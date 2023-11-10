@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleJvm" value="#GRADLE_LOCAL_JAVA_HOME" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/common" />
+            <option value="$PROJECT_DIR$/common/preferences" />
+            <option value="$PROJECT_DIR$/common/shared" />
+            <option value="$PROJECT_DIR$/common/theme" />
+            <option value="$PROJECT_DIR$/feature" />
+            <option value="$PROJECT_DIR$/feature/anime" />
+            <option value="$PROJECT_DIR$/feature/anime/collection" />
+            <option value="$PROJECT_DIR$/feature/anime/collection/data" />
+            <option value="$PROJECT_DIR$/feature/anime/collection/domain" />
+            <option value="$PROJECT_DIR$/feature/anime/collection/ui" />
+            <option value="$PROJECT_DIR$/feature/anime/exploration" />
+            <option value="$PROJECT_DIR$/feature/anime/exploration/data" />
+            <option value="$PROJECT_DIR$/feature/anime/exploration/domain" />
+            <option value="$PROJECT_DIR$/feature/anime/exploration/ui" />
+            <option value="$PROJECT_DIR$/feature/anime/shared" />
+            <option value="$PROJECT_DIR$/feature/settings" />
+            <option value="$PROJECT_DIR$/feature/settings/data" />
+            <option value="$PROJECT_DIR$/feature/settings/domain" />
+            <option value="$PROJECT_DIR$/feature/settings/ui" />
+          </set>
+        </option>
+        <option name="resolveExternalAnnotations" value="false" />
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>
