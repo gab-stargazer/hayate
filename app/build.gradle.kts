@@ -25,6 +25,7 @@ android {
     }
 
     buildTypes {
+
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -32,28 +33,67 @@ android {
                 "proguard-rules.pro"
             )
         }
+
+        create("r8_testing") {
+            initWith(buildTypes.getByName("release"))
+            isDebuggable = false
+            isMinifyEnabled = true
+            signingConfig = signingConfigs.getByName("debug")
+            matchingFallbacks += listOf("release")
+        }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
     buildFeatures {
         compose = true
     }
+
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
     }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
+    splits {
+        abi {
+            isEnable = true
+            reset()
+            include("x86", "x86_64", "armeabi-v7a", "arm64-v8a")
+            isUniversalApk = false
+        }
+    }
 }
 
 dependencies {
+
+    implementation(project(":common:theme"))
+
+    //  Exploration Module
+    implementation(project(":feature:anime:exploration:source"))
+    implementation(project(":feature:anime:exploration:data"))
+    implementation(project(":feature:anime:exploration:domain"))
+    implementation(project(":feature:anime:exploration:ui"))
+
+
+    //  Collection Module
+    implementation(project(":feature:anime:collection:ui"))
+
+    implementation(project(":feature:anime:shared"))
+
+    //  Setting Module
+    implementation(project(":feature:settings:ui"))
 
     //  Ktx
     implementation(libs.core.ktx)

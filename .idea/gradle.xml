@@ -23,6 +23,7 @@
             <option value="$PROJECT_DIR$/feature/anime/exploration" />
             <option value="$PROJECT_DIR$/feature/anime/exploration/data" />
             <option value="$PROJECT_DIR$/feature/anime/exploration/domain" />
+            <option value="$PROJECT_DIR$/feature/anime/exploration/source" />
             <option value="$PROJECT_DIR$/feature/anime/exploration/ui" />
             <option value="$PROJECT_DIR$/feature/anime/shared" />
             <option value="$PROJECT_DIR$/feature/settings" />

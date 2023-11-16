@@ -1,8 +1,12 @@
 [versions]
 
+# Accompanist
+accompanist-version = "0.30.0"
+
 #   Compose
-compose-bom = "2023.10.01"
 compose-activity = "1.8.0"
+compose-bom = "2023.10.01"
+compose-compiler = "1.5.1"
 
 #   Coil
 coil = "2.4.0"
@@ -77,6 +81,12 @@ appcompat = "1.6.1"
 material = "1.10.0"
 
 [libraries]
+
+#   Accompanist
+accompanist-navigation-animation = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "accompanist-version" }
+accompanist-navigation-bottomsheet = { module = "com.google.accompanist:accompanist-navigation-material", version.ref = "accompanist-version" }
+accompanist-flow-layout = { module = "com.google.accompanist:accompanist-flowlayout", version.ref = "accompanist-version" }
+accompanist-system-ui-controller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist-version" }
 
 #   Coil
 coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }

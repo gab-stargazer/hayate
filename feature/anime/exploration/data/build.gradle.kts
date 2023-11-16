@@ -38,61 +38,25 @@ android {
 
 dependencies {
 
+    implementation(project(":feature:anime:exploration:domain"))
+
     //  Ktx
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
 
-    //  Coil
-    implementation(libs.coil)
-
-    //  Compose Activity
-    implementation(libs.compose.activity)
-
-    //  Compose BOM
-    implementation(platform(libs.compose.bom))
-    androidTestImplementation(platform(libs.compose.bom))
-
-    //  Compose
-    implementation(libs.compose.material.design)
-    implementation(libs.compose.ui)
-    implementation(libs.compose.ui.graphic)
-    implementation(libs.compose.ui.tooling)
-    implementation(libs.compose.ui.tooling.preview)
-    implementation(libs.compose.icon)
-    implementation(libs.compose.font)
-
     //  Coroutine
     implementation(libs.coroutine)
 
-    //  Firebase
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.crashlytic)
-
     //  Hilt
     implementation(libs.hilt)
-    implementation(libs.hilt.compose)
     ksp(libs.hilt.compiler)
 
-    //  Logging Interceptor
-    implementation(libs.logging.interceptor)
-
-    //  Navigation
-    implementation(libs.navigation)
-
-    //  Paging
-    implementation(libs.paging)
-    implementation(libs.paging.compose)
-
-    //  Retrofit
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.moshi)
+    //  Moshi
     implementation(libs.moshi)
     ksp(libs.moshi.codegen)
 
-    //  Room
-    implementation(libs.room)
-    implementation(libs.room.ktx)
-    ksp(libs.room.compiler)
+    //  Paging
+    implementation(libs.paging)
 
     //  Timber
     implementation(libs.timber)
@@ -100,13 +64,10 @@ dependencies {
     //  Ui Test
     androidTestImplementation(libs.ui.test.espresso.core)
     androidTestImplementation(libs.ui.test.android.junit)
-    androidTestImplementation(libs.ui.test.compose.junit)
-    androidTestImplementation(libs.ui.test.compose.manifest)
 
     //  ViewModel
     implementation(libs.lifecycle.ktx)
     implementation(libs.lifecycle.viewmodel)
-    implementation(libs.lifecycle.viewmodel.compose)
 
     /*============================ Testing ==============================*/
     // (Required) Writing and executing Unit Tests on the JUnit Platform
