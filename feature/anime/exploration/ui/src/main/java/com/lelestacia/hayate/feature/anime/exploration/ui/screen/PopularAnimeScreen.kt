@@ -21,16 +21,16 @@ import androidx.paging.compose.LazyPagingItems
 import com.lelestacia.hayate.common.shared.LoadingScreen
 import com.lelestacia.hayate.common.theme.padding
 import com.lelestacia.hayate.feature.anime.exploration.domain.model.Anime
-import com.lelestacia.hayate.feature.anime.exploration.domain.presenter.airing.AiringAnimeEvent
-import com.lelestacia.hayate.feature.anime.exploration.domain.presenter.airing.AiringAnimeState
+import com.lelestacia.hayate.feature.anime.exploration.domain.presenter.popular.PopularAnimeEvent
+import com.lelestacia.hayate.feature.anime.exploration.domain.presenter.popular.PopularAnimeState
 import com.lelestacia.hayate.feature.anime.exploration.ui.component.AnimeCard
 import com.lelestacia.hayate.feature.anime.shared.HayateAnimeDropDownFilter
 
 @Composable
-fun AiringAnimeScreen(
-    airingAnimePaging: LazyPagingItems<Anime>,
-    state: AiringAnimeState,
-    onEvent: (AiringAnimeEvent) -> Unit,
+fun PopularAnimeScreen(
+    popularAnimePaging: LazyPagingItems<Anime>,
+    state: PopularAnimeState,
+    onEvent: (PopularAnimeEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -48,18 +48,27 @@ fun AiringAnimeScreen(
             shouldFilterTypeBeVisible = true,
             isFilterTypeOpened = state.isTypeMenuOpened,
             selectedFilterType = state.animeType,
-            onFilterTypeSelected = { selectedFilter ->
-                onEvent(AiringAnimeEvent.OnAnimeFilterChanged(selectedFilter))
+            onFilterTypeSelected = { selectedType ->
+                onEvent(PopularAnimeEvent.OnAnimeTypeChanged(selectedType))
             },
             onFilterTypeToggled = {
-                onEvent(AiringAnimeEvent.OnTypeFilterMenuToggled)
+                onEvent(PopularAnimeEvent.OnTypeMenuToggled)
+            },
+            shouldAnimeFilterBeVisible = true,
+            isAnimeFilterOpened = state.isFilterMenuOpened,
+            selectedAnimeFilter = state.animeFilter,
+            onAnimeFilterSelected = { selectedFilter ->
+                onEvent(PopularAnimeEvent.OnAnimeFilterChanged(selectedFilter))
+            },
+            onAnimeFilterToggled = {
+                onEvent(PopularAnimeEvent.OnFilterMenuToggled)
             },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = padding.small, vertical = padding.extraSmall)
         )
 
-        when (airingAnimePaging.loadState.refresh) {
+        when (popularAnimePaging.loadState.refresh) {
             is LoadState.Error -> {
                 // TODO: Implement Error Screen
             }
@@ -82,13 +91,13 @@ fun AiringAnimeScreen(
                     modifier = Modifier.weight(1f)
                 ) {
 
-                    items(count = airingAnimePaging.itemCount) { index ->
-                        val currentAnime: Anime? = airingAnimePaging[index]
+                    items(count = popularAnimePaging.itemCount) { index ->
+                        val currentAnime: Anime? = popularAnimePaging[index]
                         currentAnime?.let { validAnime ->
                             AnimeCard(
                                 anime = validAnime,
                                 onClicked = { clickedAnime ->
-                                    val event = AiringAnimeEvent.OnAnimeClicked(clickedAnime)
+                                    val event = PopularAnimeEvent.OnAnimeClicked(clickedAnime)
                                     onEvent(event)
                                 },
                                 isDarkTheme = isSystemInDarkTheme()
@@ -96,7 +105,7 @@ fun AiringAnimeScreen(
                         }
                     }
 
-                    when (airingAnimePaging.loadState.append) {
+                    when (popularAnimePaging.loadState.append) {
                         is LoadState.Error -> {
                             // TODO: Implement Error Screen
                         }

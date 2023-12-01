@@ -7,7 +7,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.lelestacia.hayate.feature.anime.exploration.domain.model.Anime
 import com.lelestacia.hayate.feature.anime.exploration.domain.usecases.AnimeUseCases
-import com.lelestacia.hayate.feature.anime.shared.AnimeTypeFilter
+import com.lelestacia.hayate.feature.anime.shared.AnimeType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -31,8 +31,8 @@ class AnimeViewModel @Inject constructor(
             animeUseCases.getScheduledAnime(it)
         }.cachedIn(viewModelScope)
 
-    private val _airingAnimeType: MutableStateFlow<AnimeTypeFilter?> = MutableStateFlow(null)
-    val airingAnimeType: StateFlow<AnimeTypeFilter?> = _airingAnimeType.asStateFlow()
+    private val _airingAnimeType: MutableStateFlow<AnimeType?> = MutableStateFlow(null)
+    val airingAnimeType: StateFlow<AnimeType?> = _airingAnimeType.asStateFlow()
 
     val topAnime: Flow<PagingData<Anime>> = animeUseCases
         .getTopAnime()
@@ -69,6 +69,6 @@ class AnimeViewModel @Inject constructor(
 
 sealed class AnimeScreenEvent {
     sealed class AiringAnimeEvent : AnimeScreenEvent() {
-        data class OnTypeChanged(val filter: AnimeTypeFilter?) : AiringAnimeEvent()
+        data class OnTypeChanged(val filter: AnimeType?) : AiringAnimeEvent()
     }
 }

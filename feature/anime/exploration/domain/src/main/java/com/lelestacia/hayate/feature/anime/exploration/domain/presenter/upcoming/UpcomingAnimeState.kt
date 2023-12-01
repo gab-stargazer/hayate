@@ -2,12 +2,12 @@ package com.lelestacia.hayate.feature.anime.exploration.domain.presenter.upcomin
 
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.grid.LazyGridState
-import com.lelestacia.hayate.feature.anime.shared.AnimeTypeFilter
+import com.lelestacia.hayate.feature.anime.shared.AnimeType
 
 data class UpcomingAnimeState(
-    val animeType: AnimeTypeFilter? = null,
+    val animeType: AnimeType? = null,
     val gridState: LazyGridState = LazyGridState(),
     val listState: LazyListState = LazyListState(),
     val isBottomSheetOpened: Boolean = false,
-    val isTypeFilterMenuOpened: Boolean = false
+    val isTypeMenuOpened: Boolean = false
 )

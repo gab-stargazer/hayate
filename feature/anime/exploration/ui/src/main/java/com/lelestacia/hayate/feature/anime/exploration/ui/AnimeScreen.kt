@@ -48,7 +48,7 @@ import com.lelestacia.hayate.common.theme.padding
 import com.lelestacia.hayate.feature.anime.exploration.domain.model.Anime
 import com.lelestacia.hayate.feature.anime.exploration.ui.component.AnimeCard
 import com.lelestacia.hayate.feature.anime.exploration.ui.viewmodel.AnimeScreenEvent
-import com.lelestacia.hayate.feature.anime.shared.AnimeTypeFilter
+import com.lelestacia.hayate.feature.anime.shared.AnimeType
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -56,7 +56,7 @@ import com.lelestacia.hayate.feature.anime.shared.AnimeTypeFilter
 fun AnimeScreen(
     displayType: DisplayType,
     animePaging: LazyPagingItems<Anime>,
-    animeTypeFilter: AnimeTypeFilter?,
+    animeType: AnimeType?,
     animeState: LazyGridState,
     onAnimeClicked: (Anime) -> Unit,
     onEvent: (AnimeScreenEvent) -> Unit,
@@ -119,7 +119,7 @@ fun AnimeScreen(
                         .padding(horizontal = padding.small, vertical = padding.extraSmall)
                 ) {
                     FilterChip(
-                        selected = animeTypeFilter != null,
+                        selected = animeType != null,
                         onClick = {
                             isDropDownMenuOpened = true
                         },
@@ -127,7 +127,7 @@ fun AnimeScreen(
                             Text(
                                 text = stringResource(
                                     id = com.lelestacia.hayate.common.shared.R.string.anime_type_with_value,
-                                    animeTypeFilter?.name
+                                    animeType?.name
                                         ?: stringResource(id = com.lelestacia.hayate.common.shared.R.string.all)
                                 )
                             )
@@ -181,7 +181,7 @@ fun AnimeScreen(
                                 onEvent(event)
                             }
                         )
-                        AnimeTypeFilter.entries.forEach {
+                        AnimeType.entries.forEach {
                             DropdownMenuItem(
                                 text = {
                                     Text(text = it.name)

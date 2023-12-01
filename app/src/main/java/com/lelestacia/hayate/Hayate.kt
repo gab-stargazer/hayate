@@ -40,9 +40,11 @@ import com.lelestacia.hayate.feature.anime.collection.ui.CollectionScreen
 import com.lelestacia.hayate.feature.anime.exploration.ui.AnimeScreen
 import com.lelestacia.hayate.feature.anime.exploration.ui.DisplayType
 import com.lelestacia.hayate.feature.anime.exploration.ui.screen.AiringAnimeScreen
+import com.lelestacia.hayate.feature.anime.exploration.ui.screen.PopularAnimeScreen
 import com.lelestacia.hayate.feature.anime.exploration.ui.screen.UpcomingAnimeScreen
 import com.lelestacia.hayate.feature.anime.exploration.ui.viewmodel.AiringAnimeViewModel
 import com.lelestacia.hayate.feature.anime.exploration.ui.viewmodel.AnimeViewModel
+import com.lelestacia.hayate.feature.anime.exploration.ui.viewmodel.PopularAnimeViewModel
 import com.lelestacia.hayate.feature.anime.exploration.ui.viewmodel.UpcomingAnimeViewModel
 import com.lelestacia.hayate.feature.settings.ui.SettingScreen
 import com.lelestacia.hayate.navigation.CustomBottomNavigation
@@ -120,6 +122,9 @@ fun Hayate() {
 
             composable(Screen.Exploration.route) {
 
+                val popularAnimeVm = hiltViewModel<PopularAnimeViewModel>()
+                val popularAnimeState by popularAnimeVm.state.collectAsState()
+
                 val airingAnimeVm = hiltViewModel<AiringAnimeViewModel>()
                 val airingAnimeState by airingAnimeVm.state.collectAsState()
 
@@ -188,7 +193,7 @@ fun Hayate() {
                                     displayType = DisplayType.Scheduled,
                                     animePaging = vm.scheduleAnime.collectAsLazyPagingItems(),
                                     animeState = vm.scheduleAnimeState,
-                                    animeTypeFilter = null,
+                                    animeType = null,
                                     onAnimeClicked = {
 
                                     },
@@ -200,18 +205,10 @@ fun Hayate() {
                             }
 
                             1 -> {
-                                AnimeScreen(
-                                    displayType = DisplayType.Popular,
-                                    animePaging = vm.topAnime.collectAsLazyPagingItems(),
-                                    animeState = vm.topAnimeState,
-                                    animeTypeFilter = null,
-                                    onAnimeClicked = {
-
-                                    },
-                                    onEvent = {
-
-                                    },
-                                    modifier = Modifier.weight(1f),
+                                PopularAnimeScreen(
+                                    popularAnimePaging = popularAnimeVm.popularAnime.collectAsLazyPagingItems(),
+                                    state = popularAnimeState,
+                                    onEvent = popularAnimeVm::onEvent
                                 )
                             }
 

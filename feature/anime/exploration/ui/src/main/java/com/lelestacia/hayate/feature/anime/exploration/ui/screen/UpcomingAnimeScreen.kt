@@ -46,7 +46,7 @@ fun UpcomingAnimeScreen(
 
         HayateAnimeDropDownFilter(
             shouldFilterTypeBeVisible = true,
-            isFilterTypeOpened = state.isTypeFilterMenuOpened,
+            isFilterTypeOpened = state.isTypeMenuOpened,
             selectedFilterType = state.animeType,
             onFilterTypeSelected = { selectedFilter ->
                 onEvent(UpcomingAnimeEvent.OnAnimeFilterChanged(selectedFilter))

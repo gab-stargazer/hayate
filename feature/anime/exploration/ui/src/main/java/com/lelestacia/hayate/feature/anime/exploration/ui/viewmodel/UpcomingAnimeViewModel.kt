@@ -8,7 +8,7 @@ import com.lelestacia.hayate.feature.anime.exploration.domain.model.Anime
 import com.lelestacia.hayate.feature.anime.exploration.domain.presenter.upcoming.UpcomingAnimeEvent
 import com.lelestacia.hayate.feature.anime.exploration.domain.presenter.upcoming.UpcomingAnimeState
 import com.lelestacia.hayate.feature.anime.exploration.domain.usecases.AnimeUseCases
-import com.lelestacia.hayate.feature.anime.shared.AnimeTypeFilter
+import com.lelestacia.hayate.feature.anime.shared.AnimeType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -25,16 +25,16 @@ class UpcomingAnimeViewModel @Inject constructor(
     private val animeUseCases: AnimeUseCases
 ) : BaseViewModel() {
 
-    private val filterAnimeType: MutableStateFlow<AnimeTypeFilter?> = MutableStateFlow(null)
+    private val animeType: MutableStateFlow<AnimeType?> = MutableStateFlow(null)
 
     private val _state: MutableStateFlow<UpcomingAnimeState> =
         MutableStateFlow(UpcomingAnimeState())
     val state: StateFlow<UpcomingAnimeState> = _state.asStateFlow()
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val upcomingAnime: Flow<PagingData<Anime>> = filterAnimeType.flatMapLatest { currentState ->
+    val upcomingAnime: Flow<PagingData<Anime>> = animeType.flatMapLatest { currentType ->
         animeUseCases.getUpcomingSeasonAnime(
-            filter = currentState?.name?.lowercase()
+            filter = currentType?.name?.lowercase()
         )
     }.cachedIn(viewModelScope)
 
@@ -45,7 +45,7 @@ class UpcomingAnimeViewModel @Inject constructor(
             }
 
             is UpcomingAnimeEvent.OnAnimeFilterChanged -> {
-                filterAnimeType.update {
+                animeType.update {
                     //  NOTE:
                     //  Theres no Need to copy and stuff since its only 1 value
                     event.filter
@@ -71,7 +71,7 @@ class UpcomingAnimeViewModel @Inject constructor(
             UpcomingAnimeEvent.OnTypeFilterMenuToggled -> {
                 _state.update { currentState ->
                     currentState.copy(
-                        isTypeFilterMenuOpened = !currentState.isTypeFilterMenuOpened
+                        isTypeMenuOpened = !currentState.isTypeMenuOpened
                     )
                 }
             }
