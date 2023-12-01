@@ -1,4 +1,4 @@
-package com.lelestacia.hayate.feature.anime.exploration.ui
+package com.lelestacia.hayate.feature.anime.exploration.ui.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,20 +21,18 @@ import androidx.paging.compose.LazyPagingItems
 import com.lelestacia.hayate.common.shared.LoadingScreen
 import com.lelestacia.hayate.common.theme.padding
 import com.lelestacia.hayate.feature.anime.exploration.domain.model.Anime
-import com.lelestacia.hayate.feature.anime.exploration.domain.presenter.airing.AiringAnimeEvent
-import com.lelestacia.hayate.feature.anime.exploration.domain.presenter.airing.AiringAnimeState
+import com.lelestacia.hayate.feature.anime.exploration.domain.presenter.upcoming.UpcomingAnimeEvent
+import com.lelestacia.hayate.feature.anime.exploration.domain.presenter.upcoming.UpcomingAnimeState
 import com.lelestacia.hayate.feature.anime.exploration.ui.component.AnimeCard
 import com.lelestacia.hayate.feature.anime.shared.HayateAnimeDropDownFilter
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AiringAnimeScreen(
+fun UpcomingAnimeScreen(
     airingAnimePaging: LazyPagingItems<Anime>,
-    state: AiringAnimeState,
-    onEvent: (AiringAnimeEvent) -> Unit,
+    state: UpcomingAnimeState,
+    onEvent: (UpcomingAnimeEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-
     Column(
         modifier = modifier
             .background(
@@ -52,10 +49,10 @@ fun AiringAnimeScreen(
             isFilterTypeOpened = state.isTypeFilterMenuOpened,
             selectedFilterType = state.animeType,
             onFilterTypeSelected = { selectedFilter ->
-                onEvent(AiringAnimeEvent.OnAnimeFilterChanged(selectedFilter))
+                onEvent(UpcomingAnimeEvent.OnAnimeFilterChanged(selectedFilter))
             },
             onFilterTypeToggled = {
-                onEvent(AiringAnimeEvent.OnTypeFilterMenuToggled)
+                onEvent(UpcomingAnimeEvent.OnTypeFilterMenuToggled)
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -91,7 +88,7 @@ fun AiringAnimeScreen(
                             AnimeCard(
                                 anime = validAnime,
                                 onClicked = { clickedAnime ->
-                                    val event = AiringAnimeEvent.OnAnimeClicked(clickedAnime)
+                                    val event = UpcomingAnimeEvent.OnAnimeClicked(clickedAnime)
                                     onEvent(event)
                                 },
                                 isDarkTheme = isSystemInDarkTheme()

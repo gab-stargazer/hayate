@@ -37,11 +37,13 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.lelestacia.hayate.common.theme.quickSandFamily
 import com.lelestacia.hayate.component.CustomAppBar
 import com.lelestacia.hayate.feature.anime.collection.ui.CollectionScreen
-import com.lelestacia.hayate.feature.anime.exploration.ui.AiringAnimeScreen
 import com.lelestacia.hayate.feature.anime.exploration.ui.AnimeScreen
 import com.lelestacia.hayate.feature.anime.exploration.ui.DisplayType
+import com.lelestacia.hayate.feature.anime.exploration.ui.screen.AiringAnimeScreen
+import com.lelestacia.hayate.feature.anime.exploration.ui.screen.UpcomingAnimeScreen
 import com.lelestacia.hayate.feature.anime.exploration.ui.viewmodel.AiringAnimeViewModel
 import com.lelestacia.hayate.feature.anime.exploration.ui.viewmodel.AnimeViewModel
+import com.lelestacia.hayate.feature.anime.exploration.ui.viewmodel.UpcomingAnimeViewModel
 import com.lelestacia.hayate.feature.settings.ui.SettingScreen
 import com.lelestacia.hayate.navigation.CustomBottomNavigation
 import kotlinx.coroutines.flow.collectLatest
@@ -121,6 +123,9 @@ fun Hayate() {
                 val airingAnimeVm = hiltViewModel<AiringAnimeViewModel>()
                 val airingAnimeState by airingAnimeVm.state.collectAsState()
 
+                val upcomingAnimeVm = hiltViewModel<UpcomingAnimeViewModel>()
+                val upcomingAnimeState by upcomingAnimeVm.state.collectAsState()
+
                 val currentLifeCycle = LocalLifecycleOwner.current
 
                 LaunchedEffect(key1 = Unit) {
@@ -130,8 +135,6 @@ fun Hayate() {
                 }
 
                 val vm = hiltViewModel<AnimeViewModel>()
-
-                val airingAnimeFilterType by vm.airingAnimeType.collectAsState()
 
 
                 LaunchedEffect(key1 = Unit) {
@@ -222,17 +225,10 @@ fun Hayate() {
                             }
 
                             3 -> {
-                                AnimeScreen(
-                                    displayType = DisplayType.Upcoming,
-                                    animePaging = vm.upcomingAnime.collectAsLazyPagingItems(),
-                                    animeState = vm.upcomingAnimeState,
-                                    animeTypeFilter = null,
-                                    onAnimeClicked = {
-
-                                    },
-                                    onEvent = {
-
-                                    },
+                                UpcomingAnimeScreen(
+                                    airingAnimePaging = upcomingAnimeVm.upcomingAnime.collectAsLazyPagingItems(),
+                                    state = upcomingAnimeState,
+                                    onEvent = upcomingAnimeVm::onEvent,
                                     modifier = Modifier.weight(1f)
                                 )
                             }
