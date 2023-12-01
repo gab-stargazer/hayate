@@ -1,6 +1,8 @@
 package com.lelestacia.hayate.feature.anime.exploration.ui
 
 import android.annotation.SuppressLint
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
@@ -17,11 +19,15 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.ArrowDropUp
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
@@ -118,19 +124,46 @@ fun AnimeScreen(
                             isDropDownMenuOpened = true
                         },
                         label = {
-                            Text(text = stringResource(id = com.lelestacia.hayate.common.shared.R.string.anime_type))
+                            Text(
+                                text = stringResource(
+                                    id = com.lelestacia.hayate.common.shared.R.string.anime_type_with_value,
+                                    animeTypeFilter?.name
+                                        ?: stringResource(id = com.lelestacia.hayate.common.shared.R.string.all)
+                                )
+                            )
+                        },
+                        trailingIcon = {
+                            AnimatedContent(
+                                targetState = isDropDownMenuOpened,
+                                label = "Chip Trailing Icon Animation"
+                            ) { isOpened ->
+                                when (isOpened) {
+                                    true -> Icon(
+                                        imageVector = Icons.Default.ArrowDropUp,
+
+                                        contentDescription = null
+                                    )
+
+                                    false -> Icon(
+                                        imageVector = Icons.Default.ArrowDropDown,
+                                        contentDescription = null
+                                    )
+                                }
+                            }
                         },
                         colors = FilterChipDefaults.filterChipColors(
                             containerColor = Color.Transparent,
                             labelColor = MaterialTheme.colorScheme.primary,
                             selectedContainerColor = MaterialTheme.colorScheme.primary,
                             selectedLabelColor = MaterialTheme.colorScheme.onPrimary,
+                            selectedTrailingIconColor = MaterialTheme.colorScheme.onPrimary
                         ),
                         shape = RoundedCornerShape(15),
                         border = FilterChipDefaults.filterChipBorder(
                             selectedBorderColor = Color.Transparent,
                             borderColor = MaterialTheme.colorScheme.primary
-                        )
+                        ),
+                        modifier = Modifier.animateContentSize()
                     )
                     DropdownMenu(
                         expanded = isDropDownMenuOpened,

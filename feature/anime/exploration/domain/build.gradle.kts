@@ -40,6 +40,15 @@ android {
 
 dependencies {
 
+    implementation(project(":feature:anime:shared"))
+
+    //  Compose
+    implementation(libs.compose.material.design)
+    implementation(libs.compose.ui)
+    implementation(libs.compose.ui.graphic)
+    implementation(libs.compose.ui.tooling)
+    implementation(libs.compose.ui.tooling.preview)
+
     //  Ktx
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)

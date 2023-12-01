@@ -78,6 +78,7 @@ android {
 
 dependencies {
 
+    implementation(project(":common:shared"))
     implementation(project(":common:theme"))
 
     //  Exploration Module

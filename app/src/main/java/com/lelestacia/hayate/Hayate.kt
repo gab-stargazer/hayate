@@ -24,8 +24,10 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.font.FontWeight
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -35,12 +37,16 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.lelestacia.hayate.common.theme.quickSandFamily
 import com.lelestacia.hayate.component.CustomAppBar
 import com.lelestacia.hayate.feature.anime.collection.ui.CollectionScreen
+import com.lelestacia.hayate.feature.anime.exploration.ui.AiringAnimeScreen
 import com.lelestacia.hayate.feature.anime.exploration.ui.AnimeScreen
 import com.lelestacia.hayate.feature.anime.exploration.ui.DisplayType
+import com.lelestacia.hayate.feature.anime.exploration.ui.viewmodel.AiringAnimeViewModel
 import com.lelestacia.hayate.feature.anime.exploration.ui.viewmodel.AnimeViewModel
 import com.lelestacia.hayate.feature.settings.ui.SettingScreen
 import com.lelestacia.hayate.navigation.CustomBottomNavigation
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import timber.log.Timber
 import java.time.LocalDate
@@ -111,6 +117,17 @@ fun Hayate() {
         ) {
 
             composable(Screen.Exploration.route) {
+
+                val airingAnimeVm = hiltViewModel<AiringAnimeViewModel>()
+                val airingAnimeState by airingAnimeVm.state.collectAsState()
+
+                val currentLifeCycle = LocalLifecycleOwner.current
+
+                LaunchedEffect(key1 = Unit) {
+                    airingAnimeVm.route.onEach { route ->
+                        navController.navigate(route)
+                    }.launchIn(currentLifeCycle.lifecycleScope)
+                }
 
                 val vm = hiltViewModel<AnimeViewModel>()
 
@@ -196,15 +213,10 @@ fun Hayate() {
                             }
 
                             2 -> {
-                                AnimeScreen(
-                                    displayType = DisplayType.Airing,
-                                    animePaging = vm.currentSeasonAnime.collectAsLazyPagingItems(),
-                                    animeState = vm.currentSeasonAnimeState,
-                                    animeTypeFilter = airingAnimeFilterType,
-                                    onAnimeClicked = {
-
-                                    },
-                                    onEvent = vm::onEvent,
+                                AiringAnimeScreen(
+                                    airingAnimePaging = airingAnimeVm.airingAnime.collectAsLazyPagingItems(),
+                                    state = airingAnimeState,
+                                    onEvent = airingAnimeVm::onEvent,
                                     modifier = Modifier.weight(1f)
                                 )
                             }

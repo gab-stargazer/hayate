@@ -1,4 +1,4 @@
-package com.lelestacia.hayate
+package com.lelestacia.hayate.application
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
