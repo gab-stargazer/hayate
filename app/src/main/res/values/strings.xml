@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Hayate</string>
+    <string name="app_name" translatable="false">Hayate</string>
+    <string name="japanese_app_name" translatable="false">颯</string>
 </resources>

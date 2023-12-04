@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="scheduled_anime_title">
+        <item>Airing Today</item>
+        <item>Today\'s Picks</item>
+        <item>On Air Now</item>
+        <item>Daily Anime</item>
+    </string-array>
+    <string-array name="pager_title">
+        <item>Schedule</item>
+        <item>Popular</item>
+        <item>Airing</item>
+        <item>Upcoming</item>
+    </string-array>
+</resources>
