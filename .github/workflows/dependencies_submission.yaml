@@ -1,0 +1,32 @@
+name: Gradle Dependency Submission
+on:
+  push:
+    branches:
+      - develop # Run the action on the develop branch or your default branch
+
+jobs:
+  build:
+    name: Dependencies
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: 'Checkout Repository'
+        uses: actions/checkout@v3
+
+      - name: Run dependency submission
+        uses: mikepenz/gradle-dependency-submission@{latest}
+        with:
+          gradle-project-path: .
+          gradle-build-module: |
+            :common:shared
+            :common:theme
+            :feature:anime:exploration:source
+            :feature:anime:exploration:data
+            :feature:anime:exploration:domain
+            :feature:anime:exploration:ui
+            :feature:anime:shared
+            :feature:anime:collection:ui
+            :feature:settings:ui
+          gradle-build-configuration: |
+            implementationClasspath
