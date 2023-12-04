@@ -6,4 +6,10 @@
         <item>On Air Now</item>
         <item>Daily Anime</item>
     </string-array>
+    <string-array name="pager_title">
+        <item>Schedule</item>
+        <item>Popular</item>
+        <item>Airing</item>
+        <item>Upcoming</item>
+    </string-array>
 </resources>

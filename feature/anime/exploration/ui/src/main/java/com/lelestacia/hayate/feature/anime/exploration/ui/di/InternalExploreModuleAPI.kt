@@ -3,10 +3,12 @@ package com.lelestacia.hayate.feature.anime.exploration.ui.di
 import android.net.Uri
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
@@ -16,6 +18,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -27,6 +30,7 @@ import com.lelestacia.hayate.common.shared.Screen
 import com.lelestacia.hayate.common.shared.api.FeatureApi
 import com.lelestacia.hayate.common.shared.toJson
 import com.lelestacia.hayate.common.theme.quickSandFamily
+import com.lelestacia.hayate.feature.anime.exploration.ui.R
 import com.lelestacia.hayate.feature.anime.exploration.ui.screen.AiringAnimeScreen
 import com.lelestacia.hayate.feature.anime.exploration.ui.screen.PopularAnimeScreen
 import com.lelestacia.hayate.feature.anime.exploration.ui.screen.ScheduleAnimeScreen
@@ -43,12 +47,12 @@ internal object InternalExploreModuleAPI : FeatureApi {
     override fun registerGraph(
         navController: NavHostController,
         navGraphBuilder: NavGraphBuilder,
-        modifier: Modifier
+        snackBarHostState: SnackbarHostState
     ) {
         navGraphBuilder.composable(
             route = Screen.Exploration.route
         ) {
-            val titles = listOf("Schedule", "Popular", "Airing", "Upcoming")
+            val titles = stringArrayResource(id = R.array.pager_title)
             var state by rememberSaveable { mutableIntStateOf(1) }
 
             val pagerState = rememberPagerState(
@@ -81,16 +85,16 @@ internal object InternalExploreModuleAPI : FeatureApi {
             val scheduleAnimeState by scheduleAnimeVm.state.collectAsStateWithLifecycle()
 
             val handleAnimeClicked: (Anime) -> Unit = { clickedAnime ->
-                val jsonAnime = toJson(clickedAnime)
+                val encodedJsonAnime = toJson(clickedAnime).also { json -> Uri.encode(json) }
                 navController.navigate(
                     Screen.Detail.createRoute(
-                        jsonAnime = Uri.encode(jsonAnime)
+                        jsonAnime = encodedJsonAnime
                     )
                 )
             }
 
             Column(
-                modifier = modifier
+                modifier = Modifier.fillMaxSize()
             ) {
                 TabRow(
                     selectedTabIndex = state,

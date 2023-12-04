@@ -27,10 +27,12 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
@@ -38,11 +40,8 @@ android {
 
 dependencies {
 
+    //  =====Feature Anime=====
     implementation(project(":feature:anime:exploration:data"))
-
-    //  Ktx
-    implementation(libs.core.ktx)
-    implementation(libs.lifecycle.runtime.ktx)
 
     //  Coroutine
     implementation(libs.coroutine)

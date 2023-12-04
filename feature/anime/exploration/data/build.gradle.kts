@@ -27,10 +27,12 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
@@ -38,12 +40,9 @@ android {
 
 dependencies {
 
+    // =====Feature Anime=====
     implementation(project(":feature:anime:exploration:domain"))
     implementation(project(":feature:anime:shared"))
-
-    //  Ktx
-    implementation(libs.core.ktx)
-    implementation(libs.lifecycle.runtime.ktx)
 
     //  Coroutine
     implementation(libs.coroutine)
@@ -65,10 +64,6 @@ dependencies {
     //  Ui Test
     androidTestImplementation(libs.ui.test.espresso.core)
     androidTestImplementation(libs.ui.test.android.junit)
-
-    //  ViewModel
-    implementation(libs.lifecycle.ktx)
-    implementation(libs.lifecycle.viewmodel)
 
     /*============================ Testing ==============================*/
     // (Required) Writing and executing Unit Tests on the JUnit Platform

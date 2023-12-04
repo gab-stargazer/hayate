@@ -1,5 +1,6 @@
 package com.lelestacia.hayate.feature.anime.shared.parcelable
 
+import android.net.Uri
 import android.os.Bundle
 import androidx.navigation.NavType
 import com.lelestacia.hayate.common.shared.fromJson
@@ -13,7 +14,7 @@ class AnimeNavType : NavType<Anime>(isNullableAllowed = false) {
     }
 
     override fun parseValue(value: String): Anime {
-        return fromJson<Anime>(data = value)
+        return fromJson<Anime>(data = Uri.decode(value))
             ?: throw IllegalArgumentException("Failed to Retrieve Anime")
     }
 

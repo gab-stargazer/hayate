@@ -39,3 +39,13 @@ val HayateNavigationItem = listOf(
         unselectedIcon = Icons.Outlined.MoreHoriz
     ),
 )
+
+fun isRootDestination(route: String): Boolean {
+    val rootDestination = listOf(
+        Screen.Exploration.route,
+        Screen.Collection.route,
+        Screen.More.route
+    )
+
+    return rootDestination.contains(route)
+}

@@ -1,4 +1,4 @@
-package com.lelestacia.hayate.feature.anime.exploration.ui.di
+package com.lelestacia.hayate.feature.anime.collection.ui.di
 
 import androidx.compose.material3.SnackbarHostState
 import androidx.navigation.NavGraphBuilder
@@ -6,16 +6,16 @@ import androidx.navigation.NavHostController
 import com.lelestacia.hayate.common.shared.api.FeatureApi
 import javax.inject.Inject
 
-interface ExploreModuleAPI : FeatureApi
+interface CollectionModuleAPI : FeatureApi
 
-class ExploreModuleApiImpl @Inject constructor() : ExploreModuleAPI {
+class CollectionModuleApiImpl @Inject constructor() : CollectionModuleAPI {
 
     override fun registerGraph(
         navController: NavHostController,
         navGraphBuilder: NavGraphBuilder,
         snackBarHostState: SnackbarHostState
     ) {
-        InternalExploreModuleAPI.registerGraph(
+        InternalCollectionModuleAPI.registerGraph(
             navController = navController,
             navGraphBuilder = navGraphBuilder,
             snackBarHostState = snackBarHostState

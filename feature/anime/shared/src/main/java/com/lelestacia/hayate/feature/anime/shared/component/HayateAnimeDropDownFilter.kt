@@ -49,7 +49,8 @@ fun HayateAnimeDropDownFilter(
     val scrollState = rememberScrollState()
     Row(
         horizontalArrangement = Arrangement.spacedBy(spacing.small),
-        modifier = modifier.horizontalScroll(scrollState, true)
+        modifier = modifier
+            .horizontalScroll(scrollState, true)
     ) {
         if (shouldAnimeTypeBeVisible) {
             Column {

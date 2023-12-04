@@ -40,18 +40,15 @@ android {
 
 dependencies {
 
+    // =====Feature Anime=====
     implementation(project(":feature:anime:shared"))
 
     //  Compose BOM
     implementation(platform(libs.compose.bom))
-    androidTestImplementation(platform(libs.compose.bom))
 
     //  Compose
     implementation(libs.compose.material.design)
     implementation(libs.compose.ui)
-    implementation(libs.compose.ui.graphic)
-    implementation(libs.compose.ui.tooling)
-    implementation(libs.compose.ui.tooling.preview)
 
     //  Coroutine
     implementation(libs.coroutine)
