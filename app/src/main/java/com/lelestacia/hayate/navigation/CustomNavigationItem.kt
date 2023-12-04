@@ -10,7 +10,7 @@ import androidx.compose.material.icons.outlined.Explore
 import androidx.compose.material.icons.outlined.MoreHoriz
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.lelestacia.hayate.R
-import com.lelestacia.hayate.Screen
+import com.lelestacia.hayate.common.shared.Screen
 
 data class CustomNavigationItem(
     @StringRes val title: Int,

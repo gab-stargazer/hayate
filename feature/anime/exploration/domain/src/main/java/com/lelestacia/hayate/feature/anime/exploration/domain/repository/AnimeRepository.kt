@@ -1,7 +1,7 @@
 package com.lelestacia.hayate.feature.anime.exploration.domain.repository
 
 import androidx.paging.PagingData
-import com.lelestacia.hayate.feature.anime.exploration.domain.model.Anime
+import com.lelestacia.hayate.feature.anime.shared.model.Anime
 import kotlinx.coroutines.flow.Flow
 
 interface AnimeRepository {

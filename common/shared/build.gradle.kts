@@ -82,26 +82,9 @@ dependencies {
     implementation(libs.hilt.compose)
     ksp(libs.hilt.compiler)
 
-    //  Logging Interceptor
-    implementation(libs.logging.interceptor)
-
-    //  Navigation
-    implementation(libs.navigation)
-
-    //  Paging
-    implementation(libs.paging)
-    implementation(libs.paging.compose)
-
-    //  Retrofit
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.moshi)
+    //  Moshi
     implementation(libs.moshi)
-    ksp(libs.moshi.codegen)
-
-    //  Room
-    implementation(libs.room)
-    implementation(libs.room.ktx)
-    ksp(libs.room.compiler)
+    implementation(libs.moshi.kotlin)
 
     //  Timber
     implementation(libs.timber)

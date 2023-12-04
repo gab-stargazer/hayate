@@ -48,14 +48,18 @@ android {
 
 dependencies {
 
+    //  =====Common=====
     implementation(project(":common:shared"))
     implementation(project(":common:theme"))
-    implementation(project(":feature:anime:shared"))
+
+    // =====Feature Anime=====
+    api(project(":feature:anime:shared"))
     implementation(project(":feature:anime:exploration:domain"))
 
     //  Ktx
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
+    implementation(libs.lifecycle.viewmodel)
 
     //  Coil
     implementation(libs.coil)
@@ -101,6 +105,7 @@ dependencies {
     implementation(libs.lifecycle.ktx)
     implementation(libs.lifecycle.viewmodel)
     implementation(libs.lifecycle.viewmodel.compose)
+    implementation(libs.lifecycle.viewmodel.runtime.compose)
 
     /*============================ Testing ==============================*/
     // (Required) Writing and executing Unit Tests on the JUnit Platform

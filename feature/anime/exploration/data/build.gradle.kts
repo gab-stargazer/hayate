@@ -39,6 +39,7 @@ android {
 dependencies {
 
     implementation(project(":feature:anime:exploration:domain"))
+    implementation(project(":feature:anime:shared"))
 
     //  Ktx
     implementation(libs.core.ktx)

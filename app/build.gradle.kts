@@ -91,14 +91,15 @@ dependencies {
     //  Collection Module
     implementation(project(":feature:anime:collection:ui"))
 
-    implementation(project(":feature:anime:shared"))
-
     //  Setting Module
     implementation(project(":feature:settings:ui"))
 
     //  Ktx
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
+    implementation(libs.lifecycle.viewmodel)
+    implementation(libs.lifecycle.viewmodel.compose)
+    implementation(libs.lifecycle.viewmodel.runtime.compose)
 
     //  Coil
     implementation(libs.coil)
