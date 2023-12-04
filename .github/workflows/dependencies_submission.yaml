@@ -31,5 +31,5 @@ jobs:
             :feature:anime:shared
             :feature:anime:collection:ui
             :feature:settings:ui
-          gradle-build-configuration: |
-            implementationClasspath
+          gradle-build-configuration: |-
+            debugCompileClasspath
