@@ -2,11 +2,11 @@ name: Gradle Dependency Submission
 on:
   push:
     branches:
-      - development # Run the action on the develop branch or your default branch
+      - main
 
 jobs:
   build:
-    name: Dependencies
+    name: Gradle Dependency Calculation
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -20,13 +20,22 @@ jobs:
       - name: 'Checkout Repository'
         uses: actions/checkout@v4 
         
-      - name: Grant executable permissions to gradlew
+      - name: 'Grant executable permissions to gradlew'
         run: chmod +x gradlew
 
-      - name: Setup Gradle to generate and submit dependency graphs
-        uses: gradle/gradle-build-action@v2
+      - name: 'Run dependency submission'
+        uses: mikepenz/gradle-dependency-submission@v0.9.1
         with:
-           dependency-graph: generate-and-submit
-           
-      - name: Run a build and generate the dependency graph which will be submitted post-job
-        run: ./gradlew build
+          gradle-project-path: .
+          gradle-build-module: |
+            :common:shared
+            :common:theme
+            :feature:anime:exploration:source
+            :feature:anime:exploration:data
+            :feature:anime:exploration:domain
+            :feature:anime:exploration:ui
+            :feature:anime:shared
+            :feature:anime:collection:ui
+            :feature:settings:ui
+          gradle-build-configuration: |-
+            debugCompileClasspath
