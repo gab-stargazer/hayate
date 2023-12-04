@@ -16,7 +16,6 @@ jobs:
         
       - name: Grant executable permissions to gradlew
         run: chmod +x gradlew
-        working-directory: path/to/your/project/directory
 
       - name: Run dependency submission
         uses: mikepenz/gradle-dependency-submission@v0.9.1
