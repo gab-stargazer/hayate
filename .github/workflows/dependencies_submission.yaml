@@ -2,7 +2,7 @@ name: Gradle Dependency Submission
 on:
   push:
     branches:
-      - develop # Run the action on the develop branch or your default branch
+      - development # Run the action on the develop branch or your default branch
 
 jobs:
   build:
