@@ -1,4 +1,4 @@
-package com.lelestacia.hayate.common.shared
+package com.lelestacia.hayate.common.shared.component
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.DropdownMenuItem

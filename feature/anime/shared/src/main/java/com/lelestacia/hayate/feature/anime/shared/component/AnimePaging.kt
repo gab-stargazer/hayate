@@ -15,7 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
-import com.lelestacia.hayate.common.shared.LoadingScreen
+import com.lelestacia.hayate.common.shared.screen.ErrorScreen
+import com.lelestacia.hayate.common.shared.screen.LoadingScreen
 import com.lelestacia.hayate.feature.anime.shared.model.Anime
 
 @Composable
@@ -27,7 +28,14 @@ fun AnimePagingLazyGrid(
 ) {
     when (animePaging.loadState.refresh) {
         is LoadState.Error -> {
-            TODO("Implement Error Screen")
+            ErrorScreen(
+                errorMessage = (animePaging.loadState.refresh as LoadState.Error).error.message.orEmpty(),
+                onRetry = {
+                    animePaging.retry()
+                },
+                isDarkTheme = isSystemInDarkTheme(),
+                modifier = Modifier.fillMaxSize()
+            )
         }
 
         LoadState.Loading -> {
@@ -61,7 +69,22 @@ fun AnimePagingLazyGrid(
 
                 when (animePaging.loadState.append) {
                     is LoadState.Error -> {
-                        TODO("Implement Error Screen Later")
+                        item(
+                            span = {
+                                GridItemSpan(3)
+                            }
+                        ) {
+                            ErrorScreen(
+                                errorMessage = (animePaging.loadState.refresh as LoadState.Error).error.message.orEmpty(),
+                                onRetry = {
+                                    animePaging.retry()
+                                },
+                                isDarkTheme = isSystemInDarkTheme(),
+                                modifier = Modifier
+                                    .height(250.dp)
+                                    .fillMaxWidth()
+                            )
+                        }
                     }
 
                     LoadState.Loading -> {

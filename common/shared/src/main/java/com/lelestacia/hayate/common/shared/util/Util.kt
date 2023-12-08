@@ -1,4 +1,4 @@
-package com.lelestacia.hayate.common.shared
+package com.lelestacia.hayate.common.shared.util
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory

@@ -2,26 +2,63 @@ package com.lelestacia.hayate.component
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import com.google.accompanist.systemuicontroller.SystemUiController
 import com.lelestacia.hayate.common.theme.quickSandFamily
 import com.lelestacia.hayate.domain.state.BottomNavigationState
 
 @Composable
 fun CustomBottomNavigation(
-    state: BottomNavigationState,
-    onNavigationItemClicked: (String) -> Unit
+    navController: NavHostController,
+    uiController: SystemUiController,
+    state: BottomNavigationState
 ) {
+    val bottomNavigationColor = MaterialTheme.colorScheme.surfaceColorAtElevation(2.dp)
+    val surfaceColor = MaterialTheme.colorScheme.surface
+
+    SideEffect {
+        if (state.isRootDestination) {
+            uiController.setNavigationBarColor(
+                color = bottomNavigationColor,
+                darkIcons = !state.isDarkTheme
+            )
+        } else {
+            uiController.setNavigationBarColor(
+                color = surfaceColor,
+                darkIcons = !state.isDarkTheme
+            )
+        }
+    }
+
+    //  TODO: Fix Coloring for Night Mode
     AnimatedVisibility(
-        visible = state.isRootDestination
+        visible = state.isRootDestination,
+        enter = slideInVertically(
+            initialOffsetY = { it },
+            animationSpec = tween(250) // adjust duration as needed
+        ) + fadeIn(animationSpec = tween(250)), // adjust duration as needed
+        exit = slideOutVertically(
+            targetOffsetY = { it },
+            animationSpec = tween(250) // adjust duration as needed
+        ) + fadeOut(animationSpec = tween(250)) // adjust duration as needed
     ) {
         NavigationBar(
             containerColor = MaterialTheme.colorScheme.background
@@ -30,7 +67,13 @@ fun CustomBottomNavigation(
                 NavigationBarItem(
                     selected = state.selectedRoute == item.route,
                     onClick = {
-                        onNavigationItemClicked(item.route)
+                        navController.navigate(item.route) {
+                            popUpTo(id = navController.graph.startDestinationId) {
+                                saveState = true
+                            }
+                            restoreState = true
+                            launchSingleTop = true
+                        }
                     },
                     icon = {
                         AnimatedContent(
@@ -65,7 +108,14 @@ fun CustomBottomNavigation(
                     },
                     alwaysShowLabel = false,
                     colors = NavigationBarItemDefaults.colors(
-                        unselectedIconColor = MaterialTheme.colorScheme.primary,
+                        unselectedIconColor =
+                        when (state.isDarkTheme) {
+                            true -> Color.White.copy(
+                                alpha = 0.75F
+                            )
+
+                            false -> MaterialTheme.colorScheme.primary
+                        },
                         selectedIconColor =
                         when (state.isDarkTheme) {
                             true -> Color.White
@@ -73,12 +123,12 @@ fun CustomBottomNavigation(
                         },
                         indicatorColor =
                         when (state.isDarkTheme) {
-                            true -> MaterialTheme.colorScheme.inversePrimary
+                            true -> MaterialTheme.colorScheme.primaryContainer
                             false -> MaterialTheme.colorScheme.primary
                         },
                         selectedTextColor =
                         when (state.isDarkTheme) {
-                            true -> MaterialTheme.colorScheme.onPrimaryContainer
+                            true -> Color.White
                             false -> MaterialTheme.colorScheme.primary
                         }
                     )

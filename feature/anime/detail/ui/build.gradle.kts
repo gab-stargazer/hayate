@@ -1,6 +1,6 @@
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.ksp)
     alias(libs.plugins.hilt)
@@ -8,38 +8,23 @@ plugins {
 }
 
 android {
-    namespace = "com.lelestacia.hayate"
+    namespace = "com.lelestacia.hayate.feature.anime.detail.ui"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.lelestacia.hayate"
         minSdk = 26
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
-
         release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-        }
-
-        create("r8_testing") {
-            initWith(buildTypes.getByName("release"))
-            isDebuggable = false
-            isMinifyEnabled = true
-            signingConfig = signingConfigs.getByName("debug")
-            matchingFallbacks += listOf("release")
         }
     }
 
@@ -59,58 +44,24 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
     }
-
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
-
-    splits {
-        abi {
-            isEnable = true
-            reset()
-            include("x86", "x86_64", "armeabi-v7a", "arm64-v8a")
-            isUniversalApk = false
-        }
-    }
 }
 
 dependencies {
 
+    //  =====Common=====
     implementation(project(":common:shared"))
     implementation(project(":common:theme"))
 
-    //  Exploration Module
-    implementation(project(":feature:anime:exploration:source"))
-    implementation(project(":feature:anime:exploration:data"))
-    implementation(project(":feature:anime:exploration:domain"))
-    implementation(project(":feature:anime:exploration:ui"))
-
-    //  Detail Module
-    implementation(project(":feature:anime:detail:ui"))
-
-    //  Collection Module
-    implementation(project(":feature:anime:collection:ui"))
-
-    //  Setting Module
-    implementation(project(":feature:settings:ui"))
+    //  =====Feature Anime=====
+    implementation(project(":feature:anime:shared"))
 
     //  Ktx
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.lifecycle.viewmodel)
-    implementation(libs.lifecycle.viewmodel.compose)
-    implementation(libs.lifecycle.viewmodel.runtime.compose)
-
-    //  Accompanist
-    implementation(libs.accompanist.system.ui.controller)
 
     //  Coil
     implementation(libs.coil)
-
-    //  Compose Activity
-    implementation(libs.compose.activity)
 
     //  Compose BOM
     implementation(platform(libs.compose.bom))
@@ -125,38 +76,13 @@ dependencies {
     implementation(libs.compose.icon)
     implementation(libs.compose.font)
 
-    //  Coroutine
-    implementation(libs.coroutine)
-
-    //  Firebase
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.crashlytic)
-
     //  Hilt
     implementation(libs.hilt)
     implementation(libs.hilt.compose)
     ksp(libs.hilt.compiler)
 
-    //  Logging Interceptor
-    implementation(libs.logging.interceptor)
-
     //  Navigation
     implementation(libs.navigation)
-
-    //  Paging
-    implementation(libs.paging)
-    implementation(libs.paging.compose)
-
-    //  Retrofit
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.moshi)
-    implementation(libs.moshi)
-    ksp(libs.moshi.codegen)
-
-    //  Room
-    implementation(libs.room)
-    implementation(libs.room.ktx)
-    ksp(libs.room.compiler)
 
     //  Timber
     implementation(libs.timber)
@@ -171,6 +97,7 @@ dependencies {
     implementation(libs.lifecycle.ktx)
     implementation(libs.lifecycle.viewmodel)
     implementation(libs.lifecycle.viewmodel.compose)
+    implementation(libs.lifecycle.viewmodel.runtime.compose)
 
     /*============================ Testing ==============================*/
     // (Required) Writing and executing Unit Tests on the JUnit Platform

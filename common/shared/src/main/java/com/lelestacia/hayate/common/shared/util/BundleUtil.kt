@@ -1,4 +1,4 @@
-package com.lelestacia.hayate.common.shared
+package com.lelestacia.hayate.common.shared.util
 
 import android.content.Intent
 import android.os.Build.VERSION.SDK_INT

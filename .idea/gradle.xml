@@ -20,6 +20,8 @@
             <option value="$PROJECT_DIR$/feature/anime/collection/data" />
             <option value="$PROJECT_DIR$/feature/anime/collection/domain" />
             <option value="$PROJECT_DIR$/feature/anime/collection/ui" />
+            <option value="$PROJECT_DIR$/feature/anime/detail" />
+            <option value="$PROJECT_DIR$/feature/anime/detail/ui" />
             <option value="$PROJECT_DIR$/feature/anime/exploration" />
             <option value="$PROJECT_DIR$/feature/anime/exploration/data" />
             <option value="$PROJECT_DIR$/feature/anime/exploration/domain" />

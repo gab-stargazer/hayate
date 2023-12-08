@@ -19,8 +19,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.compose.AppTheme
-import com.lelestacia.hayate.common.shared.HayateCustomDropDownItem
-import com.lelestacia.hayate.common.shared.HayateCustomFilterChip
+import com.lelestacia.hayate.common.shared.R
+import com.lelestacia.hayate.common.shared.component.HayateCustomDropDownItem
+import com.lelestacia.hayate.common.shared.component.HayateCustomFilterChip
 import com.lelestacia.hayate.common.theme.padding
 import com.lelestacia.hayate.common.theme.spacing
 import com.lelestacia.hayate.feature.anime.shared.filter.AnimeFilter
@@ -61,9 +62,9 @@ fun HayateAnimeDropDownFilter(
                         onAnimeTypeToggled.invoke()
                     },
                     text = stringResource(
-                        id = com.lelestacia.hayate.common.shared.R.string.anime_type_with_value,
+                        id = R.string.anime_type_with_value,
                         selectedAnimeType?.name
-                            ?: stringResource(id = com.lelestacia.hayate.common.shared.R.string.all)
+                            ?: stringResource(id = R.string.all)
                     )
                 )
                 DropdownMenu(
@@ -73,7 +74,7 @@ fun HayateAnimeDropDownFilter(
                     },
                 ) {
                     HayateCustomDropDownItem(
-                        text = stringResource(id = com.lelestacia.hayate.common.shared.R.string.all),
+                        text = stringResource(id = R.string.all),
                         onClick = {
                             onAnimeTypeSelected(null)
                         }
@@ -99,9 +100,9 @@ fun HayateAnimeDropDownFilter(
                         onAnimeFilterToggled?.invoke()
                     },
                     text = stringResource(
-                        id = com.lelestacia.hayate.common.shared.R.string.anime_filter_with_value,
+                        id = R.string.anime_filter_with_value,
                         selectedAnimeFilter?.title
-                            ?: stringResource(id = com.lelestacia.hayate.common.shared.R.string.all)
+                            ?: stringResource(id = R.string.all)
                     )
                 )
                 DropdownMenu(
@@ -111,7 +112,7 @@ fun HayateAnimeDropDownFilter(
                     },
                 ) {
                     HayateCustomDropDownItem(
-                        text = stringResource(id = com.lelestacia.hayate.common.shared.R.string.all),
+                        text = stringResource(id = R.string.all),
                         onClick = {
                             if (onAnimeFilterSelected != null) {
                                 onAnimeFilterSelected(null)
@@ -141,9 +142,9 @@ fun HayateAnimeDropDownFilter(
                         onAnimeRatingToggled?.invoke()
                     },
                     text = stringResource(
-                        id = com.lelestacia.hayate.common.shared.R.string.anime_rating_with_value,
+                        id = R.string.anime_rating_with_value,
                         selectedAnimeRating?.title
-                            ?: stringResource(id = com.lelestacia.hayate.common.shared.R.string.all)
+                            ?: stringResource(id = R.string.all)
                     )
                 )
                 DropdownMenu(
@@ -153,7 +154,7 @@ fun HayateAnimeDropDownFilter(
                     },
                 ) {
                     HayateCustomDropDownItem(
-                        text = stringResource(id = com.lelestacia.hayate.common.shared.R.string.all),
+                        text = stringResource(id = R.string.all),
                         onClick = {
                             if (onAnimeRatingSelected != null) {
                                 onAnimeRatingSelected(null)

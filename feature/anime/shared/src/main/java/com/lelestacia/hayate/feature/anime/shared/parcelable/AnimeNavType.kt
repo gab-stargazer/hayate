@@ -3,8 +3,8 @@ package com.lelestacia.hayate.feature.anime.shared.parcelable
 import android.net.Uri
 import android.os.Bundle
 import androidx.navigation.NavType
-import com.lelestacia.hayate.common.shared.fromJson
-import com.lelestacia.hayate.common.shared.parcelable
+import com.lelestacia.hayate.common.shared.util.fromJson
+import com.lelestacia.hayate.common.shared.util.parcelable
 import com.lelestacia.hayate.feature.anime.shared.model.Anime
 
 class AnimeNavType : NavType<Anime>(isNullableAllowed = false) {

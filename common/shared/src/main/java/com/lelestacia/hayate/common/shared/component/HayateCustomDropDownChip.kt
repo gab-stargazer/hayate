@@ -1,4 +1,4 @@
-package com.lelestacia.hayate.common.shared
+package com.lelestacia.hayate.common.shared.component
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.animateContentSize
@@ -15,6 +15,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import com.lelestacia.hayate.common.theme.quickSandFamily
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -31,7 +33,13 @@ fun HayateCustomFilterChip(
             onClick()
         },
         label = {
-            Text(text = text)
+            Text(
+                text = text,
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    fontWeight = FontWeight.SemiBold,
+                    fontFamily = quickSandFamily
+                )
+            )
         },
         trailingIcon = {
             AnimatedContent(
