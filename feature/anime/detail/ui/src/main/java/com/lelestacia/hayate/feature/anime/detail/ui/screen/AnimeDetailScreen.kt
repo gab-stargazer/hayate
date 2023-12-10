@@ -6,6 +6,7 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
@@ -123,7 +124,8 @@ internal fun AnimeDetailScreen(
 
         Column(
             verticalArrangement = Arrangement.spacedBy(spacing.small),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.fillMaxWidth()
         ) {
             Text(
                 text = anime.synopsis.orEmpty(),
@@ -139,6 +141,7 @@ internal fun AnimeDetailScreen(
                 maxLines = 4,
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier
+                    .fillMaxWidth()
                     .padding(
                         horizontal = padding.small
                     )
