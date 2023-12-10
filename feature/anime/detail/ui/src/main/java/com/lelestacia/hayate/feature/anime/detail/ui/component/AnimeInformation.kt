@@ -26,10 +26,10 @@ import com.lelestacia.hayate.common.shared.util.isNotEmpty
 import com.lelestacia.hayate.common.shared.util.isNotNullOrEmpty
 import com.lelestacia.hayate.common.theme.quickSandFamily
 import com.lelestacia.hayate.common.theme.spacing
+import com.lelestacia.hayate.feature.anime.core.domain.model.Anime
 import com.lelestacia.hayate.feature.anime.detail.ui.R
 import com.lelestacia.hayate.feature.anime.detail.ui.util.asFormattedDate
 import com.lelestacia.hayate.feature.anime.detail.ui.util.asText
-import com.lelestacia.hayate.feature.anime.shared.model.Anime
 
 @Composable
 internal fun AnimeInformation(

@@ -51,8 +51,8 @@ android {
 dependencies {
 
     //  =====Common=====
-    implementation(project(":common:shared"))
-    implementation(project(":common:theme"))
+    implementation(projects.common.shared)
+    implementation(projects.common.theme)
 
     //  Ktx
     implementation(libs.core.ktx)

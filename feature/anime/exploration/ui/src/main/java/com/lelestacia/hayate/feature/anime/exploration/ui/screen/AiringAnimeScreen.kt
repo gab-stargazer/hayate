@@ -10,11 +10,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.paging.compose.LazyPagingItems
 import com.lelestacia.hayate.common.theme.padding
+import com.lelestacia.hayate.feature.anime.core.common.component.AnimePagingLazyGrid
+import com.lelestacia.hayate.feature.anime.core.common.component.HayateAnimeDropDownFilter
+import com.lelestacia.hayate.feature.anime.core.domain.model.Anime
 import com.lelestacia.hayate.feature.anime.exploration.domain.presenter.airing.AiringAnimeEvent
 import com.lelestacia.hayate.feature.anime.exploration.domain.presenter.airing.AiringAnimeState
-import com.lelestacia.hayate.feature.anime.shared.component.AnimePagingLazyGrid
-import com.lelestacia.hayate.feature.anime.shared.component.HayateAnimeDropDownFilter
-import com.lelestacia.hayate.feature.anime.shared.model.Anime
 
 @Composable
 internal fun AiringAnimeScreen(

@@ -30,6 +30,7 @@ import com.lelestacia.hayate.common.shared.Screen
 import com.lelestacia.hayate.common.shared.api.FeatureApi
 import com.lelestacia.hayate.common.shared.util.toJson
 import com.lelestacia.hayate.common.theme.quickSandFamily
+import com.lelestacia.hayate.feature.anime.core.domain.model.Anime
 import com.lelestacia.hayate.feature.anime.exploration.ui.R
 import com.lelestacia.hayate.feature.anime.exploration.ui.screen.AiringAnimeScreen
 import com.lelestacia.hayate.feature.anime.exploration.ui.screen.PopularAnimeScreen
@@ -39,7 +40,6 @@ import com.lelestacia.hayate.feature.anime.exploration.ui.viewmodel.AiringViewMo
 import com.lelestacia.hayate.feature.anime.exploration.ui.viewmodel.PopularViewModel
 import com.lelestacia.hayate.feature.anime.exploration.ui.viewmodel.ScheduleViewModel
 import com.lelestacia.hayate.feature.anime.exploration.ui.viewmodel.UpcomingViewModel
-import com.lelestacia.hayate.feature.anime.shared.model.Anime
 
 internal object InternalExploreModuleAPI : FeatureApi {
 

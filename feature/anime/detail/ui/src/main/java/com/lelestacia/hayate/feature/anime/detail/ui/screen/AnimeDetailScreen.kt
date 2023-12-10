@@ -5,7 +5,6 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
@@ -34,13 +33,13 @@ import com.lelestacia.hayate.common.shared.component.HayateCustomChip
 import com.lelestacia.hayate.common.theme.padding
 import com.lelestacia.hayate.common.theme.quickSandFamily
 import com.lelestacia.hayate.common.theme.spacing
+import com.lelestacia.hayate.feature.anime.core.domain.model.Anime
 import com.lelestacia.hayate.feature.anime.detail.ui.component.AnimeHeader
 import com.lelestacia.hayate.feature.anime.detail.ui.component.AnimeInformation
 import com.lelestacia.hayate.feature.anime.detail.ui.component.CardSection
-import com.lelestacia.hayate.feature.anime.shared.model.Anime
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun AnimeDetailScreen(
     anime: Anime,

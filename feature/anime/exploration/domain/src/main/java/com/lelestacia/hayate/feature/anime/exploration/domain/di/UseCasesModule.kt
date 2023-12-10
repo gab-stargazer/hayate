@@ -1,6 +1,6 @@
 package com.lelestacia.hayate.feature.anime.exploration.domain.di
 
-import com.lelestacia.hayate.feature.anime.exploration.domain.repository.AnimeRepository
+import com.lelestacia.hayate.feature.anime.core.domain.repository.AnimeRepository
 import com.lelestacia.hayate.feature.anime.exploration.domain.usecases.AnimeUseCases
 import dagger.Module
 import dagger.Provides

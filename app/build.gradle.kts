@@ -29,7 +29,7 @@ android {
     buildTypes {
 
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -38,10 +38,11 @@ android {
 
         create("r8_testing") {
             initWith(buildTypes.getByName("release"))
-            isDebuggable = false
+            isDebuggable = true
             isMinifyEnabled = true
             signingConfig = signingConfigs.getByName("debug")
             matchingFallbacks += listOf("release")
+            applicationIdSuffix = ".testing"
         }
     }
 
@@ -80,23 +81,26 @@ android {
 
 dependencies {
 
-    implementation(project(":common:shared"))
-    implementation(project(":common:theme"))
+    implementation(projects.common.shared)
+    implementation(projects.common.theme)
+
+    //  =====Feature Anime=====
+    implementation(projects.feature.anime.core.data)
+//    implementation(project(":feature:anime:core:source:remote:impl-test"))
+    implementation(projects.feature.anime.core.source.remote.impl)
 
     //  Exploration Module
-    implementation(project(":feature:anime:exploration:source"))
-    implementation(project(":feature:anime:exploration:data"))
-    implementation(project(":feature:anime:exploration:domain"))
-    implementation(project(":feature:anime:exploration:ui"))
+    implementation(projects.feature.anime.exploration.domain)
+    implementation(projects.feature.anime.exploration.ui)
 
     //  Detail Module
-    implementation(project(":feature:anime:detail:ui"))
+    implementation(projects.feature.anime.detail.ui)
 
     //  Collection Module
-    implementation(project(":feature:anime:collection:ui"))
+    implementation(projects.feature.anime.collection.ui)
 
     //  Setting Module
-    implementation(project(":feature:settings:ui"))
+    implementation(projects.feature.settings.ui)
 
     //  Ktx
     implementation(libs.core.ktx)
