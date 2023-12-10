@@ -20,10 +20,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.paging.compose.LazyPagingItems
 import com.lelestacia.hayate.common.theme.padding
 import com.lelestacia.hayate.common.theme.quickSandFamily
+import com.lelestacia.hayate.feature.anime.core.common.component.AnimePagingLazyGrid
+import com.lelestacia.hayate.feature.anime.core.domain.model.Anime
 import com.lelestacia.hayate.feature.anime.exploration.domain.presenter.schedule.ScheduleAnimeState
 import com.lelestacia.hayate.feature.anime.exploration.ui.R
-import com.lelestacia.hayate.feature.anime.shared.component.AnimePagingLazyGrid
-import com.lelestacia.hayate.feature.anime.shared.model.Anime
 
 @Composable
 internal fun ScheduleAnimeScreen(

@@ -1,6 +1,12 @@
 package com.lelestacia.hayate.component
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -11,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavHostController
@@ -22,16 +29,17 @@ fun CustomAppBar(
     state: AppBarState,
     navController: NavHostController,
 ) {
+    val textColor = when (state.isDarkTheme) {
+        true -> Color.White
+        false -> MaterialTheme.colorScheme.primary
+    }
     TopAppBar(
         title = {
             Text(
                 text = stringResource(id = state.appBarTitle),
                 style = MaterialTheme.typography.titleLarge.copy(
                     fontWeight = FontWeight.ExtraBold,
-                    color = when (state.isDarkTheme) {
-                        true -> MaterialTheme.colorScheme.primary
-                        false -> MaterialTheme.colorScheme.primary
-                    }
+                    color = textColor
                 )
             )
         },
@@ -40,7 +48,31 @@ fun CustomAppBar(
             titleContentColor = MaterialTheme.colorScheme.onPrimary
         ),
         navigationIcon = {
-            AnimatedVisibility(visible = state.shouldNavigationIconBeVisible) {
+            AnimatedVisibility(
+                visible = state.shouldNavigationIconBeVisible, enter =
+                slideInHorizontally(
+                    animationSpec = tween(
+                        durationMillis = 500,
+                        easing = FastOutSlowInEasing
+                    )
+                ) + fadeIn(
+                    animationSpec = tween(
+                        durationMillis = 500,
+                        easing = FastOutSlowInEasing
+                    )
+                ), exit =
+                slideOutHorizontally(
+                    animationSpec = tween(
+                        durationMillis = 500,
+                        easing = FastOutSlowInEasing
+                    )
+                ) + fadeOut(
+                    animationSpec = tween(
+                        durationMillis = 500,
+                        easing = FastOutSlowInEasing
+                    )
+                )
+            ) {
                 IconButton(
                     onClick = {
                         navController.popBackStack()
@@ -48,7 +80,8 @@ fun CustomAppBar(
                 ) {
                     Icon(
                         imageVector = Icons.Default.ArrowBack,
-                        contentDescription = null
+                        contentDescription = null,
+                        tint = textColor
                     )
                 }
             }

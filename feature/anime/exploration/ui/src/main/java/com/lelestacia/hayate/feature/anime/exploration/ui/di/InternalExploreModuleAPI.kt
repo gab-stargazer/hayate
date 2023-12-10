@@ -28,8 +28,9 @@ import androidx.navigation.compose.composable
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.lelestacia.hayate.common.shared.Screen
 import com.lelestacia.hayate.common.shared.api.FeatureApi
-import com.lelestacia.hayate.common.shared.toJson
+import com.lelestacia.hayate.common.shared.util.toJson
 import com.lelestacia.hayate.common.theme.quickSandFamily
+import com.lelestacia.hayate.feature.anime.core.domain.model.Anime
 import com.lelestacia.hayate.feature.anime.exploration.ui.R
 import com.lelestacia.hayate.feature.anime.exploration.ui.screen.AiringAnimeScreen
 import com.lelestacia.hayate.feature.anime.exploration.ui.screen.PopularAnimeScreen
@@ -39,9 +40,13 @@ import com.lelestacia.hayate.feature.anime.exploration.ui.viewmodel.AiringViewMo
 import com.lelestacia.hayate.feature.anime.exploration.ui.viewmodel.PopularViewModel
 import com.lelestacia.hayate.feature.anime.exploration.ui.viewmodel.ScheduleViewModel
 import com.lelestacia.hayate.feature.anime.exploration.ui.viewmodel.UpcomingViewModel
-import com.lelestacia.hayate.feature.anime.shared.model.Anime
 
 internal object InternalExploreModuleAPI : FeatureApi {
+
+    /*
+     *  NOTE: Gesture temporarily disabled due to inconsistency when user is scrolling
+     *  the filter menu
+     */
 
     @OptIn(ExperimentalFoundationApi::class)
     override fun registerGraph(
@@ -85,12 +90,14 @@ internal object InternalExploreModuleAPI : FeatureApi {
             val scheduleAnimeState by scheduleAnimeVm.state.collectAsStateWithLifecycle()
 
             val handleAnimeClicked: (Anime) -> Unit = { clickedAnime ->
-                val encodedJsonAnime = toJson(clickedAnime).also { json -> Uri.encode(json) }
+                val jsonAnime = toJson(clickedAnime)
                 navController.navigate(
                     Screen.Detail.createRoute(
-                        jsonAnime = encodedJsonAnime
+                        jsonAnime = Uri.encode(jsonAnime)
                     )
-                )
+                ) {
+                    launchSingleTop = true
+                }
             }
 
             Column(
@@ -118,7 +125,10 @@ internal object InternalExploreModuleAPI : FeatureApi {
                     }
                 }
 
-                HorizontalPager(state = pagerState) { index ->
+                HorizontalPager(
+                    state = pagerState,
+                    userScrollEnabled = false
+                ) { index ->
                     when (index) {
 
                         0 -> {

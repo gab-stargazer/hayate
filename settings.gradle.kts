@@ -13,11 +13,11 @@ dependencyResolutionManagement {
     }
 }
 
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 rootProject.name = "Hayate"
 include(":app")
-include(":feature:anime:exploration:ui")
-include(":feature:anime:exploration:domain")
-include(":feature:anime:exploration:data")
+
 include(":feature:anime:collection:ui")
 include(":feature:anime:collection:domain")
 include(":feature:anime:collection:data")
@@ -26,6 +26,18 @@ include(":feature:settings:domain")
 include(":feature:settings:data")
 include(":common:theme")
 include(":common:preferences")
-include(":feature:anime:shared")
 include(":common:shared")
-include(":feature:anime:exploration:source")
+
+include(":feature:anime:detail:ui")
+
+//=====Feature Anime=====
+include(":feature:anime:core:common")
+include(":feature:anime:core:data")
+include(":feature:anime:core:domain")
+include(":feature:anime:core:source:remote:api")
+include(":feature:anime:core:source:remote:impl")
+
+//=====Anime - Explore=====
+include(":feature:anime:exploration:domain")
+include(":feature:anime:exploration:ui")
+
