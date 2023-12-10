@@ -28,14 +28,24 @@ jobs:
         with:
           gradle-project-path: .
           gradle-build-module: |
+            :app
+            :buildSrc
+            :common:preferences
             :common:shared
             :common:theme
-            :feature:anime:exploration:source
-            :feature:anime:exploration:data
+            :feature:anime:collection:data
+            :feature:anime:collection:domain
+            :feature:anime:collection:ui
+            :feature:anime:core:common
+            :feature:anime:core:data
+            :feature:anime:core:domain
+            :feature:anime:core:source:remote:api
+            :feature:anime:core:source:remote:impl
+            :feature:anime:detail:ui
             :feature:anime:exploration:domain
             :feature:anime:exploration:ui
-            :feature:anime:shared
-            :feature:anime:collection:ui
+            :feature:settings:data
+            :feature:settings:domain
             :feature:settings:ui
           gradle-build-configuration: |-
             debugCompileClasspath
