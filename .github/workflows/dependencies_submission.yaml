@@ -29,7 +29,6 @@ jobs:
           gradle-project-path: .
           gradle-build-module: |
             :app
-            :buildSrc
             :common:preferences
             :common:shared
             :common:theme
