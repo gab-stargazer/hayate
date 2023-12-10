@@ -1,5 +1,6 @@
 package com.lelestacia.hayate.feature.anime.exploration.ui.viewmodel
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
@@ -11,6 +12,9 @@ import com.lelestacia.hayate.feature.anime.core.domain.model.Anime
 import com.lelestacia.hayate.feature.anime.exploration.domain.presenter.popular.PopularAnimeEvent
 import com.lelestacia.hayate.feature.anime.exploration.domain.presenter.popular.PopularAnimeState
 import com.lelestacia.hayate.feature.anime.exploration.domain.usecases.AnimeUseCases
+import com.lelestacia.hayate.feature.anime.exploration.ui.Constant.POPULAR_ANIME_FILTER_KEY
+import com.lelestacia.hayate.feature.anime.exploration.ui.Constant.POPULAR_ANIME_RATING_KEY
+import com.lelestacia.hayate.feature.anime.exploration.ui.Constant.POPULAR_ANIME_TYPE_KEY
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -27,12 +31,25 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class PopularViewModel @Inject constructor(
-    private val animeUseCases: AnimeUseCases
+    private val animeUseCases: AnimeUseCases,
+    private val savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
 
-    private val animeType: MutableStateFlow<AnimeType?> = MutableStateFlow(null)
-    private val animeFilter: MutableStateFlow<AnimeFilter?> = MutableStateFlow(null)
-    private val animeRating: MutableStateFlow<AnimeRating?> = MutableStateFlow(null)
+    private val animeType: StateFlow<AnimeType?> = savedStateHandle
+        .getStateFlow(
+            key = POPULAR_ANIME_TYPE_KEY,
+            initialValue = null
+        )
+    private val animeFilter: StateFlow<AnimeFilter?> = savedStateHandle
+        .getStateFlow(
+            key = POPULAR_ANIME_FILTER_KEY,
+            initialValue = null
+        )
+    private val animeRating: StateFlow<AnimeRating?> = savedStateHandle
+        .getStateFlow(
+            key = POPULAR_ANIME_RATING_KEY,
+            initialValue = null
+        )
 
     private val filter: Flow<PopularAnimeFilter> =
         combine(
@@ -52,7 +69,13 @@ internal class PopularViewModel @Inject constructor(
         )
 
     private val _state: MutableStateFlow<PopularAnimeState> =
-        MutableStateFlow(PopularAnimeState())
+        MutableStateFlow(
+            PopularAnimeState(
+                animeType = savedStateHandle[POPULAR_ANIME_TYPE_KEY],
+                animeFilter = savedStateHandle[POPULAR_ANIME_FILTER_KEY],
+                animeRating = savedStateHandle[POPULAR_ANIME_RATING_KEY]
+            )
+        )
     val state: StateFlow<PopularAnimeState> = _state.asStateFlow()
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -67,11 +90,7 @@ internal class PopularViewModel @Inject constructor(
     fun onEvent(event: PopularAnimeEvent) = viewModelScope.launch {
         when (event) {
             is PopularAnimeEvent.OnAnimeFilterChanged -> {
-                animeFilter.update {
-                    //  NOTE:
-                    //  Theres no Need to copy and stuff since its only 1 value
-                    event.filter
-                }
+                savedStateHandle[POPULAR_ANIME_FILTER_KEY] = event.filter
 
                 _state.update {
                     it.gridState.scrollToItem(0)
@@ -99,11 +118,7 @@ internal class PopularViewModel @Inject constructor(
             }
 
             is PopularAnimeEvent.OnAnimeTypeChanged -> {
-                animeType.update {
-                    //  NOTE:
-                    //  Theres no Need to copy and stuff since its only 1 value
-                    event.type
-                }
+                savedStateHandle[POPULAR_ANIME_TYPE_KEY] = event.type
 
                 _state.update {
                     it.gridState.scrollToItem(0)
@@ -123,11 +138,7 @@ internal class PopularViewModel @Inject constructor(
             }
 
             is PopularAnimeEvent.OnAnimeRatingChanged -> {
-                animeRating.update {
-                    //  NOTE:
-                    //  Theres no Need to copy and stuff since its only 1 value
-                    event.rating
-                }
+                savedStateHandle[POPULAR_ANIME_RATING_KEY] = event.rating
 
                 _state.update {
                     it.gridState.scrollToItem(0)

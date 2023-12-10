@@ -1,5 +1,6 @@
 package com.lelestacia.hayate.feature.anime.exploration.ui.viewmodel
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
@@ -9,6 +10,7 @@ import com.lelestacia.hayate.feature.anime.core.domain.model.Anime
 import com.lelestacia.hayate.feature.anime.exploration.domain.presenter.upcoming.UpcomingAnimeEvent
 import com.lelestacia.hayate.feature.anime.exploration.domain.presenter.upcoming.UpcomingAnimeState
 import com.lelestacia.hayate.feature.anime.exploration.domain.usecases.AnimeUseCases
+import com.lelestacia.hayate.feature.anime.exploration.ui.Constant.UPCOMING_ANIME_TYPE_KEY
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -22,13 +24,22 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class UpcomingViewModel @Inject constructor(
-    private val animeUseCases: AnimeUseCases
+    private val animeUseCases: AnimeUseCases,
+    private val savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
 
-    private val animeType: MutableStateFlow<AnimeType?> = MutableStateFlow(null)
+    private val animeType: StateFlow<AnimeType?> = savedStateHandle
+        .getStateFlow(
+            key = UPCOMING_ANIME_TYPE_KEY,
+            initialValue = null
+        )
 
     private val _state: MutableStateFlow<UpcomingAnimeState> =
-        MutableStateFlow(UpcomingAnimeState())
+        MutableStateFlow(
+            UpcomingAnimeState(
+                animeType = savedStateHandle[UPCOMING_ANIME_TYPE_KEY]
+            )
+        )
     val state: StateFlow<UpcomingAnimeState> = _state.asStateFlow()
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -41,9 +52,7 @@ internal class UpcomingViewModel @Inject constructor(
     fun onEvent(event: UpcomingAnimeEvent) = viewModelScope.launch {
         when (event) {
             is UpcomingAnimeEvent.OnAnimeFilterChanged -> {
-                animeType.update {
-                    event.filter
-                }
+                savedStateHandle[UPCOMING_ANIME_TYPE_KEY] = event.filter
 
                 _state.update {
                     it.gridState.scrollToItem(0)

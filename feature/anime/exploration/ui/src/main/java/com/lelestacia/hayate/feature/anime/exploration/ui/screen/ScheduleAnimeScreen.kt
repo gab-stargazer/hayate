@@ -31,6 +31,7 @@ internal fun ScheduleAnimeScreen(
     state: ScheduleAnimeState,
     onAnimeClicked: (Anime) -> Unit,
     modifier: Modifier = Modifier,
+    isDarkTheme: Boolean = isSystemInDarkTheme()
 ) {
     Column(
         modifier = modifier
@@ -57,7 +58,11 @@ internal fun ScheduleAnimeScreen(
                 text = title,
                 style = MaterialTheme.typography.titleMedium.copy(
                     fontFamily = quickSandFamily,
-                    fontWeight = FontWeight.ExtraBold
+                    fontWeight = FontWeight.ExtraBold,
+                    color = when(isDarkTheme) {
+                        true -> Color.White
+                        false -> Color.Black
+                    }
                 )
             )
         }
