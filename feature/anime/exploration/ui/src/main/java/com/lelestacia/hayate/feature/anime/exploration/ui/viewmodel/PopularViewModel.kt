@@ -4,13 +4,13 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.lelestacia.hayate.common.shared.BaseViewModel
+import com.lelestacia.hayate.feature.anime.core.common.filter.AnimeFilter
+import com.lelestacia.hayate.feature.anime.core.common.filter.AnimeRating
+import com.lelestacia.hayate.feature.anime.core.common.filter.AnimeType
+import com.lelestacia.hayate.feature.anime.core.domain.model.Anime
 import com.lelestacia.hayate.feature.anime.exploration.domain.presenter.popular.PopularAnimeEvent
 import com.lelestacia.hayate.feature.anime.exploration.domain.presenter.popular.PopularAnimeState
 import com.lelestacia.hayate.feature.anime.exploration.domain.usecases.AnimeUseCases
-import com.lelestacia.hayate.feature.anime.shared.filter.AnimeFilter
-import com.lelestacia.hayate.feature.anime.shared.filter.AnimeRating
-import com.lelestacia.hayate.feature.anime.shared.filter.AnimeType
-import com.lelestacia.hayate.feature.anime.shared.model.Anime
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow

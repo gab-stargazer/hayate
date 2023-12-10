@@ -5,7 +5,7 @@ import com.lelestacia.hayate.feature.anime.core.source.remote.api.dto.pagination
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface SeasonEndpoint {
+internal interface SeasonEndpoint {
 
     @GET("seasons/now")
     suspend fun getCurrentSeasonAnime(

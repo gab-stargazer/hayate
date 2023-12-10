@@ -13,10 +13,9 @@ import androidx.navigation.navArgument
 import com.lelestacia.hayate.common.shared.Screen
 import com.lelestacia.hayate.common.shared.api.FeatureApi
 import com.lelestacia.hayate.common.shared.util.parcelable
+import com.lelestacia.hayate.feature.anime.core.domain.model.Anime
 import com.lelestacia.hayate.feature.anime.detail.ui.screen.AnimeDetailScreen
 import com.lelestacia.hayate.feature.anime.detail.ui.util.Constant.KEY_DATA
-import com.lelestacia.hayate.feature.anime.shared.model.Anime
-import com.lelestacia.hayate.feature.anime.shared.parcelable.AnimeNavType
 
 internal object InternalDetailModuleAPI : FeatureApi {
 
@@ -29,7 +28,7 @@ internal object InternalDetailModuleAPI : FeatureApi {
             route = Screen.Detail.route,
             arguments = listOf(
                 navArgument(KEY_DATA) {
-                    type = AnimeNavType()
+                    type = com.lelestacia.hayate.feature.anime.core.common.parcelable.AnimeNavType()
                 }
             ),
             enterTransition = {

@@ -1,6 +1,5 @@
 package com.lelestacia.hayate.feature.anime.core.source.remote.impl.di
 
-import com.lelestacia.hayate.feature.anime.core.source.remote.impl.Constant
 import com.lelestacia.hayate.feature.anime.core.source.remote.impl.Constant.BASE_URL
 import com.lelestacia.hayate.feature.anime.core.source.remote.impl.endpoint.ScheduleEndpoint
 import com.lelestacia.hayate.feature.anime.core.source.remote.impl.endpoint.SeasonEndpoint

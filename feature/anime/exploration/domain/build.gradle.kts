@@ -43,7 +43,8 @@ android {
 dependencies {
 
     // =====Feature Anime=====
-    implementation(project(":feature:anime:shared"))
+    api(projects.feature.anime.core.domain)
+    api(projects.feature.anime.core.common)
 
     //  Compose BOM
     implementation(platform(libs.compose.bom))

@@ -1,3 +1,5 @@
+import com.lelestacia.hayate.buildsrc.ProjectConfig
+
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     alias(libs.plugins.android.library)
@@ -20,7 +22,7 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -34,14 +36,14 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = ProjectConfig.jvmTarget
     }
 }
 
 dependencies {
 
     //  =====API=====
-    implementation(project(":feature:anime:core:source:remote:api"))
+    implementation(projects.feature.anime.core.source.remote.api)
 
     //  Coroutine
     implementation(libs.coroutine)

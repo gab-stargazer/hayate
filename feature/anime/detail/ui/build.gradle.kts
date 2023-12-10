@@ -51,11 +51,12 @@ android {
 dependencies {
 
     //  =====Common=====
-    implementation(project(":common:shared"))
-    implementation(project(":common:theme"))
+    implementation(projects.common.shared)
+    implementation(projects.common.theme)
 
     //  =====Feature Anime=====
-    implementation(project(":feature:anime:shared"))
+    implementation(projects.feature.anime.core.common)
+    implementation(projects.feature.anime.core.domain)
 
     //  Ktx
     implementation(libs.core.ktx)
@@ -67,6 +68,7 @@ dependencies {
 
     //  Compose BOM
     implementation(platform(libs.compose.bom))
+    implementation(project(":feature:anime:core:domain"))
     androidTestImplementation(platform(libs.compose.bom))
 
     //  Compose

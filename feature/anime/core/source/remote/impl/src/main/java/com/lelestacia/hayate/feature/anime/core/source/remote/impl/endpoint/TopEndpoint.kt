@@ -5,7 +5,7 @@ import com.lelestacia.hayate.feature.anime.core.source.remote.api.dto.pagination
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface TopEndpoint {
+internal interface TopEndpoint {
 
     @GET("top/anime")
     suspend fun getTopAnime(

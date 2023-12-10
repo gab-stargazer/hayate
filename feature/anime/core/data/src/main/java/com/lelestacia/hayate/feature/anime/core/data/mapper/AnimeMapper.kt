@@ -1,5 +1,23 @@
 package com.lelestacia.hayate.feature.anime.core.data.mapper
 
+import com.lelestacia.hayate.feature.anime.core.domain.model.Anime
+import com.lelestacia.hayate.feature.anime.core.domain.model.aired.AnimeAired
+import com.lelestacia.hayate.feature.anime.core.domain.model.aired.AnimeProp
+import com.lelestacia.hayate.feature.anime.core.domain.model.aired.AnimePropFrom
+import com.lelestacia.hayate.feature.anime.core.domain.model.aired.AnimePropTo
+import com.lelestacia.hayate.feature.anime.core.domain.model.broadcast.AnimeBroadcast
+import com.lelestacia.hayate.feature.anime.core.domain.model.demographic.AnimeDemographic
+import com.lelestacia.hayate.feature.anime.core.domain.model.genre.AnimeGenre
+import com.lelestacia.hayate.feature.anime.core.domain.model.image.AnimeImages
+import com.lelestacia.hayate.feature.anime.core.domain.model.image.AnimeJpg
+import com.lelestacia.hayate.feature.anime.core.domain.model.image.AnimeWebp
+import com.lelestacia.hayate.feature.anime.core.domain.model.licensor.AnimeLicensor
+import com.lelestacia.hayate.feature.anime.core.domain.model.producer.AnimeProducer
+import com.lelestacia.hayate.feature.anime.core.domain.model.studio.AnimeStudio
+import com.lelestacia.hayate.feature.anime.core.domain.model.theme.AnimeTheme
+import com.lelestacia.hayate.feature.anime.core.domain.model.title.AnimeTitle
+import com.lelestacia.hayate.feature.anime.core.domain.model.trailer.AnimeTrailer
+import com.lelestacia.hayate.feature.anime.core.domain.model.trailer.AnimeTrailerImages
 import com.lelestacia.hayate.feature.anime.core.source.remote.api.dto.anime.AnimeDto
 import com.lelestacia.hayate.feature.anime.core.source.remote.api.dto.anime.demographic.AnimeDemographicDto
 import com.lelestacia.hayate.feature.anime.core.source.remote.api.dto.anime.genre.AnimeGenreDto
@@ -8,26 +26,8 @@ import com.lelestacia.hayate.feature.anime.core.source.remote.api.dto.anime.prod
 import com.lelestacia.hayate.feature.anime.core.source.remote.api.dto.anime.studio.AnimeStudioDto
 import com.lelestacia.hayate.feature.anime.core.source.remote.api.dto.anime.theme.AnimeThemeDto
 import com.lelestacia.hayate.feature.anime.core.source.remote.api.dto.anime.title.AnimeTitleDto
-import com.lelestacia.hayate.feature.anime.shared.model.Anime
-import com.lelestacia.hayate.feature.anime.shared.model.aired.AnimeAired
-import com.lelestacia.hayate.feature.anime.shared.model.aired.AnimeProp
-import com.lelestacia.hayate.feature.anime.shared.model.aired.AnimePropFrom
-import com.lelestacia.hayate.feature.anime.shared.model.aired.AnimePropTo
-import com.lelestacia.hayate.feature.anime.shared.model.broadcast.AnimeBroadcast
-import com.lelestacia.hayate.feature.anime.shared.model.demographic.AnimeDemographic
-import com.lelestacia.hayate.feature.anime.shared.model.genre.AnimeGenre
-import com.lelestacia.hayate.feature.anime.shared.model.image.AnimeImages
-import com.lelestacia.hayate.feature.anime.shared.model.image.AnimeJpg
-import com.lelestacia.hayate.feature.anime.shared.model.image.AnimeWebp
-import com.lelestacia.hayate.feature.anime.shared.model.licensor.AnimeLicensor
-import com.lelestacia.hayate.feature.anime.shared.model.producer.AnimeProducer
-import com.lelestacia.hayate.feature.anime.shared.model.studio.AnimeStudio
-import com.lelestacia.hayate.feature.anime.shared.model.theme.AnimeTheme
-import com.lelestacia.hayate.feature.anime.shared.model.title.AnimeTitle
-import com.lelestacia.hayate.feature.anime.shared.model.trailer.AnimeTrailer
-import com.lelestacia.hayate.feature.anime.shared.model.trailer.AnimeTrailerImages
 
-fun AnimeDto.asAnime(): Anime {
+internal fun AnimeDto.asAnime(): Anime {
     return Anime(
         malId = malId,
         url = url,

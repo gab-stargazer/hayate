@@ -5,14 +5,15 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
 import com.lelestacia.hayate.feature.anime.core.data.mapper.asAnime
+import com.lelestacia.hayate.feature.anime.core.domain.model.Anime
+import com.lelestacia.hayate.feature.anime.core.domain.repository.AnimeRepository
 import com.lelestacia.hayate.feature.anime.core.source.remote.api.AnimeRemoteDataSourceApi
 import com.lelestacia.hayate.feature.anime.core.source.remote.api.dto.anime.AnimeDto
-import com.lelestacia.hayate.feature.anime.exploration.domain.repository.AnimeRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class AnimeRepositoryImpl @Inject constructor(
+internal class AnimeRepositoryImpl @Inject constructor(
     private val remoteDataSource: AnimeRemoteDataSourceApi
 ) : AnimeRepository {
 
@@ -20,7 +21,7 @@ class AnimeRepositoryImpl @Inject constructor(
         type: String?,
         filter: String?,
         rating: String?
-    ): Flow<PagingData<com.lelestacia.hayate.feature.anime.shared.model.Anime>> {
+    ): Flow<PagingData<Anime>> {
         return Pager(
             config = PagingConfig(
                 pageSize = 24,
@@ -39,7 +40,7 @@ class AnimeRepositoryImpl @Inject constructor(
     override fun getCurrentSeasonAnime(
         filter: String?,
         sfw: Boolean
-    ): Flow<PagingData<com.lelestacia.hayate.feature.anime.shared.model.Anime>> {
+    ): Flow<PagingData<Anime>> {
         return Pager(
             config = PagingConfig(
                 pageSize = 24,
@@ -58,7 +59,7 @@ class AnimeRepositoryImpl @Inject constructor(
     override fun getUpcomingSeasonAnime(
         filter: String?,
         sfw: Boolean
-    ): Flow<PagingData<com.lelestacia.hayate.feature.anime.shared.model.Anime>> {
+    ): Flow<PagingData<Anime>> {
         return Pager(
             config = PagingConfig(
                 pageSize = 24,
@@ -77,7 +78,7 @@ class AnimeRepositoryImpl @Inject constructor(
     override fun getScheduledAnime(
         filter: String?,
         sfw: Boolean
-    ): Flow<PagingData<com.lelestacia.hayate.feature.anime.shared.model.Anime>> {
+    ): Flow<PagingData<Anime>> {
         return Pager(
             config = PagingConfig(
                 pageSize = 24,
