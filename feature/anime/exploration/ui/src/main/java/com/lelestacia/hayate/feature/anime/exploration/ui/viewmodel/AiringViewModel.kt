@@ -1,5 +1,6 @@
 package com.lelestacia.hayate.feature.anime.exploration.ui.viewmodel
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
@@ -9,6 +10,7 @@ import com.lelestacia.hayate.feature.anime.core.domain.model.Anime
 import com.lelestacia.hayate.feature.anime.exploration.domain.presenter.airing.AiringAnimeEvent
 import com.lelestacia.hayate.feature.anime.exploration.domain.presenter.airing.AiringAnimeState
 import com.lelestacia.hayate.feature.anime.exploration.domain.usecases.AnimeUseCases
+import com.lelestacia.hayate.feature.anime.exploration.ui.Constant.AIRING_ANIME_TYPE_KEY
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -22,12 +24,21 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class AiringViewModel @Inject constructor(
-    private val animeUseCases: AnimeUseCases
+    private val animeUseCases: AnimeUseCases,
+    private val savedStateHandle: SavedStateHandle
 ) : BaseViewModel() {
 
-    private val animeType: MutableStateFlow<AnimeType?> = MutableStateFlow(null)
+    private val animeType: StateFlow<AnimeType?> = savedStateHandle
+        .getStateFlow(
+            key = AIRING_ANIME_TYPE_KEY,
+            initialValue = null
+        )
 
-    private val _state: MutableStateFlow<AiringAnimeState> = MutableStateFlow(AiringAnimeState())
+    private val _state: MutableStateFlow<AiringAnimeState> = MutableStateFlow(
+        AiringAnimeState(
+            animeType = savedStateHandle[AIRING_ANIME_TYPE_KEY]
+        )
+    )
     val state: StateFlow<AiringAnimeState> = _state.asStateFlow()
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -40,9 +51,7 @@ internal class AiringViewModel @Inject constructor(
     fun onEvent(event: AiringAnimeEvent) = viewModelScope.launch {
         when (event) {
             is AiringAnimeEvent.OnAnimeFilterChanged -> {
-                animeType.update {
-                    event.filter
-                }
+                savedStateHandle[AIRING_ANIME_TYPE_KEY] = event.filter
 
                 _state.update {
                     it.gridState.scrollToItem(0)
