@@ -36,8 +36,11 @@ include(":feature:anime:core:data")
 include(":feature:anime:core:domain")
 include(":feature:anime:core:source:remote:api")
 include(":feature:anime:core:source:remote:impl")
+include(":feature:anime:core:source:local:api")
+include(":feature:anime:core:source:local:impl")
 
 //=====Anime - Explore=====
 include(":feature:anime:exploration:domain")
 include(":feature:anime:exploration:ui")
-
+include(":feature:anime:initialization:ui")
+include(":feature:anime:initialization:domain")

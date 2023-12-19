@@ -86,11 +86,11 @@ dependencies {
 
     //  =====Feature Anime=====
     implementation(projects.feature.anime.core.data)
-//    implementation(project(":feature:anime:core:source:remote:impl-test"))
+    implementation(projects.feature.anime.core.domain)
     implementation(projects.feature.anime.core.source.remote.impl)
+    implementation(projects.feature.anime.core.source.local.impl)
 
     //  Exploration Module
-    implementation(projects.feature.anime.exploration.domain)
     implementation(projects.feature.anime.exploration.ui)
 
     //  Detail Module
@@ -98,6 +98,9 @@ dependencies {
 
     //  Collection Module
     implementation(projects.feature.anime.collection.ui)
+
+    //  Init Module
+    implementation(projects.feature.anime.initialization.ui)
 
     //  Setting Module
     implementation(projects.feature.settings.ui)

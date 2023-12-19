@@ -1,6 +1,7 @@
 package com.lelestacia.hayate.common.shared
 
 sealed class Screen(val route: String) {
+    data object Init : Screen("init")
     data object Exploration : Screen("explore")
     data object Collection : Screen("collection")
     data object More : Screen("more")

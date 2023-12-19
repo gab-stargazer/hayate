@@ -124,4 +124,6 @@ dependencies {
     testImplementation(libs.test.junit.old)
     testRuntimeOnly(libs.junit.vintage.engine)
     /*====================================================================*/
+
+    implementation(libs.datastore.preferences)
 }

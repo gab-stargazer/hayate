@@ -67,7 +67,6 @@ dependencies {
 
     //  Compose BOM
     implementation(platform(libs.compose.bom))
-    implementation(project(":feature:anime:core:domain"))
     androidTestImplementation(platform(libs.compose.bom))
 
     //  Compose

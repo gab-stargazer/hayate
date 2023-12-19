@@ -37,6 +37,9 @@
             <option value="$PROJECT_DIR$/feature/anime/core/data" />
             <option value="$PROJECT_DIR$/feature/anime/core/domain" />
             <option value="$PROJECT_DIR$/feature/anime/core/source" />
+            <option value="$PROJECT_DIR$/feature/anime/core/source/local" />
+            <option value="$PROJECT_DIR$/feature/anime/core/source/local/api" />
+            <option value="$PROJECT_DIR$/feature/anime/core/source/local/impl" />
             <option value="$PROJECT_DIR$/feature/anime/core/source/remote" />
             <option value="$PROJECT_DIR$/feature/anime/core/source/remote/api" />
             <option value="$PROJECT_DIR$/feature/anime/core/source/remote/impl" />
@@ -45,6 +48,9 @@
             <option value="$PROJECT_DIR$/feature/anime/exploration" />
             <option value="$PROJECT_DIR$/feature/anime/exploration/domain" />
             <option value="$PROJECT_DIR$/feature/anime/exploration/ui" />
+            <option value="$PROJECT_DIR$/feature/anime/initialization" />
+            <option value="$PROJECT_DIR$/feature/anime/initialization/domain" />
+            <option value="$PROJECT_DIR$/feature/anime/initialization/ui" />
             <option value="$PROJECT_DIR$/feature/settings" />
             <option value="$PROJECT_DIR$/feature/settings/data" />
             <option value="$PROJECT_DIR$/feature/settings/domain" />

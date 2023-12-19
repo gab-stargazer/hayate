@@ -14,13 +14,16 @@ coil = "2.4.0"
 #   Coroutine
 coroutine = "1.7.3"
 
+#   Datastore
+datastore = "1.0.0"
+
 #   Firebase
-firebase-bom = "32.6.0"
+firebase-bom = "32.7.0"
 firebase-crashlytic-plugin = "2.9.9"
 firebase-plugin = "4.4.0"
 
 #   Gradle
-android-gradle-plugin = "8.2.0-rc03"
+android-gradle-plugin = "8.2.0"
 
 #   Hilt
 hilt = "2.48"
@@ -61,7 +64,7 @@ paging-compose = "3.2.1"
 retrofit = "2.9.0"
 
 #   Room
-room = "2.6.0"
+room = "2.6.1"
 
 # Ui Test
 ui-test-espresso-core = "3.5.1"
@@ -79,7 +82,7 @@ timber = "5.0.1"
 viewmodel-version = "2.6.2"
 
 #   Worker
-worker = "2.8.1"
+worker = "2.9.0"
 appcompat = "1.6.1"
 material = "1.10.0"
 
@@ -109,6 +112,9 @@ compose-runtime = { group = "androidx.compose.runtime", name = "runtime" }
 #   Coroutine
 coroutine = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutine" }
 coroutine-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutine" }
+
+#   Datastore
+datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
 
 #   Firebase
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase-bom" }

@@ -164,3 +164,30 @@ internal fun AnimeDto.asAnime(): Anime {
         }
     )
 }
+
+fun AnimeGenreDto.asGenre(): AnimeGenre {
+    return AnimeGenre(
+        malId = malId,
+        type = type,
+        name = name,
+        url = url
+    )
+}
+
+fun AnimeThemeDto.asTheme(): AnimeTheme {
+    return AnimeTheme(
+        malId = malId,
+        type = type,
+        name = name,
+        url = url
+    )
+}
+
+fun AnimeDemographicDto.asDemographic(): AnimeDemographic {
+    return AnimeDemographic(
+        malId = malId,
+        type = type,
+        name = name,
+        url = url
+    )
+}

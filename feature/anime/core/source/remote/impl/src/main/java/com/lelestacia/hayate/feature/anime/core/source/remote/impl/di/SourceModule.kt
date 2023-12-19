@@ -1,15 +1,18 @@
 package com.lelestacia.hayate.feature.anime.core.source.remote.impl.di
 
-import com.lelestacia.hayate.feature.anime.core.source.remote.api.AnimeRemoteDataSourceApi
+import com.lelestacia.hayate.common.shared.util.IoDispatcher
+import com.lelestacia.hayate.feature.anime.core.source.remote.api.api.AnimeRemoteDataSourceApi
 import com.lelestacia.hayate.feature.anime.core.source.remote.impl.endpoint.ScheduleEndpoint
 import com.lelestacia.hayate.feature.anime.core.source.remote.impl.endpoint.SeasonEndpoint
 import com.lelestacia.hayate.feature.anime.core.source.remote.impl.endpoint.TopEndpoint
+import com.lelestacia.hayate.feature.anime.core.source.remote.impl.endpoint.UtilityEndpoint
 import com.lelestacia.hayate.feature.anime.core.source.remote.impl.source.AnimeRemoteDataSourceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
+import kotlin.coroutines.CoroutineContext
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -20,12 +23,16 @@ internal object SourceModule {
     fun provideAnimeDataSource(
         topEndpoint: TopEndpoint,
         seasonEndpoint: SeasonEndpoint,
-        scheduleEndpoint: ScheduleEndpoint
+        scheduleEndpoint: ScheduleEndpoint,
+        utilityEndpoint: UtilityEndpoint,
+        @IoDispatcher dispatcher: CoroutineContext
     ): AnimeRemoteDataSourceApi {
         return AnimeRemoteDataSourceImpl(
             topEndpoint = topEndpoint,
             seasonEndpoint = seasonEndpoint,
-            scheduleEndpoint = scheduleEndpoint
+            scheduleEndpoint = scheduleEndpoint,
+            utilityEndpoint = utilityEndpoint,
+            ioDispatcher = dispatcher
         )
     }
 }

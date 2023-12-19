@@ -62,9 +62,8 @@ fun Hayate(
     val isDarkTheme = isSystemInDarkTheme()
     val surfaceColor = MaterialTheme.colorScheme.surface
 
-    val backStackEntry by navController.currentBackStackEntryFlow.collectAsStateWithLifecycle(
-        initialValue = null
-    )
+    val backStackEntry by navController.currentBackStackEntryFlow
+        .collectAsStateWithLifecycle(initialValue = null)
 
     DisposableEffect(key1 = backStackEntry) {
         uiController.setStatusBarColor(
@@ -105,7 +104,7 @@ fun Hayate(
 
         NavHost(
             navController = navController,
-            startDestination = Screen.Exploration.route,
+            startDestination = Screen.Init.route,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)

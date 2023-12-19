@@ -6,4 +6,4 @@ import dagger.hilt.components.SingletonComponent
 
 @Module(includes = [SourceModule::class])
 @InstallIn(SingletonComponent::class)
-interface ExposedModule
+interface ExposedRemoteDataSourceModule

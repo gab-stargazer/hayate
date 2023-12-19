@@ -1,0 +1,1120 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "73cdb46bb866909da910f0a83d875620",
+    "entities": [
+      {
+        "tableName": "demographic",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mal_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `type` TEXT, `name` TEXT NOT NULL, `url` TEXT NOT NULL, `created_at` INTEGER NOT NULL, `updated_at` INTEGER)",
+        "fields": [
+          {
+            "fieldPath": "malId",
+            "columnName": "mal_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "url",
+            "columnName": "url",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "created_at",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "updatedAt",
+            "columnName": "updated_at",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "mal_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_demographic_mal_id",
+            "unique": true,
+            "columnNames": [
+              "mal_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_demographic_mal_id` ON `${TABLE_NAME}` (`mal_id`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "genre",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mal_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `type` TEXT, `name` TEXT NOT NULL, `url` TEXT NOT NULL, `created_at` INTEGER NOT NULL, `updated_at` INTEGER)",
+        "fields": [
+          {
+            "fieldPath": "malId",
+            "columnName": "mal_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "url",
+            "columnName": "url",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "created_at",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "updatedAt",
+            "columnName": "updated_at",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "mal_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_genre_mal_id",
+            "unique": true,
+            "columnNames": [
+              "mal_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_genre_mal_id` ON `${TABLE_NAME}` (`mal_id`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "explicit_genre",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mal_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `type` TEXT, `name` TEXT NOT NULL, `url` TEXT NOT NULL, `created_at` INTEGER NOT NULL, `updated_at` INTEGER)",
+        "fields": [
+          {
+            "fieldPath": "malId",
+            "columnName": "mal_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "url",
+            "columnName": "url",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "created_at",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "updatedAt",
+            "columnName": "updated_at",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "mal_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_explicit_genre_mal_id",
+            "unique": true,
+            "columnNames": [
+              "mal_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_explicit_genre_mal_id` ON `${TABLE_NAME}` (`mal_id`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "licensor",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mal_id` INTEGER NOT NULL, `type` TEXT NOT NULL, `name` TEXT NOT NULL, `url` TEXT NOT NULL, `created_at` INTEGER NOT NULL, `updated_at` INTEGER, PRIMARY KEY(`mal_id`))",
+        "fields": [
+          {
+            "fieldPath": "malId",
+            "columnName": "mal_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "url",
+            "columnName": "url",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "created_at",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "updatedAt",
+            "columnName": "updated_at",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "mal_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_licensor_mal_id",
+            "unique": true,
+            "columnNames": [
+              "mal_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_licensor_mal_id` ON `${TABLE_NAME}` (`mal_id`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "producer",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mal_id` INTEGER NOT NULL, `type` TEXT NOT NULL, `name` TEXT NOT NULL, `url` TEXT NOT NULL, `created_at` INTEGER NOT NULL, `updated_at` INTEGER, PRIMARY KEY(`mal_id`))",
+        "fields": [
+          {
+            "fieldPath": "malId",
+            "columnName": "mal_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "url",
+            "columnName": "url",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "created_at",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "updatedAt",
+            "columnName": "updated_at",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "mal_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_producer_mal_id",
+            "unique": true,
+            "columnNames": [
+              "mal_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_producer_mal_id` ON `${TABLE_NAME}` (`mal_id`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "studio",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mal_id` INTEGER NOT NULL, `type` TEXT NOT NULL, `name` TEXT NOT NULL, `url` TEXT NOT NULL, `created_at` INTEGER NOT NULL, `updated_at` INTEGER, PRIMARY KEY(`mal_id`))",
+        "fields": [
+          {
+            "fieldPath": "malId",
+            "columnName": "mal_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "url",
+            "columnName": "url",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "created_at",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "updatedAt",
+            "columnName": "updated_at",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "mal_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_studio_mal_id",
+            "unique": true,
+            "columnNames": [
+              "mal_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_studio_mal_id` ON `${TABLE_NAME}` (`mal_id`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "theme",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mal_id` INTEGER NOT NULL, `type` TEXT, `name` TEXT NOT NULL, `url` TEXT NOT NULL, `created_at` INTEGER NOT NULL, `updated_at` INTEGER, PRIMARY KEY(`mal_id`))",
+        "fields": [
+          {
+            "fieldPath": "malId",
+            "columnName": "mal_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "url",
+            "columnName": "url",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "created_at",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "updatedAt",
+            "columnName": "updated_at",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "mal_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_theme_mal_id",
+            "unique": true,
+            "columnNames": [
+              "mal_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_theme_mal_id` ON `${TABLE_NAME}` (`mal_id`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "watchlist",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `anime_id` INTEGER NOT NULL, PRIMARY KEY(`id`, `anime_id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "animeId",
+            "columnName": "anime_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id",
+            "anime_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_watchlist_id_anime_id",
+            "unique": true,
+            "columnNames": [
+              "id",
+              "anime_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_watchlist_id_anime_id` ON `${TABLE_NAME}` (`id`, `anime_id`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "anime_demographic_cross_reference",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`anime_id` INTEGER NOT NULL, `demographic_id` INTEGER NOT NULL, PRIMARY KEY(`anime_id`, `demographic_id`), FOREIGN KEY(`anime_id`) REFERENCES `anime`(`mal_id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`demographic_id`) REFERENCES `demographic`(`mal_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "animeId",
+            "columnName": "anime_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "demographicId",
+            "columnName": "demographic_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "anime_id",
+            "demographic_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_anime_demographic_cross_reference_demographic_id",
+            "unique": false,
+            "columnNames": [
+              "demographic_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_anime_demographic_cross_reference_demographic_id` ON `${TABLE_NAME}` (`demographic_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "anime",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "anime_id"
+            ],
+            "referencedColumns": [
+              "mal_id"
+            ]
+          },
+          {
+            "table": "demographic",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "demographic_id"
+            ],
+            "referencedColumns": [
+              "mal_id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "anime_genre_cross_reference",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`anime_id` INTEGER NOT NULL, `genre_id` INTEGER NOT NULL, PRIMARY KEY(`anime_id`, `genre_id`), FOREIGN KEY(`anime_id`) REFERENCES `anime`(`mal_id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`genre_id`) REFERENCES `genre`(`mal_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "animeId",
+            "columnName": "anime_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "genreId",
+            "columnName": "genre_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "anime_id",
+            "genre_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_anime_genre_cross_reference_genre_id",
+            "unique": false,
+            "columnNames": [
+              "genre_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_anime_genre_cross_reference_genre_id` ON `${TABLE_NAME}` (`genre_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "anime",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "anime_id"
+            ],
+            "referencedColumns": [
+              "mal_id"
+            ]
+          },
+          {
+            "table": "genre",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "genre_id"
+            ],
+            "referencedColumns": [
+              "mal_id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "anime_explicit_genre_cross_reference",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`anime_id` INTEGER NOT NULL, `explicit_genre_id` INTEGER NOT NULL, PRIMARY KEY(`anime_id`, `explicit_genre_id`), FOREIGN KEY(`anime_id`) REFERENCES `anime`(`mal_id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`explicit_genre_id`) REFERENCES `explicit_genre`(`mal_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "animeId",
+            "columnName": "anime_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "genreId",
+            "columnName": "explicit_genre_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "anime_id",
+            "explicit_genre_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_anime_explicit_genre_cross_reference_explicit_genre_id",
+            "unique": false,
+            "columnNames": [
+              "explicit_genre_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_anime_explicit_genre_cross_reference_explicit_genre_id` ON `${TABLE_NAME}` (`explicit_genre_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "anime",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "anime_id"
+            ],
+            "referencedColumns": [
+              "mal_id"
+            ]
+          },
+          {
+            "table": "explicit_genre",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "explicit_genre_id"
+            ],
+            "referencedColumns": [
+              "mal_id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "anime_licensor_cross_reference",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`anime_id` INTEGER NOT NULL, `licensor_id` INTEGER NOT NULL, PRIMARY KEY(`anime_id`, `licensor_id`), FOREIGN KEY(`anime_id`) REFERENCES `anime`(`mal_id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`licensor_id`) REFERENCES `licensor`(`mal_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "animeId",
+            "columnName": "anime_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "licensorId",
+            "columnName": "licensor_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "anime_id",
+            "licensor_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_anime_licensor_cross_reference_licensor_id",
+            "unique": false,
+            "columnNames": [
+              "licensor_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_anime_licensor_cross_reference_licensor_id` ON `${TABLE_NAME}` (`licensor_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "anime",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "anime_id"
+            ],
+            "referencedColumns": [
+              "mal_id"
+            ]
+          },
+          {
+            "table": "licensor",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "licensor_id"
+            ],
+            "referencedColumns": [
+              "mal_id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "anime_producer_cross_reference",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`anime_id` INTEGER NOT NULL, `producer_id` INTEGER NOT NULL, PRIMARY KEY(`anime_id`, `producer_id`), FOREIGN KEY(`anime_id`) REFERENCES `anime`(`mal_id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`producer_id`) REFERENCES `producer`(`mal_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "animeId",
+            "columnName": "anime_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "producerId",
+            "columnName": "producer_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "anime_id",
+            "producer_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_anime_producer_cross_reference_producer_id",
+            "unique": false,
+            "columnNames": [
+              "producer_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_anime_producer_cross_reference_producer_id` ON `${TABLE_NAME}` (`producer_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "anime",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "anime_id"
+            ],
+            "referencedColumns": [
+              "mal_id"
+            ]
+          },
+          {
+            "table": "producer",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "producer_id"
+            ],
+            "referencedColumns": [
+              "mal_id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "anime_studio_cross_reference",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`anime_id` INTEGER NOT NULL, `studio_id` INTEGER NOT NULL, PRIMARY KEY(`anime_id`, `studio_id`), FOREIGN KEY(`anime_id`) REFERENCES `anime`(`mal_id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`studio_id`) REFERENCES `studio`(`mal_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "animeId",
+            "columnName": "anime_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "studioId",
+            "columnName": "studio_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "anime_id",
+            "studio_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_anime_studio_cross_reference_studio_id",
+            "unique": false,
+            "columnNames": [
+              "studio_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_anime_studio_cross_reference_studio_id` ON `${TABLE_NAME}` (`studio_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "anime",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "anime_id"
+            ],
+            "referencedColumns": [
+              "mal_id"
+            ]
+          },
+          {
+            "table": "studio",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "studio_id"
+            ],
+            "referencedColumns": [
+              "mal_id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "anime_theme_cross_reference",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`anime_id` INTEGER NOT NULL, `theme_id` INTEGER NOT NULL, PRIMARY KEY(`anime_id`, `theme_id`), FOREIGN KEY(`anime_id`) REFERENCES `anime`(`mal_id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`theme_id`) REFERENCES `theme`(`mal_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "animeId",
+            "columnName": "anime_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "themeId",
+            "columnName": "theme_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "anime_id",
+            "theme_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_anime_theme_cross_reference_theme_id",
+            "unique": false,
+            "columnNames": [
+              "theme_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_anime_theme_cross_reference_theme_id` ON `${TABLE_NAME}` (`theme_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "anime",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "anime_id"
+            ],
+            "referencedColumns": [
+              "mal_id"
+            ]
+          },
+          {
+            "table": "theme",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "theme_id"
+            ],
+            "referencedColumns": [
+              "mal_id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "anime",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mal_id` INTEGER NOT NULL, `url` TEXT NOT NULL, `images` TEXT NOT NULL, `trailer` TEXT NOT NULL, `approved` INTEGER NOT NULL, `titles` TEXT NOT NULL, `title` TEXT NOT NULL, `title_english` TEXT, `title_japanese` TEXT, `title_synonyms` TEXT NOT NULL, `type` TEXT, `source` TEXT NOT NULL, `episodes` INTEGER, `status` TEXT NOT NULL, `airing` INTEGER NOT NULL, `aired` TEXT NOT NULL, `duration` TEXT NOT NULL, `rating` TEXT, `score` REAL, `scored_by` INTEGER, `rank` INTEGER, `popularity` INTEGER NOT NULL, `members` INTEGER NOT NULL, `favorites` INTEGER NOT NULL, `synopsis` TEXT, `background` TEXT, `season` TEXT, `year` INTEGER, `created_at` INTEGER NOT NULL, `updated_at` INTEGER, `day` TEXT, `time` TEXT, `timezone` TEXT, `string` TEXT, PRIMARY KEY(`mal_id`))",
+        "fields": [
+          {
+            "fieldPath": "malId",
+            "columnName": "mal_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "url",
+            "columnName": "url",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "images",
+            "columnName": "images",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "trailer",
+            "columnName": "trailer",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "approved",
+            "columnName": "approved",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "titles",
+            "columnName": "titles",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "titleEnglish",
+            "columnName": "title_english",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "titleJapanese",
+            "columnName": "title_japanese",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "titleSynonyms",
+            "columnName": "title_synonyms",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "source",
+            "columnName": "source",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "episodes",
+            "columnName": "episodes",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "status",
+            "columnName": "status",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "airing",
+            "columnName": "airing",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "aired",
+            "columnName": "aired",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "duration",
+            "columnName": "duration",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rating",
+            "columnName": "rating",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "score",
+            "columnName": "score",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "scoredBy",
+            "columnName": "scored_by",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "rank",
+            "columnName": "rank",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "popularity",
+            "columnName": "popularity",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "members",
+            "columnName": "members",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "favorites",
+            "columnName": "favorites",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "synopsis",
+            "columnName": "synopsis",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "background",
+            "columnName": "background",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "season",
+            "columnName": "season",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "year",
+            "columnName": "year",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "created_at",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "updatedAt",
+            "columnName": "updated_at",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "broadcast.day",
+            "columnName": "day",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "broadcast.time",
+            "columnName": "time",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "broadcast.timezone",
+            "columnName": "timezone",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "broadcast.string",
+            "columnName": "string",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "mal_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_anime_mal_id",
+            "unique": true,
+            "columnNames": [
+              "mal_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_anime_mal_id` ON `${TABLE_NAME}` (`mal_id`)"
+          }
+        ],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '73cdb46bb866909da910f0a83d875620')"
+    ]
+  }
+}

@@ -3,6 +3,7 @@ package com.lelestacia.hayate.domain.viewmodel
 import androidx.lifecycle.viewModelScope
 import com.lelestacia.hayate.common.shared.BaseViewModel
 import com.lelestacia.hayate.common.shared.event.HayateEvent
+import com.lelestacia.hayate.component.shouldAppBarBeVisible
 import com.lelestacia.hayate.domain.state.AppBarState
 import com.lelestacia.hayate.domain.state.BottomNavigationState
 import com.lelestacia.hayate.navigation.isRootDestination
@@ -52,7 +53,8 @@ class HayateViewModel @Inject constructor() : BaseViewModel() {
             is HayateEvent.OnDestinationChanged -> {
                 _appBarState.update {
                     it.copy(
-                        shouldNavigationIconBeVisible = !isRootDestination(event.route)
+                        shouldNavigationIconBeVisible = !isRootDestination(event.route),
+                        shouldAppBarBeVisible = shouldAppBarBeVisible(event.route)
                     )
                 }
 

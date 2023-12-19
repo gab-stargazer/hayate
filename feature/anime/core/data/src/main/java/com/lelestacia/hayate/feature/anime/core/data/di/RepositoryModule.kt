@@ -2,7 +2,8 @@ package com.lelestacia.hayate.feature.anime.core.data.di
 
 import com.lelestacia.hayate.feature.anime.core.data.AnimeRepositoryImpl
 import com.lelestacia.hayate.feature.anime.core.domain.repository.AnimeRepository
-import com.lelestacia.hayate.feature.anime.core.source.remote.api.AnimeRemoteDataSourceApi
+import com.lelestacia.hayate.feature.anime.core.source.local.api.api.AnimeLocalDataSourceApi
+import com.lelestacia.hayate.feature.anime.core.source.remote.api.api.AnimeRemoteDataSourceApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,10 +17,12 @@ internal object RepositoryModule {
     @Provides
     @Singleton
     fun provideAnimeRepository(
-        animeRemoteDataSource: AnimeRemoteDataSourceApi
+        animeRemoteDataSource: AnimeRemoteDataSourceApi,
+        localDataSource: AnimeLocalDataSourceApi
     ): AnimeRepository {
         return AnimeRepositoryImpl(
-            remoteDataSource = animeRemoteDataSource
+            remoteDataSource = animeRemoteDataSource,
+            localDataSource = localDataSource
         )
     }
 }

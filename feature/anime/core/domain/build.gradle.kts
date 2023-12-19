@@ -48,6 +48,8 @@ android {
 
 dependencies {
 
+    implementation(projects.common.shared)
+
     //  =====Compose=====
     implementation(platform(libs.compose.bom))
     implementation(libs.compose.runtime)

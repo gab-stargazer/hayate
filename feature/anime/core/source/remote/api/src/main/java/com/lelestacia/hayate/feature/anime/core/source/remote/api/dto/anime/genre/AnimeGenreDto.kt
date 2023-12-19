@@ -11,7 +11,7 @@ data class AnimeGenreDto(
     val malId: Int,
 
     @Json(name = "type")
-    val type: String,
+    val type: String?,
 
     @Json(name = "name")
     val name: String,

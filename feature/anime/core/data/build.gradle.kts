@@ -40,7 +40,9 @@ android {
 
 dependencies {
 
+    implementation(projects.common.shared)
     implementation(projects.feature.anime.core.source.remote.api)
+    implementation(projects.feature.anime.core.source.local.api)
     implementation(projects.feature.anime.core.domain)
 
     //  Coroutine

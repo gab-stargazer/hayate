@@ -101,11 +101,6 @@ dependencies {
     implementation(libs.moshi)
     ksp(libs.moshi.codegen)
 
-    //  Room
-    implementation(libs.room)
-    implementation(libs.room.ktx)
-    ksp(libs.room.compiler)
-
     //  Timber
     implementation(libs.timber)
 

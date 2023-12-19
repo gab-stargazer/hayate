@@ -6,7 +6,9 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -33,58 +35,89 @@ fun CustomAppBar(
         true -> Color.White
         false -> MaterialTheme.colorScheme.primary
     }
-    TopAppBar(
-        title = {
-            Text(
-                text = stringResource(id = state.appBarTitle),
-                style = MaterialTheme.typography.titleLarge.copy(
-                    fontWeight = FontWeight.ExtraBold,
-                    color = textColor
-                )
+    AnimatedVisibility(
+        visible = state.shouldAppBarBeVisible,
+        enter = slideInVertically(
+            animationSpec = tween(
+                durationMillis = 500,
+                easing = FastOutSlowInEasing
+            ),
+            initialOffsetY = { fullHeight ->
+                fullHeight / 2
+            }
+        ) + fadeIn(
+            animationSpec = tween(
+                durationMillis = 500,
+                easing = FastOutSlowInEasing
             )
-        },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.background,
-            titleContentColor = MaterialTheme.colorScheme.onPrimary
-        ),
-        navigationIcon = {
-            AnimatedVisibility(
-                visible = state.shouldNavigationIconBeVisible, enter =
-                slideInHorizontally(
-                    animationSpec = tween(
-                        durationMillis = 500,
-                        easing = FastOutSlowInEasing
-                    )
-                ) + fadeIn(
-                    animationSpec = tween(
-                        durationMillis = 500,
-                        easing = FastOutSlowInEasing
-                    )
-                ), exit =
-                slideOutHorizontally(
-                    animationSpec = tween(
-                        durationMillis = 500,
-                        easing = FastOutSlowInEasing
-                    )
-                ) + fadeOut(
-                    animationSpec = tween(
-                        durationMillis = 500,
-                        easing = FastOutSlowInEasing
+        ), exit = slideOutVertically(
+            animationSpec = tween(
+                durationMillis = 500,
+                easing = FastOutSlowInEasing
+            ),
+            targetOffsetY = { fullHeight ->
+                fullHeight / 2
+            }
+        ) + fadeOut(
+            animationSpec = tween(
+                durationMillis = 500,
+                easing = FastOutSlowInEasing
+            )
+        )
+    ) {
+        TopAppBar(
+            title = {
+                Text(
+                    text = stringResource(id = state.appBarTitle),
+                    style = MaterialTheme.typography.titleLarge.copy(
+                        fontWeight = FontWeight.ExtraBold,
+                        color = textColor
                     )
                 )
-            ) {
-                IconButton(
-                    onClick = {
-                        navController.popBackStack()
-                    }
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBack,
-                        contentDescription = null,
-                        tint = textColor
+            },
+            colors = TopAppBarDefaults.topAppBarColors(
+                containerColor = MaterialTheme.colorScheme.background,
+                titleContentColor = MaterialTheme.colorScheme.onPrimary
+            ),
+            navigationIcon = {
+                AnimatedVisibility(
+                    visible = state.shouldNavigationIconBeVisible, enter =
+                    slideInHorizontally(
+                        animationSpec = tween(
+                            durationMillis = 500,
+                            easing = FastOutSlowInEasing
+                        )
+                    ) + fadeIn(
+                        animationSpec = tween(
+                            durationMillis = 500,
+                            easing = FastOutSlowInEasing
+                        )
+                    ), exit =
+                    slideOutHorizontally(
+                        animationSpec = tween(
+                            durationMillis = 500,
+                            easing = FastOutSlowInEasing
+                        )
+                    ) + fadeOut(
+                        animationSpec = tween(
+                            durationMillis = 500,
+                            easing = FastOutSlowInEasing
+                        )
                     )
+                ) {
+                    IconButton(
+                        onClick = {
+                            navController.popBackStack()
+                        }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = null,
+                            tint = textColor
+                        )
+                    }
                 }
             }
-        }
-    )
+        )
+    }
 }
