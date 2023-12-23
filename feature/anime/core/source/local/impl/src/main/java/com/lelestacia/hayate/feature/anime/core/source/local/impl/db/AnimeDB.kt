@@ -24,8 +24,10 @@ import com.lelestacia.hayate.feature.anime.core.source.local.impl.dao.LicensorDa
 import com.lelestacia.hayate.feature.anime.core.source.local.impl.dao.ProducerDao
 import com.lelestacia.hayate.feature.anime.core.source.local.impl.dao.StudioDao
 import com.lelestacia.hayate.feature.anime.core.source.local.impl.dao.ThemeDao
+import com.lelestacia.hayate.feature.anime.core.source.local.impl.dao.TitleDao
 import com.lelestacia.hayate.feature.anime.core.source.local.impl.dao.WatchlistDao
 import com.lelestacia.hayate.feature.anime.core.source.local.impl.entity.AnimeBasicEntity
+import com.lelestacia.hayate.feature.anime.core.source.local.impl.entity.anime.AnimeTitleSynonymEntity
 import com.lelestacia.hayate.feature.anime.core.source.local.impl.entity.cross_reference.AnimeDemographicCrossReference
 import com.lelestacia.hayate.feature.anime.core.source.local.impl.entity.cross_reference.AnimeExplicitGenreCrossReference
 import com.lelestacia.hayate.feature.anime.core.source.local.impl.entity.cross_reference.AnimeGenreCrossReference
@@ -44,6 +46,7 @@ import com.lelestacia.hayate.feature.anime.core.source.local.impl.entity.watchli
         AnimeProducerEntity::class,
         AnimeStudioEntity::class,
         AnimeThemeEntity::class,
+        AnimeTitleSynonymEntity::class,
         WatchListEntity::class,
         AnimeDemographicCrossReference::class,
         AnimeGenreCrossReference::class,
@@ -57,7 +60,16 @@ import com.lelestacia.hayate.feature.anime.core.source.local.impl.entity.watchli
     version = 1,
     exportSchema = true
 )
-@TypeConverters(value = [AnimeAiredConverter::class, AnimeImageConverter::class, AnimeTitlesConverter::class, AnimeTrailerConverter::class, DateConverter::class, ListOfStringConverter::class])
+@TypeConverters(
+    value = [
+        AnimeAiredConverter::class,
+        AnimeImageConverter::class,
+        AnimeTitlesConverter::class,
+        AnimeTrailerConverter::class,
+        DateConverter::class,
+        ListOfStringConverter::class
+    ]
+)
 internal abstract class AnimeDB : RoomDatabase() {
 
     abstract fun animeDao(): AnimeDao
@@ -69,4 +81,5 @@ internal abstract class AnimeDB : RoomDatabase() {
     abstract fun studioDao(): StudioDao
     abstract fun themeDao(): ThemeDao
     abstract fun watchlistDao(): WatchlistDao
+    abstract fun titleDao(): TitleDao
 }

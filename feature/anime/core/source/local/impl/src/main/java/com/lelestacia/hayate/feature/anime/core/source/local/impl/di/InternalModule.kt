@@ -13,6 +13,7 @@ import com.lelestacia.hayate.feature.anime.core.source.local.impl.dao.LicensorDa
 import com.lelestacia.hayate.feature.anime.core.source.local.impl.dao.ProducerDao
 import com.lelestacia.hayate.feature.anime.core.source.local.impl.dao.StudioDao
 import com.lelestacia.hayate.feature.anime.core.source.local.impl.dao.ThemeDao
+import com.lelestacia.hayate.feature.anime.core.source.local.impl.dao.TitleDao
 import com.lelestacia.hayate.feature.anime.core.source.local.impl.dao.WatchlistDao
 import com.lelestacia.hayate.feature.anime.core.source.local.impl.db.AnimeDB
 import dagger.Module
@@ -92,11 +93,21 @@ internal object InternalModule {
 
     @Provides
     @Singleton
+    fun provideTitleDao(db: AnimeDB): TitleDao {
+        return db.titleDao()
+    }
+
+    @Provides
+    @Singleton
     fun provideDataSource(
         animeDao: AnimeDao,
         genreDao: GenreDao,
         explicitGenreDao: ExplicitGenreDao,
+        licensorDao: LicensorDao,
+        producerDao: ProducerDao,
+        studioDao: StudioDao,
         themeDao: ThemeDao,
+        titleDao: TitleDao,
         demographicDao: DemographicDao,
         @IoDispatcher ioDispatcher: CoroutineContext
     ): AnimeLocalDataSourceApi {
@@ -104,7 +115,11 @@ internal object InternalModule {
             animeDao = animeDao,
             genreDao = genreDao,
             explicitGenreDao = explicitGenreDao,
+            licensorDao = licensorDao,
+            producerDao = producerDao,
+            studioDao = studioDao,
             themeDao = themeDao,
+            titleDao = titleDao,
             demographicDao = demographicDao,
             ioDispatcher = ioDispatcher
         )

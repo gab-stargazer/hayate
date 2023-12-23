@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "73cdb46bb866909da910f0a83d875620",
+    "identityHash": "f5a48e277f79432df4bfa07597aaf287",
     "entities": [
       {
         "tableName": "demographic",
@@ -422,6 +422,32 @@
             "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_theme_mal_id` ON `${TABLE_NAME}` (`mal_id`)"
           }
         ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "title_synonym",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`anime_id` INTEGER NOT NULL, `title` TEXT NOT NULL, PRIMARY KEY(`title`))",
+        "fields": [
+          {
+            "fieldPath": "animeId",
+            "columnName": "anime_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "title"
+          ]
+        },
+        "indices": [],
         "foreignKeys": []
       },
       {
@@ -884,7 +910,7 @@
       },
       {
         "tableName": "anime",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mal_id` INTEGER NOT NULL, `url` TEXT NOT NULL, `images` TEXT NOT NULL, `trailer` TEXT NOT NULL, `approved` INTEGER NOT NULL, `titles` TEXT NOT NULL, `title` TEXT NOT NULL, `title_english` TEXT, `title_japanese` TEXT, `title_synonyms` TEXT NOT NULL, `type` TEXT, `source` TEXT NOT NULL, `episodes` INTEGER, `status` TEXT NOT NULL, `airing` INTEGER NOT NULL, `aired` TEXT NOT NULL, `duration` TEXT NOT NULL, `rating` TEXT, `score` REAL, `scored_by` INTEGER, `rank` INTEGER, `popularity` INTEGER NOT NULL, `members` INTEGER NOT NULL, `favorites` INTEGER NOT NULL, `synopsis` TEXT, `background` TEXT, `season` TEXT, `year` INTEGER, `created_at` INTEGER NOT NULL, `updated_at` INTEGER, `day` TEXT, `time` TEXT, `timezone` TEXT, `string` TEXT, PRIMARY KEY(`mal_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`mal_id` INTEGER NOT NULL, `url` TEXT NOT NULL, `images` TEXT NOT NULL, `trailer` TEXT NOT NULL, `approved` INTEGER NOT NULL, `titles` TEXT NOT NULL, `title` TEXT NOT NULL, `title_english` TEXT, `title_japanese` TEXT, `type` TEXT, `source` TEXT NOT NULL, `episodes` INTEGER, `status` TEXT NOT NULL, `airing` INTEGER NOT NULL, `aired` TEXT NOT NULL, `duration` TEXT NOT NULL, `rating` TEXT, `score` REAL, `scored_by` INTEGER, `rank` INTEGER, `popularity` INTEGER NOT NULL, `members` INTEGER NOT NULL, `favorites` INTEGER NOT NULL, `synopsis` TEXT, `background` TEXT, `season` TEXT, `year` INTEGER, `created_at` INTEGER NOT NULL, `updated_at` INTEGER, `day` TEXT, `time` TEXT, `timezone` TEXT, `string` TEXT, PRIMARY KEY(`mal_id`))",
         "fields": [
           {
             "fieldPath": "malId",
@@ -939,12 +965,6 @@
             "columnName": "title_japanese",
             "affinity": "TEXT",
             "notNull": false
-          },
-          {
-            "fieldPath": "titleSynonyms",
-            "columnName": "title_synonyms",
-            "affinity": "TEXT",
-            "notNull": true
           },
           {
             "fieldPath": "type",
@@ -1114,7 +1134,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '73cdb46bb866909da910f0a83d875620')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f5a48e277f79432df4bfa07597aaf287')"
     ]
   }
 }

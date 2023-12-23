@@ -10,6 +10,7 @@ import com.lelestacia.hayate.feature.anime.core.source.local.api.entity.licensor
 import com.lelestacia.hayate.feature.anime.core.source.local.api.entity.producer.AnimeProducerEntity
 import com.lelestacia.hayate.feature.anime.core.source.local.api.entity.studio.AnimeStudioEntity
 import com.lelestacia.hayate.feature.anime.core.source.local.api.entity.theme.AnimeThemeEntity
+import com.lelestacia.hayate.feature.anime.core.source.local.impl.entity.anime.AnimeTitleSynonymEntity
 import com.lelestacia.hayate.feature.anime.core.source.local.impl.entity.cross_reference.AnimeDemographicCrossReference
 import com.lelestacia.hayate.feature.anime.core.source.local.impl.entity.cross_reference.AnimeExplicitGenreCrossReference
 import com.lelestacia.hayate.feature.anime.core.source.local.impl.entity.cross_reference.AnimeGenreCrossReference
@@ -22,6 +23,12 @@ data class AnimeFullEntity(
 
     @Embedded
     val anime: AnimeBasicEntity,
+
+    @Relation(
+        parentColumn = "mal_id",
+        entityColumn = "anime_id"
+    )
+    val titleSynonym: List<AnimeTitleSynonymEntity>,
 
     @Relation(
         parentColumn = "mal_id",

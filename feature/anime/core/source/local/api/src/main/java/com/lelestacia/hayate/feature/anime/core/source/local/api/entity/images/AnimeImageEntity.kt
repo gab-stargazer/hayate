@@ -4,9 +4,9 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class AnimeImagesEntity(
+data class AnimeImageEntity(
 
-    @Json(name = "jpg")
+    @Json(name = "jpeg")
     val jpg: AnimeJpegEntity,
 
     @Json(name = "webp")

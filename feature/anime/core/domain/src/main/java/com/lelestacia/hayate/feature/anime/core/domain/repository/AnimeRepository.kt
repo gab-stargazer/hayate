@@ -29,4 +29,6 @@ interface AnimeRepository {
     ): Flow<PagingData<Anime>>
 
     fun initiateApp(): Flow<DataState<Boolean>>
+
+    suspend fun insertAnime(anime: Anime): Flow<DataState<Boolean>>
 }

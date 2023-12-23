@@ -57,11 +57,15 @@ internal object InternalInitializationModuleAPI : FeatureApi {
             InitializationScreen()
 
             vm.isInitiated.CollectInLaunchEffect(key = Unit) { initiated ->
-                if (initiated) {
-                    handleNavigation()
-                } else {
-                    vm.initiate()
-                }
+
+                handleNavigation()
+
+//                Temporarily disabled
+//                if (initiated) {
+//                    handleNavigation()
+//                } else {
+//                    vm.initiate()
+//                }
             }
         }
     }

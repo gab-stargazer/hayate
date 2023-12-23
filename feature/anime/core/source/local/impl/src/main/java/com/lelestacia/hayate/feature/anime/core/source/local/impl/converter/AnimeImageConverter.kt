@@ -1,18 +1,19 @@
 package com.lelestacia.hayate.feature.anime.core.source.local.impl.converter
 
-import android.net.Uri
 import androidx.room.TypeConverter
-import com.lelestacia.hayate.feature.anime.core.source.local.api.entity.images.AnimeImagesEntity
+import com.lelestacia.hayate.feature.anime.core.source.local.api.entity.images.AnimeImageEntity
+import com.lelestacia.hayate.common.shared.util.fromJson as MoshiFromJson
+import com.lelestacia.hayate.common.shared.util.toJson as MoshiToJson
 
 internal class AnimeImageConverter {
 
     @TypeConverter
-    fun fromJson(json: String): AnimeImagesEntity {
-        return fromJson(Uri.decode(json))
+    fun fromJson(json: String): AnimeImageEntity {
+        return MoshiFromJson<AnimeImageEntity>(json) as AnimeImageEntity
     }
 
     @TypeConverter
-    fun toJson(image: AnimeImagesEntity): String {
-        return Uri.decode(toJson(image))
+    fun toJson(image: AnimeImageEntity): String {
+        return MoshiToJson(image)
     }
 }

@@ -3,8 +3,9 @@ package com.lelestacia.hayate.feature.anime.core.source.local.api.entity
 import com.lelestacia.hayate.feature.anime.core.source.local.api.entity.aired.AnimeAiredEntity
 import com.lelestacia.hayate.feature.anime.core.source.local.api.entity.broadcast.AnimeBroadcastEntity
 import com.lelestacia.hayate.feature.anime.core.source.local.api.entity.demographic.AnimeDemographicEntity
+import com.lelestacia.hayate.feature.anime.core.source.local.api.entity.genre.AnimeExplicitGenreEntity
 import com.lelestacia.hayate.feature.anime.core.source.local.api.entity.genre.AnimeGenreEntity
-import com.lelestacia.hayate.feature.anime.core.source.local.api.entity.images.AnimeImagesEntity
+import com.lelestacia.hayate.feature.anime.core.source.local.api.entity.images.AnimeImageEntity
 import com.lelestacia.hayate.feature.anime.core.source.local.api.entity.licensor.AnimeLicensorEntity
 import com.lelestacia.hayate.feature.anime.core.source.local.api.entity.producer.AnimeProducerEntity
 import com.lelestacia.hayate.feature.anime.core.source.local.api.entity.studio.AnimeStudioEntity
@@ -15,7 +16,7 @@ import com.lelestacia.hayate.feature.anime.core.source.local.api.entity.trailer.
 data class AnimeEntity(
     val malId: Int,
     val url: String,
-    val images: AnimeImagesEntity,
+    val images: AnimeImageEntity,
     val trailer: AnimeTrailerEntity,
     val approved: Boolean,
     val titles: List<AnimeTitleEntity>,
@@ -46,7 +47,7 @@ data class AnimeEntity(
     val licensors: List<AnimeLicensorEntity>,
     val studios: List<AnimeStudioEntity>,
     val genres: List<AnimeGenreEntity>,
-    val explicitGenres: List<AnimeGenreEntity>,
+    val explicitGenres: List<AnimeExplicitGenreEntity>,
     val themes: List<AnimeThemeEntity>,
     val demographics: List<AnimeDemographicEntity>
 )

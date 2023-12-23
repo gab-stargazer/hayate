@@ -2,7 +2,6 @@ package com.lelestacia.hayate.feature.anime.exploration.ui.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
-import com.lelestacia.hayate.common.shared.BaseViewModel
 import com.lelestacia.hayate.feature.anime.exploration.domain.presenter.schedule.ScheduleAnimeEvent
 import com.lelestacia.hayate.feature.anime.exploration.domain.presenter.schedule.ScheduleAnimeState
 import com.lelestacia.hayate.feature.anime.exploration.domain.usecases.AnimeUseCases
@@ -17,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 internal class ScheduleViewModel @Inject constructor(
     private val animeUseCases: AnimeUseCases
-) : BaseViewModel() {
+) : BaseExploreViewModel(animeUseCases) {
 
     private val _state: MutableStateFlow<ScheduleAnimeState> =
         MutableStateFlow(ScheduleAnimeState())

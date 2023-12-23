@@ -4,7 +4,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.lelestacia.hayate.common.shared.BaseViewModel
 import com.lelestacia.hayate.feature.anime.core.common.filter.AnimeType
 import com.lelestacia.hayate.feature.anime.core.domain.model.Anime
 import com.lelestacia.hayate.feature.anime.exploration.domain.presenter.airing.AiringAnimeEvent
@@ -26,7 +25,7 @@ import javax.inject.Inject
 internal class AiringViewModel @Inject constructor(
     private val animeUseCases: AnimeUseCases,
     private val savedStateHandle: SavedStateHandle
-) : BaseViewModel() {
+) : BaseExploreViewModel(animeUseCases) {
 
     private val animeType: StateFlow<AnimeType?> = savedStateHandle
         .getStateFlow(

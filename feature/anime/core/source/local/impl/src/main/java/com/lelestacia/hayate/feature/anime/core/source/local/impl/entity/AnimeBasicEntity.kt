@@ -7,7 +7,7 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.lelestacia.hayate.feature.anime.core.source.local.api.entity.aired.AnimeAiredEntity
 import com.lelestacia.hayate.feature.anime.core.source.local.api.entity.broadcast.AnimeBroadcastEntity
-import com.lelestacia.hayate.feature.anime.core.source.local.api.entity.images.AnimeImagesEntity
+import com.lelestacia.hayate.feature.anime.core.source.local.api.entity.images.AnimeImageEntity
 import com.lelestacia.hayate.feature.anime.core.source.local.api.entity.title.AnimeTitleEntity
 import com.lelestacia.hayate.feature.anime.core.source.local.api.entity.trailer.AnimeTrailerEntity
 import java.util.Date
@@ -26,7 +26,7 @@ data class AnimeBasicEntity(
     val url: String,
 
     @ColumnInfo(name = "images")
-    val images: AnimeImagesEntity,
+    val images: AnimeImageEntity,
 
     @ColumnInfo(name = "trailer")
     val trailer: AnimeTrailerEntity,
@@ -45,9 +45,6 @@ data class AnimeBasicEntity(
 
     @ColumnInfo(name = "title_japanese")
     val titleJapanese: String?,
-
-    @ColumnInfo(name = "title_synonyms")
-    val titleSynonyms: List<String>,
 
     @ColumnInfo(name = "type")
     val type: String?,

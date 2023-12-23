@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -41,6 +42,7 @@ import com.lelestacia.hayate.feature.anime.exploration.ui.viewmodel.AiringViewMo
 import com.lelestacia.hayate.feature.anime.exploration.ui.viewmodel.PopularViewModel
 import com.lelestacia.hayate.feature.anime.exploration.ui.viewmodel.ScheduleViewModel
 import com.lelestacia.hayate.feature.anime.exploration.ui.viewmodel.UpcomingViewModel
+import kotlinx.coroutines.launch
 
 internal object InternalExploreModuleAPI : FeatureApi {
 
@@ -60,6 +62,7 @@ internal object InternalExploreModuleAPI : FeatureApi {
         ) {
             val titles = stringArrayResource(id = R.array.pager_title)
             var state by rememberSaveable { mutableIntStateOf(1) }
+            val scope = rememberCoroutineScope()
 
             val pagerState = rememberPagerState(
                 pageCount = {
@@ -98,6 +101,10 @@ internal object InternalExploreModuleAPI : FeatureApi {
                     )
                 ) {
                     launchSingleTop = true
+                }
+
+                scope.launch {
+                    popularAnimeVm.insertAnime(clickedAnime)
                 }
             }
 

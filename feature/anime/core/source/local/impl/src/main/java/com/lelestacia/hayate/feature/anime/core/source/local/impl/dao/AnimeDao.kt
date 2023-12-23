@@ -2,6 +2,7 @@ package com.lelestacia.hayate.feature.anime.core.source.local.impl.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import com.lelestacia.hayate.feature.anime.core.source.local.impl.entity.AnimeBasicEntity
@@ -10,7 +11,7 @@ import com.lelestacia.hayate.feature.anime.core.source.local.impl.entity.AnimeFu
 @Dao
 internal interface AnimeDao {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAnime(anime: AnimeBasicEntity)
 
     @Transaction

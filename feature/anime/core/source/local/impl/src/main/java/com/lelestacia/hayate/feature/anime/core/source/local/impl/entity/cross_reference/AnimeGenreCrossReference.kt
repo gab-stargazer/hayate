@@ -4,13 +4,14 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import com.lelestacia.hayate.feature.anime.core.source.local.api.entity.genre.AnimeGenreEntity
+import com.lelestacia.hayate.feature.anime.core.source.local.impl.entity.AnimeBasicEntity
 
 @Entity(
     tableName = "anime_genre_cross_reference",
     primaryKeys = ["anime_id", "genre_id"],
     foreignKeys = [
         ForeignKey(
-            entity = com.lelestacia.hayate.feature.anime.core.source.local.impl.entity.AnimeBasicEntity::class,
+            entity = AnimeBasicEntity::class,
             parentColumns = ["mal_id"],
             childColumns = ["anime_id"],
             onDelete = ForeignKey.CASCADE

@@ -4,7 +4,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.lelestacia.hayate.common.shared.BaseViewModel
 import com.lelestacia.hayate.feature.anime.core.common.filter.AnimeFilter
 import com.lelestacia.hayate.feature.anime.core.common.filter.AnimeRating
 import com.lelestacia.hayate.feature.anime.core.common.filter.AnimeType
@@ -33,7 +32,7 @@ import javax.inject.Inject
 internal class PopularViewModel @Inject constructor(
     private val animeUseCases: AnimeUseCases,
     private val savedStateHandle: SavedStateHandle
-) : BaseViewModel() {
+) : BaseExploreViewModel(animeUseCases) {
 
     private val animeType: StateFlow<AnimeType?> = savedStateHandle
         .getStateFlow(
@@ -159,7 +158,7 @@ internal class PopularViewModel @Inject constructor(
         }
     }
 
-    data class PopularAnimeFilter(
+    private data class PopularAnimeFilter(
         val type: AnimeType? = null,
         val filter: AnimeFilter? = null,
         val rating: AnimeRating? = null

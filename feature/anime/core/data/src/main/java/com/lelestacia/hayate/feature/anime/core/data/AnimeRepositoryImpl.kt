@@ -11,6 +11,7 @@ import com.lelestacia.hayate.feature.anime.core.data.mapper.asDemographic
 import com.lelestacia.hayate.feature.anime.core.data.mapper.asEntity
 import com.lelestacia.hayate.feature.anime.core.data.mapper.asExplicitEntity
 import com.lelestacia.hayate.feature.anime.core.data.mapper.asGenre
+import com.lelestacia.hayate.feature.anime.core.data.mapper.asNewEntity
 import com.lelestacia.hayate.feature.anime.core.data.mapper.asTheme
 import com.lelestacia.hayate.feature.anime.core.domain.model.Anime
 import com.lelestacia.hayate.feature.anime.core.domain.model.demographic.AnimeDemographic
@@ -31,6 +32,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import timber.log.Timber
 import javax.inject.Inject
+import kotlin.time.measureTime
 
 internal class AnimeRepositoryImpl @Inject constructor(
     private val remoteDataSource: AnimeRemoteDataSourceApi,
@@ -164,6 +166,22 @@ internal class AnimeRepositoryImpl @Inject constructor(
             emit(DataState.Loading)
         }.catch { t ->
             Timber.e(t.stackTraceToString())
+            emit(DataState.Failed(UiText.MessageString(t.message.orEmpty())))
+        }
+    }
+
+    override suspend fun insertAnime(anime: Anime): Flow<DataState<Boolean>> {
+        return flow<DataState<Boolean>> {
+            val durations = measureTime {
+                localDataSource.insertAnime(anime.asNewEntity())
+            }
+            Timber.d("Insert new Anime duration is: ${durations.inWholeMilliseconds}ms")
+
+            emit(DataState.Success(true))
+        }.onStart {
+            emit(DataState.Loading)
+        }.catch { t ->
+            t.printStackTrace()
             emit(DataState.Failed(UiText.MessageString(t.message.orEmpty())))
         }
     }
