@@ -2,6 +2,7 @@ package com.lelestacia.hayate.feature.anime.exploration.ui.di
 
 import android.net.Uri
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,6 +19,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.text.font.FontWeight
@@ -89,9 +91,12 @@ internal object InternalExploreModuleAPI : FeatureApi {
 
             val upcomingAnimeVm = hiltViewModel<UpcomingViewModel>()
             val upcomingAnimeState by upcomingAnimeVm.state.collectAsStateWithLifecycle()
+            val isUpcomingFeatureEnabled by upcomingAnimeVm.isFeatureEnabled.collectAsStateWithLifecycle()
 
             val scheduleAnimeVm = hiltViewModel<ScheduleViewModel>()
             val scheduleAnimeState by scheduleAnimeVm.state.collectAsStateWithLifecycle()
+            val isScheduleFeatureEnabled by scheduleAnimeVm.isFeatureEnabled.collectAsStateWithLifecycle()
+
 
             val handleAnimeClicked: (Anime) -> Unit = { clickedAnime ->
                 val jsonAnime = toJson(clickedAnime)
@@ -142,12 +147,21 @@ internal object InternalExploreModuleAPI : FeatureApi {
                     when (index) {
 
                         0 -> {
-                            ScheduleAnimeScreen(
-                                scheduledAnimePaging = scheduleAnimeVm.scheduledAnime.collectAsLazyPagingItems(),
-                                state = scheduleAnimeState,
-                                onAnimeClicked = handleAnimeClicked,
-                                modifier = Modifier.weight(1f),
-                            )
+                            if (isScheduleFeatureEnabled) {
+                                ScheduleAnimeScreen(
+                                    scheduledAnimePaging = scheduleAnimeVm.scheduledAnime.collectAsLazyPagingItems(),
+                                    state = scheduleAnimeState,
+                                    onAnimeClicked = handleAnimeClicked,
+                                    modifier = Modifier.weight(1f),
+                                )
+                            } else {
+                                Box(
+                                    contentAlignment = Alignment.Center,
+                                    modifier = Modifier.fillMaxSize()
+                                ) {
+                                    Text(text = "Feature is temporarily disabled or not available")
+                                }
+                            }
                         }
 
                         1 -> {
@@ -171,13 +185,22 @@ internal object InternalExploreModuleAPI : FeatureApi {
                         }
 
                         3 -> {
-                            UpcomingAnimeScreen(
-                                airingAnimePaging = upcomingAnimeVm.upcomingAnime.collectAsLazyPagingItems(),
-                                state = upcomingAnimeState,
-                                onEvent = upcomingAnimeVm::onEvent,
-                                onAnimeClicked = handleAnimeClicked,
-                                modifier = Modifier.weight(1f)
-                            )
+                            if (isUpcomingFeatureEnabled) {
+                                UpcomingAnimeScreen(
+                                    airingAnimePaging = upcomingAnimeVm.upcomingAnime.collectAsLazyPagingItems(),
+                                    state = upcomingAnimeState,
+                                    onEvent = upcomingAnimeVm::onEvent,
+                                    onAnimeClicked = handleAnimeClicked,
+                                    modifier = Modifier.weight(1f)
+                                )
+                            } else {
+                                Box(
+                                    contentAlignment = Alignment.Center,
+                                    modifier = Modifier.fillMaxSize()
+                                ) {
+                                    Text(text = "Feature is temporarily disabled or not available")
+                                }
+                            }
                         }
                     }
                 }

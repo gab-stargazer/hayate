@@ -7,6 +7,8 @@ plugins {
     alias(libs.plugins.kotlin.ksp)
     alias(libs.plugins.hilt)
     alias(libs.plugins.junit.adapter)
+    alias(libs.plugins.firebase)
+    alias(libs.plugins.firebase.crashlytic)
 }
 
 android {
@@ -39,7 +41,7 @@ android {
 
         create("r8_testing") {
             initWith(buildTypes.getByName("release"))
-            isDebuggable = true
+            isDebuggable = false
             isMinifyEnabled = true
             signingConfig = signingConfigs.getByName("debug")
             matchingFallbacks += listOf("release")
@@ -105,6 +107,10 @@ dependencies {
 
     //  Setting Module
     implementation(projects.feature.settings.ui)
+
+    //  Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.crashlytic)
 
     //  Ktx
     implementation(libs.core.ktx)

@@ -26,4 +26,19 @@ internal class ConfigPreferencesImpl @Inject constructor(
             config[isAnimeInitializedKey] = true
         }
     }
+
+    override suspend fun updateFeature(value: Map<String, Boolean>) {
+        context.dataStore.edit { config: MutablePreferences ->
+            value.keys.forEach { key ->
+                val prefKey = booleanPreferencesKey(key)
+                config[prefKey] = value[key] ?: true
+            }
+        }
+    }
+
+    override fun isFeatureEnabled(key: String): Flow<Boolean> =
+        context.dataStore.data.map { config: Preferences ->
+            val prefKey = booleanPreferencesKey(key)
+            config[prefKey] ?: true
+        }
 }

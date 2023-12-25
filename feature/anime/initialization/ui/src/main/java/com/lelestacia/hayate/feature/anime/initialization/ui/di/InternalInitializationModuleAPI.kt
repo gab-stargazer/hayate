@@ -13,7 +13,6 @@ import androidx.navigation.compose.composable
 import com.lelestacia.hayate.common.shared.DataState
 import com.lelestacia.hayate.common.shared.Screen
 import com.lelestacia.hayate.common.shared.api.FeatureApi
-import com.lelestacia.hayate.common.shared.util.CollectInLaunchEffect
 import com.lelestacia.hayate.feature.anime.initialization.ui.screen.InitializationScreen
 import com.lelestacia.hayate.feature.anime.initialization.ui.viewmodel.InitializationViewModel
 import kotlinx.coroutines.launch
@@ -32,8 +31,17 @@ internal object InternalInitializationModuleAPI : FeatureApi {
 
             val handleNavigation: () -> Unit = {
                 navController.navigate(Screen.Exploration.route) {
-                    popUpTo(Screen.Exploration.route)
+                    popUpTo(Screen.Init.route) {
+                        inclusive = true
+                    }
                 }
+            }
+
+            val isInitiated by vm.isInitiated.collectAsStateWithLifecycle()
+            val isConfigFinished by vm.isConfigFinished.collectAsStateWithLifecycle()
+
+            LaunchedEffect(key1 = Unit) {
+                vm.checkForFirebaseConfig()
             }
 
             LaunchedEffect(key1 = state) {
@@ -56,16 +64,10 @@ internal object InternalInitializationModuleAPI : FeatureApi {
 
             InitializationScreen()
 
-            vm.isInitiated.CollectInLaunchEffect(key = Unit) { initiated ->
-
-                handleNavigation()
-
-//                Temporarily disabled
-//                if (initiated) {
-//                    handleNavigation()
-//                } else {
-//                    vm.initiate()
-//                }
+            LaunchedEffect(key1 = isInitiated, isConfigFinished) {
+                if (isConfigFinished) {
+                    handleNavigation()
+                }
             }
         }
     }

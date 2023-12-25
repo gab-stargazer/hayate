@@ -43,6 +43,7 @@ android {
 dependencies {
 
     // =====Feature Anime=====
+    implementation(projects.common.firebase)
     implementation(projects.common.preferences)
     api(projects.common.shared)
     api(projects.feature.anime.core.domain)

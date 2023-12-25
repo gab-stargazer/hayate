@@ -8,9 +8,11 @@ import com.lelestacia.hayate.feature.anime.exploration.domain.usecases.AnimeUseC
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,6 +25,12 @@ internal class ScheduleViewModel @Inject constructor(
     val state: StateFlow<ScheduleAnimeState> =
         _state.asStateFlow()
 
+    val isFeatureEnabled = animeUseCases.isFeatureEnabled("daily")
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Eagerly,
+            initialValue = true
+        )
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val scheduledAnime = state.flatMapLatest { currentState ->

@@ -80,17 +80,21 @@ fun Hayate(
 
     Scaffold(
         topBar = {
-            CustomAppBar(
-                state = appBarState,
-                navController = navController
-            )
+            if (backStackEntry?.destination?.route != Screen.Init.route) {
+                CustomAppBar(
+                    state = appBarState,
+                    navController = navController
+                )
+            }
         },
         bottomBar = {
-            CustomBottomNavigation(
-                navController = navController,
-                uiController = uiController,
-                state = bottomNavigationState
-            )
+            if (backStackEntry?.destination?.route != Screen.Init.route) {
+                CustomBottomNavigation(
+                    navController = navController,
+                    uiController = uiController,
+                    state = bottomNavigationState
+                )
+            }
         },
         snackbarHost = {
             SnackbarHost(
