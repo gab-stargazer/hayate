@@ -45,7 +45,7 @@ import com.lelestacia.hayate.feature.anime.detail.ui.component.CardSection
 internal fun AnimeDetailScreen(
     anime: Anime,
     modifier: Modifier = Modifier,
-    isDarkTheme: Boolean = isSystemInDarkTheme()
+    isDarkTheme: Boolean = isSystemInDarkTheme(),
 ) {
     val state = rememberModalBottomSheetState(
 
@@ -111,6 +111,17 @@ internal fun AnimeDetailScreen(
             contentPadding = PaddingValues(horizontal = padding.small),
             horizontalArrangement = Arrangement.spacedBy(spacing.small)
         ) {
+
+            items(count = anime.demographics.size) { index ->
+                val demographic = anime.demographics[index]
+                HayateCustomChip(
+                    text = demographic.name,
+                    onClick = {
+                        // TODO: Implement this later
+                    }
+                )
+            }
+
             items(count = anime.genres.size) { index ->
                 val genre = anime.genres[index]
                 HayateCustomChip(
@@ -120,6 +131,16 @@ internal fun AnimeDetailScreen(
                     }
                 )
             }
+
+//            items(count = anime.themes.size) { index ->
+//                val theme = anime.themes[index]
+//                HayateCustomChip(
+//                    text = theme.name,
+//                    onClick = {
+//                        // TODO: Implement this later
+//                    }
+//                )
+//            }
         }
 
         Column(

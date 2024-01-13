@@ -7,5 +7,7 @@ data class AppBarState(
     val isDarkTheme: Boolean = false,
     val shouldAppBarBeVisible: Boolean = false,
     val shouldNavigationIconBeVisible: Boolean = false,
-    @StringRes val appBarTitle: Int = R.string.japanese_app_name
+    @StringRes val appBarTitle: Int = R.string.japanese_app_name,
+    val animeID: Int? = null,
+    val trailerURL: String? = null,
 )

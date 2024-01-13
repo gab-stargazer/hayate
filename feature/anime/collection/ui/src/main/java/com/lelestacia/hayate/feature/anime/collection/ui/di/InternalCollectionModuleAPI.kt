@@ -7,6 +7,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import com.lelestacia.hayate.common.shared.Screen
+import com.lelestacia.hayate.common.shared.event.HayateEvent
 import com.lelestacia.hayate.feature.anime.collection.ui.CollectionScreen
 
 internal object InternalCollectionModuleAPI : CollectionModuleAPI {
@@ -14,7 +15,8 @@ internal object InternalCollectionModuleAPI : CollectionModuleAPI {
     override fun registerGraph(
         navController: NavHostController,
         navGraphBuilder: NavGraphBuilder,
-        snackBarHostState: SnackbarHostState
+        snackBarHostState: SnackbarHostState,
+        onEvent: (HayateEvent) -> Unit,
     ) {
         navGraphBuilder.composable(
             route = Screen.Collection.route

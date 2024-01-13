@@ -5,6 +5,7 @@ import androidx.paging.cachedIn
 import com.lelestacia.hayate.feature.anime.exploration.domain.presenter.schedule.ScheduleAnimeEvent
 import com.lelestacia.hayate.feature.anime.exploration.domain.presenter.schedule.ScheduleAnimeState
 import com.lelestacia.hayate.feature.anime.exploration.domain.usecases.AnimeUseCases
+import com.lelestacia.hayate.feature.anime.exploration.ui.Constant.FIREBASE_RC_FEATURE_DAILY
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class ScheduleViewModel @Inject constructor(
-    private val animeUseCases: AnimeUseCases
+    private val animeUseCases: AnimeUseCases,
 ) : BaseExploreViewModel(animeUseCases) {
 
     private val _state: MutableStateFlow<ScheduleAnimeState> =
@@ -25,7 +26,7 @@ internal class ScheduleViewModel @Inject constructor(
     val state: StateFlow<ScheduleAnimeState> =
         _state.asStateFlow()
 
-    val isFeatureEnabled = animeUseCases.isFeatureEnabled("daily")
+    val isFeatureEnabled = animeUseCases.isFeatureEnabled(FIREBASE_RC_FEATURE_DAILY)
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.Eagerly,

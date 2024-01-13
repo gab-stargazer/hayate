@@ -111,6 +111,7 @@ dependencies {
     //  Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.crashlytic)
+    implementation(projects.common.firebase)
 
     //  Ktx
     implementation(libs.core.ktx)
@@ -140,6 +141,7 @@ dependencies {
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.icon)
     implementation(libs.compose.font)
+    implementation(libs.compose.icons.font.awesome)
 
     //  Coroutine
     implementation(libs.coroutine)

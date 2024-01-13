@@ -83,6 +83,7 @@ fun Hayate(
             if (backStackEntry?.destination?.route != Screen.Init.route) {
                 CustomAppBar(
                     state = appBarState,
+                    onEvent = vm::onEvent,
                     navController = navController
                 )
             }
@@ -119,7 +120,8 @@ fun Hayate(
                 feature.registerGraph(
                     navGraphBuilder = this,
                     navController = navController,
-                    snackBarHostState = snackBarHostState
+                    snackBarHostState = snackBarHostState,
+                    onEvent = vm::onEvent
                 )
             }
 
@@ -132,4 +134,6 @@ fun Hayate(
             }
         }
     }
+
+
 }

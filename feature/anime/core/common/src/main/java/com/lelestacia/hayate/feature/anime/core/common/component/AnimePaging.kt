@@ -16,7 +16,6 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.itemContentType
-import androidx.paging.compose.itemKey
 import com.lelestacia.hayate.common.shared.screen.ErrorScreen
 import com.lelestacia.hayate.common.shared.screen.LoadingScreen
 import com.lelestacia.hayate.feature.anime.core.domain.model.Anime
@@ -60,9 +59,6 @@ fun AnimePagingLazyGrid(
 
                 items(
                     count = animePaging.itemCount,
-                    key = animePaging.itemKey { anime ->
-                        anime.malId
-                    },
                     contentType = animePaging.itemContentType()
                 ) { index ->
                     val currentAnime: Anime? = animePaging[index]

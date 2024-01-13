@@ -37,6 +37,10 @@ android {
 
 dependencies {
 
+    //=====Common=====
+    implementation(projects.common.shared)
+    implementation(projects.common.preferences)
+
     //=====Firebase=====
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytic)
@@ -45,6 +49,11 @@ dependencies {
     //=====Hilt=====
     implementation(libs.hilt)
     ksp(libs.hilt.compiler)
+    implementation(libs.hilt.worker)
+    ksp(libs.hilt.worker.compiler)
+
+    //=====Worker=====
+    implementation(libs.worker)
 
     //=====Timber=====
     implementation(libs.timber)

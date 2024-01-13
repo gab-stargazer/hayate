@@ -22,6 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.google.accompanist.systemuicontroller.SystemUiController
+import com.lelestacia.hayate.common.shared.Screen
 import com.lelestacia.hayate.common.theme.quickSandFamily
 import com.lelestacia.hayate.domain.state.BottomNavigationState
 
@@ -53,12 +54,12 @@ fun CustomBottomNavigation(
         visible = state.isRootDestination,
         enter = slideInVertically(
             initialOffsetY = { it },
-            animationSpec = tween(250) // adjust duration as needed
-        ) + fadeIn(animationSpec = tween(250)), // adjust duration as needed
+            animationSpec = tween(250)
+        ) + fadeIn(animationSpec = tween(250)),
         exit = slideOutVertically(
             targetOffsetY = { it },
-            animationSpec = tween(250) // adjust duration as needed
-        ) + fadeOut(animationSpec = tween(250)) // adjust duration as needed
+            animationSpec = tween(250)
+        ) + fadeOut(animationSpec = tween(250))
     ) {
         NavigationBar(
             containerColor = MaterialTheme.colorScheme.background
@@ -68,7 +69,7 @@ fun CustomBottomNavigation(
                     selected = state.selectedRoute == item.route,
                     onClick = {
                         navController.navigate(item.route) {
-                            popUpTo(id = navController.graph.startDestinationId) {
+                            popUpTo(route = Screen.Exploration.route) {
                                 saveState = true
                             }
                             restoreState = true

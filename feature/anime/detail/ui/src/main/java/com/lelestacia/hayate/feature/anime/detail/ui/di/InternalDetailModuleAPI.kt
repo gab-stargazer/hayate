@@ -6,13 +6,16 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.lelestacia.hayate.common.shared.Screen
 import com.lelestacia.hayate.common.shared.api.FeatureApi
+import com.lelestacia.hayate.common.shared.event.HayateEvent
 import com.lelestacia.hayate.common.shared.util.parcelable
+import com.lelestacia.hayate.feature.anime.core.common.parcelable.AnimeNavType
 import com.lelestacia.hayate.feature.anime.core.domain.model.Anime
 import com.lelestacia.hayate.feature.anime.detail.ui.screen.AnimeDetailScreen
 import com.lelestacia.hayate.feature.anime.detail.ui.util.Constant.KEY_DATA
@@ -22,13 +25,14 @@ internal object InternalDetailModuleAPI : FeatureApi {
     override fun registerGraph(
         navController: NavHostController,
         navGraphBuilder: NavGraphBuilder,
-        snackBarHostState: SnackbarHostState
+        snackBarHostState: SnackbarHostState,
+        onEvent: (HayateEvent) -> Unit,
     ) {
         navGraphBuilder.composable(
             route = Screen.Detail.route,
             arguments = listOf(
                 navArgument(KEY_DATA) {
-                    type = com.lelestacia.hayate.feature.anime.core.common.parcelable.AnimeNavType()
+                    type = AnimeNavType()
                 }
             ),
             enterTransition = {
@@ -61,6 +65,13 @@ internal object InternalDetailModuleAPI : FeatureApi {
             }
         ) {
             val anime = it.arguments?.parcelable<Anime>(KEY_DATA)
+            LaunchedEffect(key1 = Unit) {
+                val event = HayateEvent.OnDetailAnimeToolbar(
+                    animeID = anime?.malId,
+                    trailerURL = anime?.trailer?.url
+                )
+                onEvent(event)
+            }
             AnimeDetailScreen(anime = anime as Anime)
         }
     }

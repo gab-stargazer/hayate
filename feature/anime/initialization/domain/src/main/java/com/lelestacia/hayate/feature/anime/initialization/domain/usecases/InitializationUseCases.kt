@@ -16,17 +16,17 @@ class InitializationUseCases @Inject constructor(
     private val configPreferences: ConfigPreferences
 ) {
 
-    fun isAnimeFeatureInitialized(): Flow<Boolean> {
-        return configPreferences.isAnimeFeatureInitialized()
-    }
+//    fun isAnimeFeatureInitialized(): Flow<Boolean> {
+//        return configPreferences.isAnimeFeatureInitialized()
+//    }
 
-    suspend fun featureAnimeInitiated() {
-        configPreferences.featureAnimeInitiated()
-    }
+//    suspend fun featureAnimeInitiated() {
+//        configPreferences.featureAnimeInitiated()
+//    }
 
-    fun initiateFeature(): Flow<DataState<Boolean>> {
-        return animeRepository.initiateApp()
-    }
+//    fun initiateFeature(): Flow<DataState<Boolean>> {
+//        return animeRepository.initiateApp()
+//    }
 
     fun checkForFirebaseConfig(): Flow<DataState<Boolean>> =
         flow<DataState<Boolean>> {

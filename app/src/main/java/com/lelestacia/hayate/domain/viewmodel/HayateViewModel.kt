@@ -71,6 +71,15 @@ class HayateViewModel @Inject constructor() : BaseViewModel() {
             is HayateEvent.OnDestinationChangedWithTitle -> {
 
             }
+
+            is HayateEvent.OnDetailAnimeToolbar -> {
+                _appBarState.update {
+                    it.copy(
+                        animeID = event.animeID,
+                        trailerURL = event.trailerURL
+                    )
+                }
+            }
         }
     }
 }

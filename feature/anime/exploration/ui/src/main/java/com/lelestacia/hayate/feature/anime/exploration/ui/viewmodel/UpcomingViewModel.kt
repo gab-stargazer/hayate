@@ -9,6 +9,7 @@ import com.lelestacia.hayate.feature.anime.core.domain.model.Anime
 import com.lelestacia.hayate.feature.anime.exploration.domain.presenter.upcoming.UpcomingAnimeEvent
 import com.lelestacia.hayate.feature.anime.exploration.domain.presenter.upcoming.UpcomingAnimeState
 import com.lelestacia.hayate.feature.anime.exploration.domain.usecases.AnimeUseCases
+import com.lelestacia.hayate.feature.anime.exploration.ui.Constant.FIREBASE_RC_FEATURE_UPCOMING
 import com.lelestacia.hayate.feature.anime.exploration.ui.Constant.UPCOMING_ANIME_TYPE_KEY
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -29,7 +30,7 @@ internal class UpcomingViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle
 ) : BaseExploreViewModel(animeUseCases) {
 
-    val isFeatureEnabled = animeUseCases.isFeatureEnabled("upcoming")
+    val isFeatureEnabled = animeUseCases.isFeatureEnabled(FIREBASE_RC_FEATURE_UPCOMING)
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.Eagerly,

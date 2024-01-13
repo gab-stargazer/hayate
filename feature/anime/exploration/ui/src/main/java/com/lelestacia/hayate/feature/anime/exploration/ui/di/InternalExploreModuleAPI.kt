@@ -32,6 +32,7 @@ import androidx.navigation.compose.composable
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.lelestacia.hayate.common.shared.Screen
 import com.lelestacia.hayate.common.shared.api.FeatureApi
+import com.lelestacia.hayate.common.shared.event.HayateEvent
 import com.lelestacia.hayate.common.shared.util.toJson
 import com.lelestacia.hayate.common.theme.quickSandFamily
 import com.lelestacia.hayate.feature.anime.core.domain.model.Anime
@@ -57,7 +58,8 @@ internal object InternalExploreModuleAPI : FeatureApi {
     override fun registerGraph(
         navController: NavHostController,
         navGraphBuilder: NavGraphBuilder,
-        snackBarHostState: SnackbarHostState
+        snackBarHostState: SnackbarHostState,
+        onEvent: (HayateEvent) -> Unit,
     ) {
         navGraphBuilder.composable(
             route = Screen.Exploration.route
