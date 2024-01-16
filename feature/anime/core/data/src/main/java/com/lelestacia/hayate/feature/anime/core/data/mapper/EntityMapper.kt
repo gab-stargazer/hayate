@@ -1,9 +1,23 @@
 package com.lelestacia.hayate.feature.anime.core.data.mapper
 
 import com.lelestacia.hayate.feature.anime.core.domain.model.Anime
+import com.lelestacia.hayate.feature.anime.core.domain.model.aired.AnimeAired
+import com.lelestacia.hayate.feature.anime.core.domain.model.aired.AnimeProp
+import com.lelestacia.hayate.feature.anime.core.domain.model.aired.AnimePropFrom
+import com.lelestacia.hayate.feature.anime.core.domain.model.aired.AnimePropTo
+import com.lelestacia.hayate.feature.anime.core.domain.model.broadcast.AnimeBroadcast
 import com.lelestacia.hayate.feature.anime.core.domain.model.demographic.AnimeDemographic
 import com.lelestacia.hayate.feature.anime.core.domain.model.genre.AnimeGenre
+import com.lelestacia.hayate.feature.anime.core.domain.model.image.AnimeImages
+import com.lelestacia.hayate.feature.anime.core.domain.model.image.AnimeJpg
+import com.lelestacia.hayate.feature.anime.core.domain.model.image.AnimeWebp
+import com.lelestacia.hayate.feature.anime.core.domain.model.licensor.AnimeLicensor
+import com.lelestacia.hayate.feature.anime.core.domain.model.producer.AnimeProducer
+import com.lelestacia.hayate.feature.anime.core.domain.model.studio.AnimeStudio
 import com.lelestacia.hayate.feature.anime.core.domain.model.theme.AnimeTheme
+import com.lelestacia.hayate.feature.anime.core.domain.model.title.AnimeTitle
+import com.lelestacia.hayate.feature.anime.core.domain.model.trailer.AnimeTrailer
+import com.lelestacia.hayate.feature.anime.core.domain.model.trailer.AnimeTrailerImages
 import com.lelestacia.hayate.feature.anime.core.source.local.api.entity.AnimeEntity
 import com.lelestacia.hayate.feature.anime.core.source.local.api.entity.aired.AnimeAiredEntity
 import com.lelestacia.hayate.feature.anime.core.source.local.api.entity.aired.AnimePropEntity
@@ -98,12 +112,14 @@ fun Anime.asNewEntity(): AnimeEntity {
             )
         ),
         approved = approved,
-        titles = titles.map {
-            AnimeTitleEntity(
-                type = it.type,
-                title = it.title
-            )
-        },
+        titles = AnimeTitleEntity(
+            data = titles.map { title ->
+                AnimeTitleEntity.Content(
+                    type = title.type,
+                    title = title.title
+                )
+            }
+        ),
         title = title,
         titleEnglish = titleEnglish,
         titleJapanese = titleJapanese,
@@ -216,6 +232,161 @@ fun Anime.asNewEntity(): AnimeEntity {
                 url = demographic.url,
                 createdAt = Date(),
                 updatedAt = null
+            )
+        }
+    )
+}
+
+fun AnimeImageEntity.asAnimeImage(): AnimeImages {
+    return AnimeImages(
+        jpg = AnimeJpg(
+            imageUrl = jpg.imageUrl,
+            smallImageUrl = jpg.smallImageUrl,
+            largeImageUrl = jpg.largeImageUrl
+        ),
+        webp = AnimeWebp(
+            imageUrl = webp.imageUrl,
+            smallImageUrl = webp.smallImageUrl,
+            largeImageUrl = webp.largeImageUrl
+        )
+    )
+}
+
+fun AnimeTrailerEntity.asAnimeTrailer(): AnimeTrailer {
+    return AnimeTrailer(
+        youtubeId = youtubeId,
+        url = url,
+        embedUrl = embedUrl,
+        images = AnimeTrailerImages(
+            imageUrl = images.imageUrl,
+            smallImageUrl = images.smallImageUrl,
+            mediumImageUrl = images.mediumImageUrl,
+            largeImageUrl = images.largeImageUrl,
+            maximumImageUrl = images.maximumImageUrl
+        )
+    )
+}
+
+fun AnimeAiredEntity.asAnimeAired(): AnimeAired {
+    return AnimeAired(
+        from = from,
+        to = to,
+        prop = AnimeProp(
+            from = AnimePropFrom(
+                day = prop.from.day,
+                month = prop.from.month,
+                year = prop.from.year
+            ),
+            to = AnimePropTo(
+                day = prop.to.day,
+                month = prop.to.month,
+                year = prop.to.year,
+            )
+        ),
+        string = string
+    )
+}
+
+fun AnimeBroadcastEntity.asAnimeBroadcast(): AnimeBroadcast {
+    return AnimeBroadcast(
+        day = day,
+        time = time,
+        timezone = timezone,
+        string = string
+    )
+}
+
+
+fun AnimeEntity.asAnime(): Anime {
+    return Anime(
+        malId = malId,
+        url = url,
+        images = images.asAnimeImage(),
+        trailer = trailer.asAnimeTrailer(),
+        approved = approved,
+        titles = titles.data.map { title ->
+            AnimeTitle(
+                type = title.type,
+                title = title.title
+            )
+        },
+        title = title,
+        titleEnglish = titleEnglish,
+        titleJapanese = titleJapanese,
+        titleSynonyms = titleSynonyms,
+        type = type,
+        source = source,
+        episodes = episodes,
+        status = status,
+        airing = airing,
+        aired = aired.asAnimeAired(),
+        duration = duration,
+        rating = rating,
+        score = score,
+        scoredBy = scoredBy,
+        rank = rank,
+        popularity = popularity,
+        members = members,
+        favorites = favorites,
+        synopsis = synopsis,
+        background = background,
+        season = season,
+        year = year,
+        broadcast = broadcast.asAnimeBroadcast(),
+        producers = producers.map { producer ->
+            AnimeProducer(
+                malId = producer.malId,
+                type = producer.type,
+                name = producer.name,
+                url = producer.url
+            )
+        },
+        licensors = licensors.map { licensor ->
+            AnimeLicensor(
+                malId = licensor.malId,
+                type = licensor.type,
+                name = licensor.name,
+                url = licensor.url,
+            )
+        },
+        studios = studios.map { studio ->
+            AnimeStudio(
+                malId = studio.malId,
+                type = studio.type,
+                name = studio.name,
+                url = studio.url,
+            )
+        },
+        genres = genres.map { genre ->
+            AnimeGenre(
+                malId = genre.malId,
+                type = genre.type,
+                name = genre.name,
+                url = genre.url
+            )
+        },
+        explicitGenres = explicitGenres.map { genre ->
+            AnimeGenre(
+                malId = genre.malId,
+                type = genre.type,
+                name = genre.name,
+                url = genre.url
+            )
+        },
+        themes = themes.map { theme ->
+            AnimeTheme(
+                malId = theme.malId,
+                type = theme.type,
+                name = theme.name,
+                url = theme.url
+            )
+        },
+        demographics = demographics.map { demographic ->
+            AnimeDemographic(
+                malId = demographic.malId,
+                type = demographic.type,
+                name = demographic.name,
+                url = demographic.url,
             )
         }
     )

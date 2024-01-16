@@ -109,7 +109,8 @@ internal object InternalModule {
         themeDao: ThemeDao,
         titleDao: TitleDao,
         demographicDao: DemographicDao,
-        @IoDispatcher ioDispatcher: CoroutineContext
+        watchlistDao: WatchlistDao,
+        @IoDispatcher ioDispatcher: CoroutineContext,
     ): AnimeLocalDataSourceApi {
         return AnimeLocalDataSourceImpl(
             animeDao = animeDao,
@@ -121,6 +122,7 @@ internal object InternalModule {
             themeDao = themeDao,
             titleDao = titleDao,
             demographicDao = demographicDao,
+            watchlistDao = watchlistDao,
             ioDispatcher = ioDispatcher
         )
     }

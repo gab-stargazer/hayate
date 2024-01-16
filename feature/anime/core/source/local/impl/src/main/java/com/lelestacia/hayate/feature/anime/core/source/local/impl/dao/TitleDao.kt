@@ -9,5 +9,5 @@ import com.lelestacia.hayate.feature.anime.core.source.local.impl.entity.anime.A
 interface TitleDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertTitles(titles: List<AnimeTitleSynonymEntity>)
+    suspend fun insertTitleSynonyms(titles: List<AnimeTitleSynonymEntity>)
 }

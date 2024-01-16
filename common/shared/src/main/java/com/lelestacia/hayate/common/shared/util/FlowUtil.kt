@@ -11,8 +11,8 @@ import kotlinx.coroutines.flow.collectLatest
 @Composable
 inline fun <T> HandleEvent(
     event: T,
-    crossinline onEvent: suspend (T) -> Unit,
-    crossinline postEvent: suspend () -> Unit
+    crossinline onEvent: (T) -> Unit,
+    crossinline postEvent: () -> Unit,
 ) {
     LaunchedEffect(key1 = event) {
         onEvent(event)
@@ -23,7 +23,7 @@ inline fun <T> HandleEvent(
 @Composable
 inline fun <reified T> Flow<T>.CollectInLaunchEffect(
     key: Any,
-    noinline block: suspend (T) -> Unit
+    noinline block: suspend (T) -> Unit,
 ) {
     val lifeCycle = LocalLifecycleOwner.current.lifecycle
     LaunchedEffect(key1 = key) {
@@ -35,7 +35,7 @@ inline fun <reified T> Flow<T>.CollectInLaunchEffect(
 
 @Composable
 inline fun <reified T> Flow<T>.CollectInLaunchEffect(
-    noinline block: suspend (T) -> Unit
+    noinline block: suspend (T) -> Unit,
 ) {
     val lifeCycle = LocalLifecycleOwner.current.lifecycle
     LaunchedEffect(key1 = Unit) {

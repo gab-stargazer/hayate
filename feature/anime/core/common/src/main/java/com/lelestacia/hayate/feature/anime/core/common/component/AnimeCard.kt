@@ -36,7 +36,8 @@ import com.lelestacia.hayate.feature.anime.core.domain.model.Anime
 internal fun AnimeCard(
     anime: Anime,
     onClick: (Anime) -> Unit,
-    isDarkTheme: Boolean
+    isDarkTheme: Boolean,
+    modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
     val lifecycle = LocalLifecycleOwner.current
@@ -50,7 +51,7 @@ internal fun AnimeCard(
     ) {
         Box(
             contentAlignment = Alignment.BottomStart,
-            modifier = Modifier
+            modifier = modifier
                 .clip(RoundedCornerShape(4))
                 .border(
                     width = 1.dp,

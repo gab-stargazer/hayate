@@ -171,6 +171,7 @@ retrofit-moshi = { group = "com.squareup.retrofit2", name = "converter-moshi", v
 room = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+room-paging = { group = "androidx.room", name = "room-paging", version.ref = "room" }
 
 #   Ui Test
 ui-test-android-junit = { group = "androidx.test.ext", name = "junit", version.ref = "ui-test-android-junit" }

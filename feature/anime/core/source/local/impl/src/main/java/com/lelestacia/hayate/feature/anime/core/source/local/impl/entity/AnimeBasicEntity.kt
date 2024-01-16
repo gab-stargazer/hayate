@@ -35,7 +35,7 @@ data class AnimeBasicEntity(
     val approved: Boolean,
 
     @ColumnInfo(name = "titles")
-    val titles: List<AnimeTitleEntity>,
+    val titles: AnimeTitleEntity,
 
     @ColumnInfo(name = "title")
     val title: String,
@@ -130,5 +130,5 @@ data class AnimeBasicEntity(
     val createdAt: Date,
 
     @ColumnInfo(name = "updated_at")
-    var updatedAt: Date?
+    var updatedAt: Date?,
 )

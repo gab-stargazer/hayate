@@ -1,5 +1,7 @@
 package com.lelestacia.hayate.common.shared.event
 
+import com.lelestacia.hayate.common.shared.util.UiText
+
 sealed class HayateEvent {
     data class OnDarkThemeChanged(val isDarkTheme: Boolean) : HayateEvent()
     data class OnDestinationChanged(val route: String) : HayateEvent()
@@ -8,4 +10,8 @@ sealed class HayateEvent {
         val animeID: Int?,
         val trailerURL: String?,
     ) : HayateEvent()
+
+    data class ShowSnackBar(val message: UiText) : HayateEvent()
+
+    data class OnNavigate(val navigation: HayateNavigationType) : HayateEvent()
 }

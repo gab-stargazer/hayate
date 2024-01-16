@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "f5a48e277f79432df4bfa07597aaf287",
+    "identityHash": "ea636503869bdaf93748bc182e2c9615",
     "entities": [
       {
         "tableName": "demographic",
@@ -452,14 +452,8 @@
       },
       {
         "tableName": "watchlist",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `anime_id` INTEGER NOT NULL, PRIMARY KEY(`id`, `anime_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`anime_id` INTEGER NOT NULL, PRIMARY KEY(`anime_id`))",
         "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
           {
             "fieldPath": "animeId",
             "columnName": "anime_id",
@@ -470,7 +464,6 @@
         "primaryKey": {
           "autoGenerate": false,
           "columnNames": [
-            "id",
             "anime_id"
           ]
         },
@@ -479,11 +472,10 @@
             "name": "index_watchlist_id_anime_id",
             "unique": true,
             "columnNames": [
-              "id",
               "anime_id"
             ],
             "orders": [],
-            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_watchlist_id_anime_id` ON `${TABLE_NAME}` (`id`, `anime_id`)"
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_watchlist_id_anime_id` ON `${TABLE_NAME}` (`anime_id`)"
           }
         ],
         "foreignKeys": []
@@ -1134,7 +1126,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f5a48e277f79432df4bfa07597aaf287')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ea636503869bdaf93748bc182e2c9615')"
     ]
   }
 }

@@ -18,8 +18,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -28,17 +30,20 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.lelestacia.hayate.common.shared.Screen
 import com.lelestacia.hayate.common.shared.api.FeatureApi
 import com.lelestacia.hayate.common.shared.event.HayateEvent
+import com.lelestacia.hayate.common.shared.event.HayateNavigationType
+import com.lelestacia.hayate.common.shared.util.CollectInLaunchEffect
+import com.lelestacia.hayate.common.shared.util.HandleEvent
 import com.lelestacia.hayate.component.CustomAppBar
 import com.lelestacia.hayate.component.CustomBottomNavigation
 import com.lelestacia.hayate.domain.viewmodel.HayateViewModel
 import com.lelestacia.hayate.feature.settings.ui.SettingScreen
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @Composable
 fun Hayate(
-    navigationProvider: Set<@JvmSuppressWildcards FeatureApi>,
-    vm: HayateViewModel = hiltViewModel()
+    featureProvider: Set<@JvmSuppressWildcards FeatureApi>,
+    vm: HayateViewModel = hiltViewModel(),
 ) {
 
     val appBarState by vm.appBarState.collectAsStateWithLifecycle()
@@ -50,19 +55,14 @@ fun Hayate(
     }
 
     val scope = rememberCoroutineScope()
-    LaunchedEffect(key1 = Unit) {
-        navController.currentBackStackEntryFlow.onEach { navBackStackEntry ->
-            navBackStackEntry.destination.route?.let { validRoute ->
-                vm.onEvent(HayateEvent.OnDestinationChanged(validRoute))
-            }
-        }.launchIn(scope)
-    }
+    val context = LocalContext.current
 
     val uiController = rememberSystemUiController()
     val isDarkTheme = isSystemInDarkTheme()
     val surfaceColor = MaterialTheme.colorScheme.surface
 
-    val backStackEntry by navController.currentBackStackEntryFlow
+    val backStackEntry by navController
+        .currentBackStackEntryFlow
         .collectAsStateWithLifecycle(initialValue = null)
 
     DisposableEffect(key1 = backStackEntry) {
@@ -70,32 +70,28 @@ fun Hayate(
             color = surfaceColor,
             darkIcons = !isDarkTheme
         )
-        onDispose { }
+        onDispose {
+            Timber.i("Disposable effect is disposed. Hmmm, weird sentence")
+        }
     }
 
     LaunchedEffect(key1 = Unit) {
         vm.onEvent(HayateEvent.OnDarkThemeChanged(isDarkTheme))
     }
 
-
     Scaffold(
         topBar = {
-            if (backStackEntry?.destination?.route != Screen.Init.route) {
-                CustomAppBar(
-                    state = appBarState,
-                    onEvent = vm::onEvent,
-                    navController = navController
-                )
-            }
+            CustomAppBar(
+                state = appBarState,
+                onEvent = vm::onEvent
+            )
         },
         bottomBar = {
-            if (backStackEntry?.destination?.route != Screen.Init.route) {
-                CustomBottomNavigation(
-                    navController = navController,
-                    uiController = uiController,
-                    state = bottomNavigationState
-                )
-            }
+            CustomBottomNavigation(
+                uiController = uiController,
+                state = bottomNavigationState,
+                onEvent = vm::onEvent
+            )
         },
         snackbarHost = {
             SnackbarHost(
@@ -116,7 +112,11 @@ fun Hayate(
                 .animateContentSize()
         ) {
 
-            navigationProvider.forEach { feature ->
+            /*
+             *  This part just need a repetition for each feature provider
+             */
+
+            featureProvider.forEach { feature ->
                 feature.registerGraph(
                     navGraphBuilder = this,
                     navController = navController,
@@ -135,5 +135,64 @@ fun Hayate(
         }
     }
 
+    val snackBarState by vm.snackBarMessage.collectAsStateWithLifecycle()
+    HandleEvent(
+        event = snackBarState,
+        onEvent = { state ->
+            state?.let { uiText ->
+                scope.launch {
+                    snackBarHostState.showSnackbar(uiText.asString(context = context))
+                }
+            }
+        },
+        postEvent = vm::onSnackBarMessageHandled
+    )
 
+    /*
+     *  New navigation system works by having a channel that host a custom data class
+     *  representing a navigation with route as string and nullable options.
+     *  Basically after navigation happened, channel should be cleared since it was consumed
+     *  as flow (FAILED).
+     *
+     *  Created on 16th January 2024
+     *
+     *  Issues list:
+     *      1. App will crash when theme changes due to consume as flow triggered once again
+     *          condition: Using Channel then consumeAsFlow to convert the channel into flow
+     *             The reason why it crashed is because when the app reconstructed because of
+     *             system UI changed, the flow got recollected even tho it supposed to be
+     *             collected only once
+     *  NOTE:
+     *      If you have a fix for this or know something about this, please let me know.
+     *      handling the navigation as a stateflow means i need to handle the state after
+     *      the event is fired, that's why i'm thinking of staying on Channel when found a
+     *      fix for that
+     */
+
+    val navigationState by vm.navigationState.collectAsStateWithLifecycle()
+    HandleEvent(
+        event = navigationState,
+        onEvent = { navigation ->
+            navigation?.let {
+                when (navigation) {
+                    is HayateNavigationType.Navigate -> navController.navigate(
+                        route = navigation.route,
+                        navOptions = navigation.options
+                    )
+
+                    HayateNavigationType.PopBackstack -> navController.popBackStack()
+                }
+            }
+        },
+        postEvent = vm::onNavigationStateHandled
+    )
+
+    navController.currentBackStackEntryFlow.CollectInLaunchEffect(
+        key = Unit,
+        block = { navBackStackEntry: NavBackStackEntry ->
+            navBackStackEntry.destination.route?.let { currentRoute: String ->
+                vm.onEvent(HayateEvent.OnDestinationChanged(currentRoute))
+            }
+        }
+    )
 }

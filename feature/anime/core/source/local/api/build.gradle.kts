@@ -50,4 +50,10 @@ dependencies {
     //  Moshi
     implementation(libs.moshi)
     ksp(libs.moshi.codegen)
+
+    //  Coroutine
+    implementation(libs.coroutine)
+
+    //  Paging
+    implementation(libs.paging)
 }

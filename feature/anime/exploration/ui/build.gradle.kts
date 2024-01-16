@@ -50,12 +50,9 @@ android {
 
 dependencies {
 
-    //  =====Common=====
-    implementation(projects.common.shared)
-    implementation(projects.common.theme)
-
     // =====Feature Anime=====
     implementation(projects.feature.anime.exploration.domain)
+    implementation(projects.feature.anime.core.common)
 
     //  Ktx
     implementation(libs.core.ktx)

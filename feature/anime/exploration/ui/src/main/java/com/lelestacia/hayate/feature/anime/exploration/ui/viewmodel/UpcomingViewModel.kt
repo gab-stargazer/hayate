@@ -6,11 +6,11 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.lelestacia.hayate.feature.anime.core.common.filter.AnimeType
 import com.lelestacia.hayate.feature.anime.core.domain.model.Anime
-import com.lelestacia.hayate.feature.anime.exploration.domain.presenter.upcoming.UpcomingAnimeEvent
-import com.lelestacia.hayate.feature.anime.exploration.domain.presenter.upcoming.UpcomingAnimeState
 import com.lelestacia.hayate.feature.anime.exploration.domain.usecases.AnimeUseCases
 import com.lelestacia.hayate.feature.anime.exploration.ui.Constant.FIREBASE_RC_FEATURE_UPCOMING
 import com.lelestacia.hayate.feature.anime.exploration.ui.Constant.UPCOMING_ANIME_TYPE_KEY
+import com.lelestacia.hayate.feature.anime.exploration.ui.presenter.upcoming.UpcomingAnimeEvent
+import com.lelestacia.hayate.feature.anime.exploration.ui.presenter.upcoming.UpcomingAnimeState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow

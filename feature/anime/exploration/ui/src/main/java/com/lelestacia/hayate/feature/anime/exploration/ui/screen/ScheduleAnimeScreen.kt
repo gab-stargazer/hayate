@@ -22,8 +22,8 @@ import com.lelestacia.hayate.common.theme.padding
 import com.lelestacia.hayate.common.theme.quickSandFamily
 import com.lelestacia.hayate.feature.anime.core.common.component.AnimePagingLazyGrid
 import com.lelestacia.hayate.feature.anime.core.domain.model.Anime
-import com.lelestacia.hayate.feature.anime.exploration.domain.presenter.schedule.ScheduleAnimeState
 import com.lelestacia.hayate.feature.anime.exploration.ui.R
+import com.lelestacia.hayate.feature.anime.exploration.ui.presenter.schedule.ScheduleAnimeState
 
 @Composable
 internal fun ScheduleAnimeScreen(

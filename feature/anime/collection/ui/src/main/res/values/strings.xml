@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="collection_pager_title">
+        <item>History</item>
+        <item>Watch List</item>
+    </array>
+</resources>

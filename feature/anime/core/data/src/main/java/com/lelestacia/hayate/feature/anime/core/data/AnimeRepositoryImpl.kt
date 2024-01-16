@@ -19,6 +19,7 @@ import com.lelestacia.hayate.feature.anime.core.domain.model.genre.AnimeGenre
 import com.lelestacia.hayate.feature.anime.core.domain.model.theme.AnimeTheme
 import com.lelestacia.hayate.feature.anime.core.domain.repository.AnimeRepository
 import com.lelestacia.hayate.feature.anime.core.source.local.api.api.AnimeLocalDataSourceApi
+import com.lelestacia.hayate.feature.anime.core.source.local.api.entity.AnimeEntity
 import com.lelestacia.hayate.feature.anime.core.source.remote.api.api.AnimeRemoteDataSourceApi
 import com.lelestacia.hayate.feature.anime.core.source.remote.api.dto.anime.AnimeDto
 import com.lelestacia.hayate.feature.anime.core.source.remote.api.dto.anime.demographic.AnimeDemographicDto
@@ -36,13 +37,13 @@ import kotlin.time.measureTime
 
 internal class AnimeRepositoryImpl @Inject constructor(
     private val remoteDataSource: AnimeRemoteDataSourceApi,
-    private val localDataSource: AnimeLocalDataSourceApi
+    private val localDataSource: AnimeLocalDataSourceApi,
 ) : AnimeRepository {
 
     override fun getTopAnime(
         type: String?,
         filter: String?,
-        rating: String?
+        rating: String?,
     ): Flow<PagingData<Anime>> {
         return Pager(
             config = PagingConfig(
@@ -61,7 +62,7 @@ internal class AnimeRepositoryImpl @Inject constructor(
 
     override fun getCurrentSeasonAnime(
         filter: String?,
-        sfw: Boolean
+        sfw: Boolean,
     ): Flow<PagingData<Anime>> {
         return Pager(
             config = PagingConfig(
@@ -80,7 +81,7 @@ internal class AnimeRepositoryImpl @Inject constructor(
 
     override fun getUpcomingSeasonAnime(
         filter: String?,
-        sfw: Boolean
+        sfw: Boolean,
     ): Flow<PagingData<Anime>> {
         return Pager(
             config = PagingConfig(
@@ -99,7 +100,7 @@ internal class AnimeRepositoryImpl @Inject constructor(
 
     override fun getScheduledAnime(
         filter: String?,
-        sfw: Boolean
+        sfw: Boolean,
     ): Flow<PagingData<Anime>> {
         return Pager(
             config = PagingConfig(
@@ -181,8 +182,45 @@ internal class AnimeRepositoryImpl @Inject constructor(
         }.onStart {
             emit(DataState.Loading)
         }.catch { t ->
-            t.printStackTrace()
+            Timber.e(t.stackTraceToString())
             emit(DataState.Failed(UiText.MessageString(t.message.orEmpty())))
         }
+    }
+
+    override fun getAnimeByAnimeID(animeID: Int): Flow<DataState<Anime>> {
+        return flow<DataState<Anime>> {
+            val animeEntity: AnimeEntity = localDataSource.getAnimeByAnimeID(animeID)
+            val anime: Anime = animeEntity.asAnime()
+            emit(DataState.Success(data = anime))
+        }.onStart {
+
+        }.catch { t ->
+            Timber.e(t.stackTraceToString())
+            emit(DataState.Failed(UiText.MessageString(t.message.orEmpty())))
+        }
+    }
+
+    override fun getAnimeHistory(): Flow<PagingData<Anime>> {
+        return localDataSource.getAnimeHistory().map { pagingData ->
+            pagingData.map { entity ->
+                entity.asAnime()
+            }
+        }
+    }
+
+    override suspend fun insertWatchList(animeID: Int) {
+        localDataSource.insertWatchList(animeID)
+    }
+
+    override fun getAnimeWatchList(): Flow<PagingData<Anime>> {
+        return localDataSource.getAnimeWatchList().map { pagingData ->
+            pagingData.map { entity ->
+                entity.asAnime()
+            }
+        }
+    }
+
+    override fun getWatchListByAnimeID(animeID: Int): Flow<Boolean> {
+        return localDataSource.getWatchListByAnimeID(animeID)
     }
 }

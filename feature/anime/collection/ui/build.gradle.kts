@@ -54,6 +54,8 @@ dependencies {
     implementation(projects.common.shared)
     implementation(projects.common.theme)
 
+    implementation(projects.feature.anime.collection.domain)
+
     //  Ktx
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)

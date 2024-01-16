@@ -55,17 +55,24 @@ dependencies {
     implementation(projects.feature.anime.core.source.local.api)
     implementation(projects.common.shared)
 
+    //  Coroutine
+    implementation(libs.coroutine)
+
     //  Hilt
     implementation(libs.hilt)
     ksp(libs.hilt.compiler)
 
+    //  Paging
+    implementation(libs.paging)
+
     // Room
     implementation(libs.room)
     implementation(libs.room.ktx)
+    implementation(libs.room.paging)
     ksp(libs.room.compiler)
 
-    //  Coroutine
-    implementation(libs.coroutine)
+    //  Timber
+    implementation(libs.timber)
 
     /*============================ Testing ==============================*/
     // (Required) Writing and executing Unit Tests on the JUnit Platform

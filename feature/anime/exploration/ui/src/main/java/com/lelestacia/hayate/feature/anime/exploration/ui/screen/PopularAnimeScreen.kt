@@ -13,8 +13,8 @@ import com.lelestacia.hayate.common.theme.padding
 import com.lelestacia.hayate.feature.anime.core.common.component.AnimePagingLazyGrid
 import com.lelestacia.hayate.feature.anime.core.common.component.HayateAnimeDropDownFilter
 import com.lelestacia.hayate.feature.anime.core.domain.model.Anime
-import com.lelestacia.hayate.feature.anime.exploration.domain.presenter.popular.PopularAnimeEvent
-import com.lelestacia.hayate.feature.anime.exploration.domain.presenter.popular.PopularAnimeState
+import com.lelestacia.hayate.feature.anime.exploration.ui.presenter.popular.PopularAnimeEvent
+import com.lelestacia.hayate.feature.anime.exploration.ui.presenter.popular.PopularAnimeState
 
 @Composable
 internal fun PopularAnimeScreen(

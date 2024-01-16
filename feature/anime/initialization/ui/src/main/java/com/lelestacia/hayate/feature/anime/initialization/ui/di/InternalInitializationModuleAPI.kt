@@ -2,15 +2,15 @@ package com.lelestacia.hayate.feature.anime.initialization.ui.di
 
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.LaunchedEffect
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
+import androidx.navigation.navOptions
 import com.lelestacia.hayate.common.shared.Screen
 import com.lelestacia.hayate.common.shared.api.FeatureApi
 import com.lelestacia.hayate.common.shared.event.HayateEvent
+import com.lelestacia.hayate.common.shared.event.HayateNavigationType
 import com.lelestacia.hayate.feature.anime.initialization.ui.screen.InitializationScreen
-import com.lelestacia.hayate.feature.anime.initialization.ui.viewmodel.InitializationViewModel
 import kotlinx.coroutines.delay
 
 internal object InternalInitializationModuleAPI : FeatureApi {
@@ -23,16 +23,7 @@ internal object InternalInitializationModuleAPI : FeatureApi {
     ) {
         navGraphBuilder.composable(Screen.Init.route) {
 
-            val vm = hiltViewModel<InitializationViewModel>()
-
-            val handleNavigation: () -> Unit = {
-                navController.navigate(Screen.Exploration.route) {
-                    popUpTo(Screen.Init.route) {
-                        inclusive = true
-                    }
-                }
-            }
-
+//            TODO: Clean this mess later, this things more messy than my future
 //            val isConfigFinished by vm.isConfigFinished.collectAsStateWithLifecycle()
 //            LaunchedEffect(key1 = Unit) {
 //                vm.checkForFirebaseConfig()
@@ -71,7 +62,18 @@ internal object InternalInitializationModuleAPI : FeatureApi {
 
             LaunchedEffect(key1 = Unit) {
                 delay(1500)
-                handleNavigation()
+                val navigationEvent = HayateEvent.OnNavigate(
+                    HayateNavigationType.Navigate(
+                        route = Screen.Exploration.route,
+                        options = navOptions {
+                            popUpTo(Screen.Init.route) {
+                                inclusive = true
+                            }
+                        }
+                    )
+                )
+
+                onEvent(navigationEvent)
             }
         }
     }

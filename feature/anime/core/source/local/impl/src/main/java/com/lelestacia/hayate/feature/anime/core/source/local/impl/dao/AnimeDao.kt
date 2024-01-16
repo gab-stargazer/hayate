@@ -1,5 +1,6 @@
 package com.lelestacia.hayate.feature.anime.core.source.local.impl.dao
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -17,4 +18,12 @@ internal interface AnimeDao {
     @Transaction
     @Query("SELECT * FROM anime WHERE mal_id =:malId LIMIT 1")
     suspend fun getAnimeByAnimeId(malId: Int): AnimeFullEntity
+
+    @Transaction
+    @Query("SELECT * FROM anime ORDER BY created_at DESC")
+    fun getAnimeHistory(): PagingSource<Int, AnimeFullEntity>
+
+    @Transaction
+    @Query("SELECT * FROM anime INNER JOIN watchlist ON anime.mal_id = watchlist.anime_id")
+    fun getAnimeWatchList(): PagingSource<Int, AnimeFullEntity>
 }

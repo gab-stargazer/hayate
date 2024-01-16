@@ -31,4 +31,13 @@ interface AnimeRepository {
     fun initiateApp(): Flow<DataState<Boolean>>
 
     suspend fun insertAnime(anime: Anime): Flow<DataState<Boolean>>
+
+    fun getAnimeByAnimeID(animeID: Int): Flow<DataState<Anime>>
+
+    fun getAnimeHistory(): Flow<PagingData<Anime>>
+
+    suspend fun insertWatchList(animeID: Int)
+
+    fun getAnimeWatchList(): Flow<PagingData<Anime>>
+    fun getWatchListByAnimeID(animeID: Int): Flow<Boolean>
 }

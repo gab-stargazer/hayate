@@ -3,6 +3,8 @@ package com.lelestacia.hayate.domain.viewmodel
 import androidx.lifecycle.viewModelScope
 import com.lelestacia.hayate.common.shared.BaseViewModel
 import com.lelestacia.hayate.common.shared.event.HayateEvent
+import com.lelestacia.hayate.common.shared.event.HayateNavigationType
+import com.lelestacia.hayate.common.shared.util.UiText
 import com.lelestacia.hayate.component.shouldAppBarBeVisible
 import com.lelestacia.hayate.domain.state.AppBarState
 import com.lelestacia.hayate.domain.state.BottomNavigationState
@@ -24,6 +26,18 @@ class HayateViewModel @Inject constructor() : BaseViewModel() {
     private val _route: Channel<String> = Channel()
     val route: Flow<String> = _route.receiveAsFlow()
 
+    private val _navigationState: MutableStateFlow<HayateNavigationType?> =
+        MutableStateFlow(null)
+    val navigationState: StateFlow<HayateNavigationType?> =
+        _navigationState.asStateFlow()
+
+    /*
+     *  Doing this as channel have a flaw, when the app theme changed,
+     *  flow got recollected and it will cause a crash
+     */
+    //  private val _navigationRoute: Channel<HayateNavigationType> = Channel()
+    //  val navigationRoute: Flow<HayateNavigationType> = _navigationRoute.consumeAsFlow()
+
     private val _appBarState: MutableStateFlow<AppBarState> =
         MutableStateFlow(AppBarState())
     val appBarState: StateFlow<AppBarState> =
@@ -33,6 +47,11 @@ class HayateViewModel @Inject constructor() : BaseViewModel() {
         MutableStateFlow(BottomNavigationState())
     val bottomNavigationState: StateFlow<BottomNavigationState> =
         _bottomNavigationState.asStateFlow()
+
+    private val _snackBarMessage: MutableStateFlow<UiText?> =
+        MutableStateFlow(null)
+    val snackBarMessage: StateFlow<UiText?> =
+        _snackBarMessage.asStateFlow()
 
     fun onEvent(event: HayateEvent) = viewModelScope.launch {
         when (event) {
@@ -80,6 +99,25 @@ class HayateViewModel @Inject constructor() : BaseViewModel() {
                     )
                 }
             }
+
+            is HayateEvent.ShowSnackBar -> {
+                _snackBarMessage.update { event.message }
+            }
+
+            is HayateEvent.OnNavigate -> {
+                _navigationState.update {
+                    event.navigation
+                }
+            }
         }
     }
+
+    fun onSnackBarMessageHandled() = viewModelScope.launch {
+        _snackBarMessage.update { null }
+    }
+
+    fun onNavigationStateHandled() = viewModelScope.launch {
+        _navigationState.update { null }
+    }
 }
+

@@ -2,7 +2,7 @@ package com.lelestacia.hayate.feature.anime.exploration.ui.di
 
 import android.net.Uri
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,7 +19,6 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.text.font.FontWeight
@@ -29,10 +28,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
+import androidx.navigation.navOptions
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.lelestacia.hayate.common.shared.Screen
 import com.lelestacia.hayate.common.shared.api.FeatureApi
 import com.lelestacia.hayate.common.shared.event.HayateEvent
+import com.lelestacia.hayate.common.shared.event.HayateNavigationType
+import com.lelestacia.hayate.common.shared.screen.DisableScreen
 import com.lelestacia.hayate.common.shared.util.toJson
 import com.lelestacia.hayate.common.theme.quickSandFamily
 import com.lelestacia.hayate.feature.anime.core.domain.model.Anime
@@ -45,7 +47,6 @@ import com.lelestacia.hayate.feature.anime.exploration.ui.viewmodel.AiringViewMo
 import com.lelestacia.hayate.feature.anime.exploration.ui.viewmodel.PopularViewModel
 import com.lelestacia.hayate.feature.anime.exploration.ui.viewmodel.ScheduleViewModel
 import com.lelestacia.hayate.feature.anime.exploration.ui.viewmodel.UpcomingViewModel
-import kotlinx.coroutines.launch
 
 internal object InternalExploreModuleAPI : FeatureApi {
 
@@ -102,17 +103,27 @@ internal object InternalExploreModuleAPI : FeatureApi {
 
             val handleAnimeClicked: (Anime) -> Unit = { clickedAnime ->
                 val jsonAnime = toJson(clickedAnime)
-                navController.navigate(
-                    Screen.Detail.createRoute(
-                        jsonAnime = Uri.encode(jsonAnime)
+                val event = HayateEvent.OnNavigate(
+                    HayateNavigationType.Navigate(
+                        route = Screen.Detail.createRoute(
+                            jsonAnime = Uri.encode(jsonAnime)
+                        ),
+                        options = navOptions {
+                            launchSingleTop = true
+                        }
                     )
-                ) {
-                    launchSingleTop = true
-                }
+                )
+                onEvent(event)
 
-                scope.launch {
-                    popularAnimeVm.insertAnime(clickedAnime)
-                }
+                //  navController.navigate(
+                //      Screen.Detail.createRoute(
+                //          jsonAnime = Uri.encode(jsonAnime)
+                //  )
+                //      ) {
+                //          launchSingleTop = true
+                //      }
+
+                popularAnimeVm.insertAnime(clickedAnime)
             }
 
             Column(
@@ -157,12 +168,10 @@ internal object InternalExploreModuleAPI : FeatureApi {
                                     modifier = Modifier.weight(1f),
                                 )
                             } else {
-                                Box(
-                                    contentAlignment = Alignment.Center,
+                                DisableScreen(
+                                    isDarkTheme = isSystemInDarkTheme(),
                                     modifier = Modifier.fillMaxSize()
-                                ) {
-                                    Text(text = "Feature is temporarily disabled or not available")
-                                }
+                                )
                             }
                         }
 
@@ -196,12 +205,10 @@ internal object InternalExploreModuleAPI : FeatureApi {
                                     modifier = Modifier.weight(1f)
                                 )
                             } else {
-                                Box(
-                                    contentAlignment = Alignment.Center,
+                                DisableScreen(
+                                    isDarkTheme = isSystemInDarkTheme(),
                                     modifier = Modifier.fillMaxSize()
-                                ) {
-                                    Text(text = "Feature is temporarily disabled or not available")
-                                }
+                                )
                             }
                         }
                     }

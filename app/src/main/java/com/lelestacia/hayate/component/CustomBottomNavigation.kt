@@ -20,17 +20,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
+import androidx.navigation.navOptions
 import com.google.accompanist.systemuicontroller.SystemUiController
 import com.lelestacia.hayate.common.shared.Screen
+import com.lelestacia.hayate.common.shared.event.HayateEvent
+import com.lelestacia.hayate.common.shared.event.HayateNavigationType
 import com.lelestacia.hayate.common.theme.quickSandFamily
 import com.lelestacia.hayate.domain.state.BottomNavigationState
 
 @Composable
 fun CustomBottomNavigation(
-    navController: NavHostController,
+    state: BottomNavigationState,
+    onEvent: (HayateEvent) -> Unit,
     uiController: SystemUiController,
-    state: BottomNavigationState
 ) {
     val bottomNavigationColor = MaterialTheme.colorScheme.surfaceColorAtElevation(2.dp)
     val surfaceColor = MaterialTheme.colorScheme.surface
@@ -68,13 +70,29 @@ fun CustomBottomNavigation(
                 NavigationBarItem(
                     selected = state.selectedRoute == item.route,
                     onClick = {
-                        navController.navigate(item.route) {
-                            popUpTo(route = Screen.Exploration.route) {
-                                saveState = true
-                            }
-                            restoreState = true
-                            launchSingleTop = true
-                        }
+                        val navigationEvent = HayateEvent.OnNavigate(
+                            HayateNavigationType.Navigate(
+                                route = item.route,
+                                options = navOptions {
+                                    popUpTo(route = Screen.Exploration.route) {
+                                        saveState = true
+                                    }
+                                    restoreState = true
+                                    launchSingleTop = true
+                                }
+                            )
+                        )
+                        onEvent(navigationEvent)
+
+//                        TODO: Test for new navigation system stability
+//                        >>> Old Navigation System, now should be centralized
+//                        navController.navigate(item.route) {
+//                            popUpTo(route = Screen.Exploration.route) {
+//                                saveState = true
+//                            }
+//                            restoreState = true
+//                            launchSingleTop = true
+//                        }
                     },
                     icon = {
                         AnimatedContent(

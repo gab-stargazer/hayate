@@ -19,7 +19,7 @@ data class AnimeEntity(
     val images: AnimeImageEntity,
     val trailer: AnimeTrailerEntity,
     val approved: Boolean,
-    val titles: List<AnimeTitleEntity>,
+    val titles: AnimeTitleEntity,
     val title: String,
     val titleEnglish: String?,
     val titleJapanese: String?,
@@ -49,5 +49,5 @@ data class AnimeEntity(
     val genres: List<AnimeGenreEntity>,
     val explicitGenres: List<AnimeExplicitGenreEntity>,
     val themes: List<AnimeThemeEntity>,
-    val demographics: List<AnimeDemographicEntity>
+    val demographics: List<AnimeDemographicEntity>,
 )

@@ -2,10 +2,10 @@ package com.lelestacia.hayate.feature.anime.exploration.ui.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
-import com.lelestacia.hayate.feature.anime.exploration.domain.presenter.schedule.ScheduleAnimeEvent
-import com.lelestacia.hayate.feature.anime.exploration.domain.presenter.schedule.ScheduleAnimeState
 import com.lelestacia.hayate.feature.anime.exploration.domain.usecases.AnimeUseCases
 import com.lelestacia.hayate.feature.anime.exploration.ui.Constant.FIREBASE_RC_FEATURE_DAILY
+import com.lelestacia.hayate.feature.anime.exploration.ui.presenter.schedule.ScheduleAnimeEvent
+import com.lelestacia.hayate.feature.anime.exploration.ui.presenter.schedule.ScheduleAnimeState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
