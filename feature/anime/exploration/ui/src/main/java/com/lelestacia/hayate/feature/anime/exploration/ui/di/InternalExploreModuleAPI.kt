@@ -1,6 +1,9 @@
 package com.lelestacia.hayate.feature.anime.exploration.ui.di
 
 import android.net.Uri
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
@@ -26,7 +29,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navOptions
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -57,13 +59,36 @@ internal object InternalExploreModuleAPI : FeatureApi {
 
     @OptIn(ExperimentalFoundationApi::class)
     override fun registerGraph(
-        navController: NavHostController,
         navGraphBuilder: NavGraphBuilder,
         snackBarHostState: SnackbarHostState,
         onEvent: (HayateEvent) -> Unit,
     ) {
         navGraphBuilder.composable(
-            route = Screen.Exploration.route
+            route = Screen.Exploration.route,
+            enterTransition = {
+                when (initialState.destination.route) {
+                    Screen.Init.route -> slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Up)
+                    else -> null
+                }
+            },
+            exitTransition = {
+                when (targetState.destination.route) {
+                    Screen.Detail.route -> fadeOut()
+                    Screen.Collection.route -> slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Left)
+                    Screen.More.route -> slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Right)
+                    Screen.Search.route -> slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Left) + fadeOut()
+                    else -> null
+                }
+            },
+            popEnterTransition = {
+                when (initialState.destination.route) {
+                    Screen.Collection.route -> slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Right)
+                    Screen.More.route -> slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Left)
+                    Screen.Detail.route -> fadeIn()
+                    Screen.Search.route -> slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Right) + fadeIn()
+                    else -> null
+                }
+            },
         ) {
             val titles = stringArrayResource(id = R.array.pager_title)
             var state by rememberSaveable { mutableIntStateOf(1) }

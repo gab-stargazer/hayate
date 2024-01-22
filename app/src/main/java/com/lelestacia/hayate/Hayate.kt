@@ -6,10 +6,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -18,7 +21,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavBackStackEntry
@@ -30,7 +35,6 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.lelestacia.hayate.common.shared.Screen
 import com.lelestacia.hayate.common.shared.api.FeatureApi
 import com.lelestacia.hayate.common.shared.event.HayateEvent
-import com.lelestacia.hayate.common.shared.event.HayateNavigationType
 import com.lelestacia.hayate.common.shared.util.CollectInLaunchEffect
 import com.lelestacia.hayate.common.shared.util.HandleEvent
 import com.lelestacia.hayate.component.CustomAppBar
@@ -70,6 +74,7 @@ fun Hayate(
             color = surfaceColor,
             darkIcons = !isDarkTheme
         )
+
         onDispose {
             Timber.i("Disposable effect is disposed. Hmmm, weird sentence")
         }
@@ -77,6 +82,7 @@ fun Hayate(
 
     LaunchedEffect(key1 = Unit) {
         vm.onEvent(HayateEvent.OnDarkThemeChanged(isDarkTheme))
+        vm.setupNavController(navController)
     }
 
     Scaffold(
@@ -95,7 +101,18 @@ fun Hayate(
         },
         snackbarHost = {
             SnackbarHost(
-                hostState = snackBarHostState
+                hostState = snackBarHostState,
+                snackbar = {
+                    Snackbar(
+                        shape = RoundedCornerShape(15.dp),
+                        containerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(5.dp),
+                        contentColor = when (isSystemInDarkTheme()) {
+                            true -> Color.White
+                            false -> MaterialTheme.colorScheme.onSurface
+                        },
+                        snackbarData = it
+                    )
+                }
             )
         },
         modifier = Modifier
@@ -119,7 +136,6 @@ fun Hayate(
             featureProvider.forEach { feature ->
                 feature.registerGraph(
                     navGraphBuilder = this,
-                    navController = navController,
                     snackBarHostState = snackBarHostState,
                     onEvent = vm::onEvent
                 )
@@ -169,23 +185,25 @@ fun Hayate(
      *      fix for that
      */
 
-    val navigationState by vm.navigationState.collectAsStateWithLifecycle()
-    HandleEvent(
-        event = navigationState,
-        onEvent = { navigation ->
-            navigation?.let {
-                when (navigation) {
-                    is HayateNavigationType.Navigate -> navController.navigate(
-                        route = navigation.route,
-                        navOptions = navigation.options
-                    )
+//
+//    val navigationState by vm.navigationState.collectAsStateWithLifecycle()
+//    HandleEvent(
+//        event = navigationState,
+//        onEvent = { navigation ->
+//            navigation?.let {
+//                when (navigation) {
+//                    is HayateNavigationType.Navigate -> navController.navigate(
+//                        route = navigation.route,
+//                        navOptions = navigation.options
+//                    )
+//
+//                    HayateNavigationType.PopBackstack -> navController.popBackStack()
+//                }
+//            }
+//        },
+//        postEvent = vm::onNavigationStateHandled
+//    )
 
-                    HayateNavigationType.PopBackstack -> navController.popBackStack()
-                }
-            }
-        },
-        postEvent = vm::onNavigationStateHandled
-    )
 
     navController.currentBackStackEntryFlow.CollectInLaunchEffect(
         key = Unit,

@@ -3,7 +3,6 @@ package com.lelestacia.hayate.feature.anime.initialization.ui.di
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navOptions
 import com.lelestacia.hayate.common.shared.Screen
@@ -16,7 +15,6 @@ import kotlinx.coroutines.delay
 internal object InternalInitializationModuleAPI : FeatureApi {
 
     override fun registerGraph(
-        navController: NavHostController,
         navGraphBuilder: NavGraphBuilder,
         snackBarHostState: SnackbarHostState,
         onEvent: (HayateEvent) -> Unit,

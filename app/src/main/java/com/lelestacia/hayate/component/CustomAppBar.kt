@@ -2,41 +2,77 @@ package com.lelestacia.hayate.component
 
 import android.content.Intent
 import android.net.Uri
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.focusable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.SearchOff
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.compose.AppTheme
+import com.lelestacia.hayate.R
 import com.lelestacia.hayate.common.shared.event.HayateEvent
 import com.lelestacia.hayate.common.shared.event.HayateNavigationType
+import com.lelestacia.hayate.common.shared.util.UiText
+import com.lelestacia.hayate.common.theme.padding
+import com.lelestacia.hayate.common.theme.spacing
 import com.lelestacia.hayate.domain.state.AppBarState
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Brands
 import compose.icons.fontawesomeicons.brands.Youtube
+
+//  TODO: Extract string resource later on
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -44,6 +80,7 @@ fun CustomAppBar(
     state: AppBarState,
     onEvent: (HayateEvent) -> Unit,
 ) {
+    val focusManager = LocalFocusManager.current
     val context = LocalContext.current
     val textColor by animateColorAsState(
         targetValue =
@@ -69,6 +106,14 @@ fun CustomAppBar(
         },
         label = "Icon Color Animation"
     )
+
+    var isSearchFieldFocused by remember {
+        mutableStateOf(false)
+    }
+
+    BackHandler(enabled = isSearchFieldFocused) {
+        focusManager.clearFocus()
+    }
 
     AnimatedVisibility(
         visible = state.shouldAppBarBeVisible,
@@ -100,50 +145,53 @@ fun CustomAppBar(
             )
         )
     ) {
-        TopAppBar(
-            title = {
-                Text(
-                    text = stringResource(id = state.appBarTitle),
-                    style = MaterialTheme.typography.titleLarge.copy(
-                        fontWeight = FontWeight.ExtraBold,
-                        color = textColor
-                    )
-                )
-            },
-            colors = TopAppBarDefaults.topAppBarColors(
-                containerColor = MaterialTheme.colorScheme.background,
-                titleContentColor = MaterialTheme.colorScheme.onPrimary
-            ),
-            navigationIcon = {
-                AnimatedVisibility(
-                    visible = state.shouldNavigationIconBeVisible,
-                    enter = slideInHorizontally(
-                        animationSpec = tween(
-                            durationMillis = 500,
-                            easing = FastOutSlowInEasing
-                        )
-                    ) + fadeIn(
-                        animationSpec = tween(
-                            durationMillis = 500,
-                            easing = FastOutSlowInEasing
-                        )
-                    ),
-                    exit = slideOutHorizontally(
-                        animationSpec = tween(
-                            durationMillis = 500,
-                            easing = FastOutSlowInEasing
-                        )
-                    ) + fadeOut(
-                        animationSpec = tween(
-                            durationMillis = 500,
-                            easing = FastOutSlowInEasing
+        Column(
+            verticalArrangement = Arrangement.spacedBy(spacing.small),
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            TopAppBar(
+                title = {
+                    Text(
+                        text = stringResource(id = state.appBarTitle),
+                        style = MaterialTheme.typography.titleLarge.copy(
+                            fontWeight = FontWeight.ExtraBold,
+                            color = textColor
                         )
                     )
-                ) {
-                    IconButton(
-                        onClick = {
-                            onEvent(HayateEvent.OnNavigate(HayateNavigationType.PopBackstack))
-                            if (state.animeID != null || state.trailerURL != null) {
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.background,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimary
+                ),
+                navigationIcon = {
+                    AnimatedVisibility(
+                        visible = state.shouldNavigationIconBeVisible,
+                        enter = slideInHorizontally(
+                            animationSpec = tween(
+                                durationMillis = 500,
+                                easing = FastOutSlowInEasing
+                            )
+                        ) + fadeIn(
+                            animationSpec = tween(
+                                durationMillis = 500,
+                                easing = FastOutSlowInEasing
+                            )
+                        ),
+                        exit = slideOutHorizontally(
+                            animationSpec = tween(
+                                durationMillis = 500,
+                                easing = FastOutSlowInEasing
+                            )
+                        ) + fadeOut(
+                            animationSpec = tween(
+                                durationMillis = 500,
+                                easing = FastOutSlowInEasing
+                            )
+                        )
+                    ) {
+                        IconButton(
+                            onClick = {
+                                onEvent(HayateEvent.OnNavigate(HayateNavigationType.PopBackstack))
                                 onEvent(
                                     HayateEvent.OnDetailAnimeToolbar(
                                         animeID = null,
@@ -151,118 +199,166 @@ fun CustomAppBar(
                                     )
                                 )
                             }
-                        }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.ArrowBack,
-                            contentDescription = null,
-                            tint = iconColor
-                        )
-                    }
-                }
-            },
-            actions = {
-
-                /*
-                 *  TODO:
-                 *   This part should be optimized later on, because if the app
-                 *   require more button, there will be lot of redundancy for animated
-                 *   visibility, and so on
-                 */
-
-                //  Button Share
-                AnimatedVisibility(
-                    visible = state.animeID != null,
-                    enter = slideInHorizontally(
-                        animationSpec = tween(
-                            durationMillis = 500,
-                            easing = FastOutSlowInEasing
-                        ),
-                        initialOffsetX = { fullWidth -> fullWidth }
-                    ) + fadeIn(
-                        animationSpec = tween(
-                            durationMillis = 500,
-                            easing = FastOutSlowInEasing
-                        )
-                    ),
-                    exit = slideOutHorizontally(
-                        animationSpec = tween(
-                            durationMillis = 500,
-                            easing = FastOutSlowInEasing
-                        ),
-                        targetOffsetX = { fullWidth -> fullWidth }
-                    ) + fadeOut(
-                        animationSpec = tween(
-                            durationMillis = 500,
-                            easing = FastOutSlowInEasing
-                        )
-                    )
-                ) {
-                    IconButton(
-                        onClick = {
-                            val intent = Intent(
-                                Intent.ACTION_VIEW,
-                                Uri.parse("https://myanimelist.net/anime/${state.animeID}/")
-                            )
-                            context.startActivity(intent)
-                        },
-                        content = {
+                        ) {
                             Icon(
-                                imageVector = Icons.Default.Share,
-                                tint = iconColor,
+                                imageVector = Icons.Default.ArrowBack,
+                                contentDescription = null,
+                                tint = iconColor
+                            )
+                        }
+                    }
+                },
+                actions = {
+                    Box {
+                        //  Button Share
+                        AnimatedButton(
+                            showCondition = state.shouldSearchIconBeVisible,
+                            icon = when (state.isSearchModeActive) {
+                                true -> Icons.Default.SearchOff
+                                false -> Icons.Default.Search
+                            },
+                            onClick = {
+                                onEvent(HayateEvent.OnSearchModeToggle)
+                            },
+                            color = iconColor,
+                            contentDescription = "Search Button"
+                        )
+
+                        Row {
+
+                            //  Button Share
+                            AnimatedButton(
+                                showCondition = state.animeID != null,
+                                icon = Icons.Default.Share,
+                                onClick = {
+                                    val intent = Intent(
+                                        Intent.ACTION_VIEW,
+                                        Uri.parse("https://myanimelist.net/anime/${state.animeID}/")
+                                    )
+                                    context.startActivity(intent)
+                                },
+                                color = iconColor,
                                 contentDescription = "Share Anime"
                             )
-                        }
-                    )
-                }
 
-                //  Button Trailer
-                AnimatedVisibility(
-                    visible = state.trailerURL != null,
-                    enter = slideInHorizontally(
-                        animationSpec = tween(
-                            durationMillis = 500,
-                            easing = FastOutSlowInEasing
-                        ),
-                        initialOffsetX = { fullWidth -> fullWidth }
-                    ) + fadeIn(
-                        animationSpec = tween(
-                            durationMillis = 500,
-                            easing = FastOutSlowInEasing
-                        )
-                    ),
-                    exit = slideOutHorizontally(
-                        animationSpec = tween(
-                            durationMillis = 500,
-                            easing = FastOutSlowInEasing
-                        ),
-                        targetOffsetX = { fullWidth -> fullWidth }
-                    ) + fadeOut(
-                        animationSpec = tween(
-                            durationMillis = 500,
-                            easing = FastOutSlowInEasing
-                        )
-                    )
-                ) {
-                    IconButton(
-                        onClick = {
-                            val intent = Intent(
-                                Intent.ACTION_VIEW,
-                                Uri.parse(state.trailerURL)
-                            )
-                            context.startActivity(intent)
-                        },
-                        content = {
-                            Icon(
-                                imageVector = FontAwesomeIcons.Brands.Youtube,
+                            //  Button Share
+                            AnimatedButton(
+                                showCondition = state.trailerURL != null,
+                                icon = FontAwesomeIcons.Brands.Youtube,
+                                onClick = {
+                                    val intent = Intent(
+                                        Intent.ACTION_VIEW,
+                                        Uri.parse(state.trailerURL)
+                                    )
+                                    context.startActivity(intent)
+                                },
+                                color = iconColor,
                                 contentDescription = "Watch Anime Trailer",
-                                tint = iconColor,
                                 modifier = Modifier.size(24.dp)
                             )
                         }
-                    )
+                    }
                 }
+            )
+            AnimatedVisibility(
+                visible = state.isSearchModeActive && state.shouldSearchIconBeVisible,
+                enter = expandVertically(),
+                exit = shrinkVertically()
+            ) {
+                TextField(
+                    value = state.searchQuery,
+                    onValueChange = { newSearchQuery ->
+                        onEvent(HayateEvent.OnSearchQueryChanged(newSearchQuery))
+                    },
+                    placeholder = {
+                        Text(text = "Searching for ...")
+                    },
+                    prefix = {
+                        if (state.searchQuery.isNotBlank()) {
+                            Text(
+                                text = "Searching for ",
+                                style = MaterialTheme.typography.titleMedium.copy(
+                                    fontWeight = FontWeight.Bold
+                                )
+                            )
+                        } else {
+                            Unit
+                        }
+                    },
+                    shape = RoundedCornerShape(
+                        15
+                    ),
+                    colors = TextFieldDefaults.colors(
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                        unfocusedContainerColor = MaterialTheme.colorScheme
+                            .surfaceColorAtElevation(5.dp),
+                        focusedTextColor = MaterialTheme.colorScheme.primary,
+                        unfocusedTextColor = MaterialTheme.colorScheme.onSurface
+                    ),
+                    keyboardOptions = KeyboardOptions(
+                        capitalization = KeyboardCapitalization.Words,
+                        autoCorrect = false,
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Search
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onSearch = {
+                            if (state.searchQuery.isNotBlank()) {
+                                //  Later this should be able to search more than once
+                                onEvent(HayateEvent.OnSearchClicked)
+                            } else {
+                                val message = "Query cannot be empty"
+                                onEvent(HayateEvent.ShowSnackBar(UiText.MessageString(message)))
+                            }
+                            focusManager.clearFocus()
+                        }
+                    ),
+                    singleLine = true,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = padding.medium, vertical = padding.small)
+                        .focusable()
+                        .onFocusChanged {
+                            isSearchFieldFocused = it.isFocused
+                        }
+                )
             }
-        )
+        }
+    }
+}
+
+@Preview
+@Composable
+fun PreviewCustomAppBar() {
+    AppTheme(
+        darkTheme = true,
+        dynamicColor = false
+    ) {
+        Surface(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            val state by remember {
+                mutableStateOf(
+                    AppBarState(
+                        isDarkTheme = true,
+                        shouldAppBarBeVisible = true,
+                        shouldNavigationIconBeVisible = false,
+                        isSearchModeActive = true,
+                        searchQuery = "Fullmetal Alchemist",
+                        shouldSearchIconBeVisible = true,
+                        appBarTitle = R.string.japanese_app_name,
+                        animeID = null,
+                        trailerURL = null
+                    )
+                )
+            }
+            CustomAppBar(
+                state = state,
+                onEvent = {
+
+                }
+            )
+        }
     }
 }

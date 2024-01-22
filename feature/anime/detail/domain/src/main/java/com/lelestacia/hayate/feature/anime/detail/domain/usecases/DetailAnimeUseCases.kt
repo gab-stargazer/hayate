@@ -21,4 +21,8 @@ class DetailAnimeUseCases @Inject constructor(
     fun getWatchListByAnimeID(animeID: Int): Flow<Boolean> {
         return repository.getWatchListByAnimeID(animeID)
     }
+
+    fun insertAnime(anime: Anime): Flow<DataState<Boolean>> {
+        return repository.insertAnime(anime)
+    }
 }

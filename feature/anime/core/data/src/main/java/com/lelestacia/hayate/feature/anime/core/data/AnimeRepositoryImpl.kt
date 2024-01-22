@@ -117,6 +117,30 @@ internal class AnimeRepositoryImpl @Inject constructor(
         }
     }
 
+    override fun getAnimeSearch(
+        query: String,
+        type: String?,
+        rating: String?,
+    ): Flow<PagingData<Anime>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 24,
+                prefetchDistance = 6,
+                enablePlaceholders = false,
+                initialLoadSize = 24
+            ),
+            pagingSourceFactory = {
+                remoteDataSource.getAnimeSearch(
+                    query = query,
+                    type = type,
+                    rating = rating
+                )
+            }
+        ).flow.map { pagingData: PagingData<AnimeDto> ->
+            pagingData.map(AnimeDto::asAnime)
+        }
+    }
+
     override fun initiateApp(): Flow<DataState<Boolean>> {
         return flow<DataState<Boolean>> {
 
@@ -171,7 +195,7 @@ internal class AnimeRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun insertAnime(anime: Anime): Flow<DataState<Boolean>> {
+    override fun insertAnime(anime: Anime): Flow<DataState<Boolean>> {
         return flow<DataState<Boolean>> {
             val durations = measureTime {
                 localDataSource.insertAnime(anime.asNewEntity())

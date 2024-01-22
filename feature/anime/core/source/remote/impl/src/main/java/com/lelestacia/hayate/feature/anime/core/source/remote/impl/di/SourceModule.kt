@@ -3,6 +3,7 @@ package com.lelestacia.hayate.feature.anime.core.source.remote.impl.di
 import com.lelestacia.hayate.common.shared.util.IoDispatcher
 import com.lelestacia.hayate.feature.anime.core.source.remote.api.api.AnimeRemoteDataSourceApi
 import com.lelestacia.hayate.feature.anime.core.source.remote.impl.endpoint.ScheduleEndpoint
+import com.lelestacia.hayate.feature.anime.core.source.remote.impl.endpoint.SearchEndpoint
 import com.lelestacia.hayate.feature.anime.core.source.remote.impl.endpoint.SeasonEndpoint
 import com.lelestacia.hayate.feature.anime.core.source.remote.impl.endpoint.TopEndpoint
 import com.lelestacia.hayate.feature.anime.core.source.remote.impl.endpoint.UtilityEndpoint
@@ -25,13 +26,15 @@ internal object SourceModule {
         seasonEndpoint: SeasonEndpoint,
         scheduleEndpoint: ScheduleEndpoint,
         utilityEndpoint: UtilityEndpoint,
-        @IoDispatcher dispatcher: CoroutineContext
+        searchEndpoint: SearchEndpoint,
+        @IoDispatcher dispatcher: CoroutineContext,
     ): AnimeRemoteDataSourceApi {
         return AnimeRemoteDataSourceImpl(
             topEndpoint = topEndpoint,
             seasonEndpoint = seasonEndpoint,
             scheduleEndpoint = scheduleEndpoint,
             utilityEndpoint = utilityEndpoint,
+            searchEndpoint = searchEndpoint,
             ioDispatcher = dispatcher
         )
     }

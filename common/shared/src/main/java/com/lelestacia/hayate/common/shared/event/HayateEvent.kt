@@ -12,6 +12,8 @@ sealed class HayateEvent {
     ) : HayateEvent()
 
     data class ShowSnackBar(val message: UiText) : HayateEvent()
-
     data class OnNavigate(val navigation: HayateNavigationType) : HayateEvent()
+    data object OnSearchModeToggle : HayateEvent()
+    data class OnSearchQueryChanged(val searchQuery: String) : HayateEvent()
+    data object OnSearchClicked : HayateEvent()
 }

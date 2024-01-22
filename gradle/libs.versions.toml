@@ -80,12 +80,12 @@ test-junit-5-adapter = "1.9.3.0"
 timber = "5.0.1"
 
 #   Viewmodel
-viewmodel-version = "2.6.2"
+viewmodel-version = "2.7.0"
 
 #   Worker
 worker = "2.9.0"
 appcompat = "1.6.1"
-material = "1.10.0"
+material = "1.11.0"
 
 [libraries]
 

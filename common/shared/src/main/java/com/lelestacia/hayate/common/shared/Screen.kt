@@ -13,4 +13,13 @@ sealed class Screen(val route: String) {
             )
         }
     }
+
+    data object Search : Screen("anime/search/{query}") {
+        fun createRoute(query: String): String {
+            return this.route.replace(
+                oldValue = "{query}",
+                newValue = query
+            )
+        }
+    }
 }

@@ -39,11 +39,13 @@ internal class PopularViewModel @Inject constructor(
             key = POPULAR_ANIME_TYPE_KEY,
             initialValue = null
         )
+
     private val animeFilter: StateFlow<AnimeFilter?> = savedStateHandle
         .getStateFlow(
             key = POPULAR_ANIME_FILTER_KEY,
             initialValue = null
         )
+
     private val animeRating: StateFlow<AnimeRating?> = savedStateHandle
         .getStateFlow(
             key = POPULAR_ANIME_RATING_KEY,

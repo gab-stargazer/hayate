@@ -30,6 +30,13 @@ interface AnimeRemoteDataSourceApi {
         sfw: Boolean = true,
     ): PagingSource<Int, AnimeDto>
 
+    fun getAnimeSearch(
+        query: String = "",
+        type: String? = null,
+        rating: String? = null,
+        sfw: Boolean = true,
+    ): PagingSource<Int, AnimeDto>
+
     suspend fun getGenres(): List<AnimeGenreDto>
 
     suspend fun getExplicitGenres(): List<AnimeGenreDto>

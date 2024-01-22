@@ -102,6 +102,9 @@ dependencies {
     //  Collection Module
     implementation(projects.feature.anime.collection.ui)
 
+    //  Search Module
+    implementation(projects.feature.anime.search.ui)
+
     //  Init Module
     implementation(projects.feature.anime.initialization.ui)
 

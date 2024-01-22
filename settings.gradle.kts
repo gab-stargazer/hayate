@@ -49,3 +49,8 @@ include(":feature:anime:exploration:ui")
 //=====Anime - Collection=====
 include(":feature:anime:collection:domain")
 include(":feature:anime:collection:ui")
+
+
+//=====Anime - Search=====
+include(":feature:anime:search:ui")
+include(":feature:anime:search:domain")

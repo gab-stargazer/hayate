@@ -28,9 +28,15 @@ interface AnimeRepository {
         sfw: Boolean = true,
     ): Flow<PagingData<Anime>>
 
+    fun getAnimeSearch(
+        query: String = "",
+        type: String? = null,
+        rating: String? = null,
+    ): Flow<PagingData<Anime>>
+
     fun initiateApp(): Flow<DataState<Boolean>>
 
-    suspend fun insertAnime(anime: Anime): Flow<DataState<Boolean>>
+    fun insertAnime(anime: Anime): Flow<DataState<Boolean>>
 
     fun getAnimeByAnimeID(animeID: Int): Flow<DataState<Anime>>
 

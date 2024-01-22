@@ -1,6 +1,9 @@
 package com.lelestacia.hayate.feature.anime.collection.ui.di
 
 import android.net.Uri
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,7 +27,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navOptions
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -42,17 +44,37 @@ internal object InternalCollectionModuleAPI : CollectionModuleAPI {
 
     @OptIn(ExperimentalFoundationApi::class)
     override fun registerGraph(
-        navController: NavHostController,
         navGraphBuilder: NavGraphBuilder,
         snackBarHostState: SnackbarHostState,
         onEvent: (HayateEvent) -> Unit,
     ) {
         navGraphBuilder.composable(
-            route = Screen.Collection.route
+            route = Screen.Collection.route,
+            enterTransition = {
+                when (initialState.destination.route) {
+                    Screen.Exploration.route -> slideIntoContainer(towards = AnimatedContentTransitionScope.SlideDirection.Left)
+                    Screen.More.route -> slideIntoContainer(towards = AnimatedContentTransitionScope.SlideDirection.Right)
+                    else -> fadeIn()
+                }
+            },
+            exitTransition = {
+                when (targetState.destination.route) {
+                    Screen.Exploration.route -> slideOutOfContainer(towards = AnimatedContentTransitionScope.SlideDirection.Right)
+                    Screen.More.route -> slideOutOfContainer(towards = AnimatedContentTransitionScope.SlideDirection.Left)
+                    else -> fadeOut()
+                }
+            },
+            popExitTransition = {
+                when (initialState.destination.route) {
+                    Screen.Exploration.route -> slideOutOfContainer(towards = AnimatedContentTransitionScope.SlideDirection.Right)
+                    Screen.More.route -> slideOutOfContainer(towards = AnimatedContentTransitionScope.SlideDirection.Left)
+                    else -> fadeOut()
+                }
+            }
         ) {
             val vm = hiltViewModel<CollectionViewModel>()
             val screenState by vm.state.collectAsStateWithLifecycle()
-            val handleOnClick: (Anime, Boolean) -> Unit = { clickedAnime, shouldUpdate ->
+            val handleOnClick: (Anime) -> Unit = { clickedAnime ->
                 val jsonAnime = toJson(clickedAnime)
                 val event = HayateEvent.OnNavigate(
                     HayateNavigationType.Navigate(
@@ -68,9 +90,6 @@ internal object InternalCollectionModuleAPI : CollectionModuleAPI {
 
                 //  TODO: Fix this later so anime list should be updated based on correct order
                 //      Fixed but seems theres a better way to do this, so i'll do it later
-                if (shouldUpdate) {
-                    vm.insertAnime(clickedAnime)
-                }
             }
 
             val titles = stringArrayResource(id = R.array.collection_pager_title)
@@ -130,7 +149,7 @@ internal object InternalCollectionModuleAPI : CollectionModuleAPI {
                                 shouldUseKey = true,
                                 state = screenState.historyGridState,
                                 onClick = { anime ->
-                                    handleOnClick(anime, true)
+                                    handleOnClick(anime)
                                 },
                                 modifier = Modifier.fillMaxSize()
                             )
@@ -142,7 +161,7 @@ internal object InternalCollectionModuleAPI : CollectionModuleAPI {
                                 shouldUseKey = true,
                                 state = screenState.watchListGridState,
                                 onClick = { anime ->
-                                    handleOnClick(anime, false)
+                                    handleOnClick(anime)
                                 },
                                 modifier = Modifier.fillMaxSize()
                             )

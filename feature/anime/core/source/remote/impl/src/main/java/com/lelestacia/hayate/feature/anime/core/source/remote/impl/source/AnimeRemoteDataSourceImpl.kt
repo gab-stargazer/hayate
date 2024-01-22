@@ -8,6 +8,7 @@ import com.lelestacia.hayate.feature.anime.core.source.remote.api.dto.anime.demo
 import com.lelestacia.hayate.feature.anime.core.source.remote.api.dto.anime.genre.AnimeGenreDto
 import com.lelestacia.hayate.feature.anime.core.source.remote.api.dto.anime.theme.AnimeThemeDto
 import com.lelestacia.hayate.feature.anime.core.source.remote.impl.endpoint.ScheduleEndpoint
+import com.lelestacia.hayate.feature.anime.core.source.remote.impl.endpoint.SearchEndpoint
 import com.lelestacia.hayate.feature.anime.core.source.remote.impl.endpoint.SeasonEndpoint
 import com.lelestacia.hayate.feature.anime.core.source.remote.impl.endpoint.TopEndpoint
 import com.lelestacia.hayate.feature.anime.core.source.remote.impl.endpoint.UtilityEndpoint
@@ -20,14 +21,15 @@ internal class AnimeRemoteDataSourceImpl @Inject constructor(
     private val seasonEndpoint: SeasonEndpoint,
     private val scheduleEndpoint: ScheduleEndpoint,
     private val utilityEndpoint: UtilityEndpoint,
-    @IoDispatcher private val ioDispatcher: CoroutineContext
+    private val searchEndpoint: SearchEndpoint,
+    @IoDispatcher private val ioDispatcher: CoroutineContext,
 ) : AnimeRemoteDataSourceApi {
 
     override fun getTopAnime(
         type: String?,
         filter: String?,
         rating: String?,
-        sfw: Boolean
+        sfw: Boolean,
     ): PagingSource<Int, AnimeDto> {
         return TopAnimePaging(
             topEndpoint = topEndpoint,
@@ -51,7 +53,7 @@ internal class AnimeRemoteDataSourceImpl @Inject constructor(
 
     override fun getUpcomingSeasonAnime(
         filter: String?,
-        sfw: Boolean
+        sfw: Boolean,
     ): PagingSource<Int, AnimeDto> {
         return UpcomingSeasonAnimePaging(
             seasonEndpoint = seasonEndpoint,
@@ -62,11 +64,26 @@ internal class AnimeRemoteDataSourceImpl @Inject constructor(
 
     override fun getScheduledAnime(
         filter: String?,
-        sfw: Boolean
+        sfw: Boolean,
     ): PagingSource<Int, AnimeDto> {
         return ScheduleAnimePaging(
             scheduleEndpoint = scheduleEndpoint,
             filter = filter,
+            sfw = sfw
+        )
+    }
+
+    override fun getAnimeSearch(
+        query: String,
+        type: String?,
+        rating: String?,
+        sfw: Boolean,
+    ): PagingSource<Int, AnimeDto> {
+        return SearchAnimePaging(
+            endpoint = searchEndpoint,
+            query = query,
+            type = type,
+            rating = rating,
             sfw = sfw
         )
     }

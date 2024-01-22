@@ -3,6 +3,8 @@ package com.lelestacia.hayate.feature.anime.detail.ui.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lelestacia.hayate.common.shared.DataState
+import com.lelestacia.hayate.common.shared.util.UiText
+import com.lelestacia.hayate.feature.anime.core.domain.model.Anime
 import com.lelestacia.hayate.feature.anime.detail.domain.usecases.DetailAnimeUseCases
 import com.lelestacia.hayate.feature.anime.detail.ui.presenter.DetailAnimeEvent
 import com.lelestacia.hayate.feature.anime.detail.ui.presenter.DetailAnimeState
@@ -18,6 +20,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -67,5 +70,16 @@ class DetailViewModel @Inject constructor(
 
     private fun insertWatchList(animeID: Int) = viewModelScope.launch {
         useCases.insertWatchList(animeID)
+    }
+
+    fun insertAnime(anime: Anime) = viewModelScope.launch {
+        useCases.insertAnime(anime).collectLatest { dataState ->
+            when (dataState) {
+                is DataState.Failed -> Timber.e("Inserting Anime Failed. Reason: ${(dataState.error as UiText.MessageString).message}")
+                DataState.Loading -> Timber.d("Inserting Anime into DB")
+                DataState.None -> Unit
+                is DataState.Success -> Timber.d("Anime insertion completed")
+            }
+        }
     }
 }

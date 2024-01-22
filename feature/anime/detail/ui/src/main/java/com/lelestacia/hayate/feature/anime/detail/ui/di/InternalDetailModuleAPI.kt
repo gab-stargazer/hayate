@@ -13,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.lelestacia.hayate.common.shared.Screen
@@ -29,7 +28,6 @@ import com.lelestacia.hayate.feature.anime.detail.ui.viewmodel.DetailViewModel
 internal object InternalDetailModuleAPI : FeatureApi {
 
     override fun registerGraph(
-        navController: NavHostController,
         navGraphBuilder: NavGraphBuilder,
         snackBarHostState: SnackbarHostState,
         onEvent: (HayateEvent) -> Unit,
@@ -84,6 +82,7 @@ internal object InternalDetailModuleAPI : FeatureApi {
                 )
                 onEvent(event)
 
+                vm.insertAnime(anime)
                 vm.getAnimeByAnimeID(anime.malId)
             }
 
