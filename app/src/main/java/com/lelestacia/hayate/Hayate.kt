@@ -41,6 +41,7 @@ import com.lelestacia.hayate.component.CustomAppBar
 import com.lelestacia.hayate.component.CustomBottomNavigation
 import com.lelestacia.hayate.domain.viewmodel.HayateViewModel
 import com.lelestacia.hayate.feature.settings.ui.SettingScreen
+import com.lelestacia.hayate.util.HandleNavigation
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -82,8 +83,36 @@ fun Hayate(
 
     LaunchedEffect(key1 = Unit) {
         vm.onEvent(HayateEvent.OnDarkThemeChanged(isDarkTheme))
-        vm.setupNavController(navController)
     }
+
+    /**
+     * Observes the [HayateViewModel.navigationRoute] StateFlow from the [HayateViewModel] and collects it as a State using the
+     * [collectAsStateWithLifecycle] extension function. It then uses the collected route to update the
+     * navigation within the application by invoking the [HandleNavigation] function.
+     *
+     * @param vm The [HayateViewModel] responsible for managing navigation states.
+     * @param navController The NavController used for navigation within the application.
+     *
+     * @see HayateViewModel.navigationRoute
+     * @see collectAsStateWithLifecycle
+     * @see HandleNavigation
+     *
+     * Example Usage:
+     * ```
+     * val navigationRoute by vm.navigationRoute.collectAsStateWithLifecycle()
+     * HandleNavigation(
+     *     navController = navController,
+     *     navigation = navigationRoute,
+     *     postNavigate = vm::handleNavigation
+     * )
+     * ```
+     */
+    val navigationRoute by vm.navigationRoute.collectAsStateWithLifecycle()
+    HandleNavigation(
+        navController = navController,
+        navigation = navigationRoute,
+        postNavigate = vm::handleNavigation
+    )
 
     Scaffold(
         topBar = {

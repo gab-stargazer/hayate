@@ -1,5 +1,6 @@
 package com.lelestacia.hayate.feature.anime.detail.ui.di
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
@@ -18,6 +19,7 @@ import androidx.navigation.navArgument
 import com.lelestacia.hayate.common.shared.Screen
 import com.lelestacia.hayate.common.shared.api.FeatureApi
 import com.lelestacia.hayate.common.shared.event.HayateEvent
+import com.lelestacia.hayate.common.shared.event.HayateNavigationType
 import com.lelestacia.hayate.common.shared.util.parcelable
 import com.lelestacia.hayate.feature.anime.core.common.parcelable.AnimeNavType
 import com.lelestacia.hayate.feature.anime.core.domain.model.Anime
@@ -40,7 +42,7 @@ internal object InternalDetailModuleAPI : FeatureApi {
                 }
             ),
             enterTransition = {
-                return@composable slideIntoContainer(
+                slideIntoContainer(
                     towards = AnimatedContentTransitionScope.SlideDirection.Up,
                     animationSpec = tween(
                         durationMillis = 500,
@@ -54,7 +56,7 @@ internal object InternalDetailModuleAPI : FeatureApi {
                 )
             },
             exitTransition = {
-                return@composable slideOutOfContainer(
+                slideOutOfContainer(
                     towards = AnimatedContentTransitionScope.SlideDirection.Down,
                     animationSpec = tween(
                         durationMillis = 500,
@@ -70,6 +72,10 @@ internal object InternalDetailModuleAPI : FeatureApi {
         ) { navBackStackEntry ->
             val vm: DetailViewModel = hiltViewModel()
             val state by vm.state.collectAsStateWithLifecycle()
+
+            BackHandler {
+                onEvent(HayateEvent.OnNavigate(HayateNavigationType.PopBackstack))
+            }
 
             val anime: Anime = state.anime
                 ?: navBackStackEntry.arguments?.parcelable<Anime>(KEY_DATA)

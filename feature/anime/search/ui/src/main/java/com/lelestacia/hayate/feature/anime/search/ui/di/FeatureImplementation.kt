@@ -63,6 +63,7 @@ internal class FeatureImplementation @Inject constructor() : FeatureApi {
             val state by vm.screenState.collectAsStateWithLifecycle()
 
             SearchScreen(
+                query = query,
                 state = state,
                 onEvent = vm::onEvent,
                 anime = pagingAnime,

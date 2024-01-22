@@ -1,7 +1,6 @@
 package com.lelestacia.hayate.domain.viewmodel
 
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavController
 import androidx.navigation.navOptions
 import com.lelestacia.hayate.common.shared.BaseViewModel
 import com.lelestacia.hayate.common.shared.Screen
@@ -14,30 +13,32 @@ import com.lelestacia.hayate.navigation.isRootDestination
 import com.lelestacia.hayate.util.shouldAppBarBeVisible
 import com.lelestacia.hayate.util.shouldSearchIconBeVisible
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
+/**
+ * ViewModel for the Hayate application, managing various UI states and navigation events.
+ *
+ * @constructor Injects the dependencies using Hilt and extends [BaseViewModel].
+ *
+ * @property _navigationRoute MutableStateFlow to track the current navigation route.
+ * @property navigationRoute Immutable StateFlow providing read-only access to the current navigation route.
+ * @property _appBarState MutableStateFlow to manage the state of the application's app bar.
+ * @property appBarState Immutable StateFlow providing read-only access to the app bar state.
+ * @property _bottomNavigationState MutableStateFlow to manage the state of the bottom navigation.
+ * @property bottomNavigationState Immutable StateFlow providing read-only access to the bottom navigation state.
+ * @property _snackBarMessage MutableStateFlow to manage the state of the displayed snack bar message.
+ * @property snackBarMessage Immutable StateFlow providing read-only access to the snack bar message state.
+ */
 @HiltViewModel
 class HayateViewModel @Inject constructor() : BaseViewModel() {
 
-    /**
-     *   New Navigation system, the route will be private to viewModel, we only launch
-     *   a scope from UI, then viewModel handle everything. We still have disposable effect
-     *   for disposing the channel when orientation changes or process death happen. If you know
-     *   how to handle it only when process death happen,
-     *   it will help me so much since i have no idea
-     */
-    private val _navigationRoute: Channel<HayateNavigationType> = Channel()
-    private val navigationRoute: Flow<HayateNavigationType> = _navigationRoute.consumeAsFlow()
+    private val _navigationRoute: MutableStateFlow<HayateNavigationType?> = MutableStateFlow(null)
+    val navigationRoute = _navigationRoute.asStateFlow()
 
     private val _appBarState: MutableStateFlow<AppBarState> =
         MutableStateFlow(AppBarState())
@@ -54,6 +55,11 @@ class HayateViewModel @Inject constructor() : BaseViewModel() {
     val snackBarMessage: StateFlow<UiText?> =
         _snackBarMessage.asStateFlow()
 
+    /**
+     * Handles various events triggered within the application, updating relevant UI states.
+     *
+     * @param event The event to be handled.
+     */
     fun onEvent(event: HayateEvent) = viewModelScope.launch {
         when (event) {
             is HayateEvent.OnDarkThemeChanged -> {
@@ -104,12 +110,21 @@ class HayateViewModel @Inject constructor() : BaseViewModel() {
             is HayateEvent.ShowSnackBar -> _snackBarMessage.update { event.message }
 
             is HayateEvent.OnNavigate -> {
-                _navigationRoute.send(event.navigation)
+                _navigationRoute.update { event.navigation }
 
                 if (event.navigation is HayateNavigationType.Navigate) {
                     _appBarState.update { currentState ->
                         currentState.copy(
                             currentRoute = (event.navigation as HayateNavigationType.Navigate).route
+                        )
+                    }
+                }
+
+                if (event.navigation is HayateNavigationType.PopBackstack) {
+                    _appBarState.update { currentState ->
+                        currentState.copy(
+                            animeID = null,
+                            trailerURL = null
                         )
                     }
                 }
@@ -132,37 +147,31 @@ class HayateViewModel @Inject constructor() : BaseViewModel() {
             }
 
             HayateEvent.OnSearchClicked -> {
-                _navigationRoute.send(
+                _navigationRoute.update {
                     HayateNavigationType.Navigate(
                         route = Screen.Search.createRoute(appBarState.value.searchQuery),
                         options = navOptions {
                             launchSingleTop = true
                         }
                     )
-                )
+                }
             }
         }
     }
 
+    /**
+     * Handles the completion of displaying the snack bar message by resetting its state to null.
+     */
     fun onSnackBarMessageHandled() = viewModelScope.launch {
         _snackBarMessage.update { null }
     }
 
-    fun setupNavController(navController: NavController) = viewModelScope.launch {
-        try {
-            navigationRoute.collectLatest { navType ->
-                when (navType) {
-                    is HayateNavigationType.Navigate -> navController.navigate(
-                        route = navType.route,
-                        navOptions = navType.options
-                    )
-
-                    HayateNavigationType.PopBackstack -> navController.popBackStack()
-                }
-            }
-        } catch (e: Exception) {
-            Timber.w("Navigation Route will not be recollected")
-        }
+    /**
+     * Clears the current navigation route, triggering any observers to update accordingly.
+     * This function is intended to be called when navigation actions are completed.
+     */
+    fun handleNavigation() = viewModelScope.launch {
+        _navigationRoute.update { null }
     }
 }
 

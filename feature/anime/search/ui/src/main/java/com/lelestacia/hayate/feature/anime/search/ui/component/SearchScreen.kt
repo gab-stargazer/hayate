@@ -11,14 +11,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.paging.compose.LazyPagingItems
 import com.lelestacia.hayate.common.theme.padding
-import com.lelestacia.hayate.feature.anime.core.common.component.AnimePagingLazyGrid
 import com.lelestacia.hayate.feature.anime.core.common.component.HayateAnimeDropDownFilter
+import com.lelestacia.hayate.feature.anime.core.common.component.SearchAnimePaging
 import com.lelestacia.hayate.feature.anime.core.domain.model.Anime
 import com.lelestacia.hayate.feature.anime.search.ui.presenter.SearchEvent
 import com.lelestacia.hayate.feature.anime.search.ui.presenter.SearchState
 
 @Composable
 fun SearchScreen(
+    query: String,
     state: SearchState,
     onEvent: (SearchEvent) -> Unit,
     anime: LazyPagingItems<Anime>,
@@ -58,7 +59,8 @@ fun SearchScreen(
                 .fillMaxWidth()
                 .padding(horizontal = padding.medium)
         )
-        AnimePagingLazyGrid(
+        SearchAnimePaging(
+            query = query,
             state = rememberLazyGridState(),
             animePaging = anime,
             onClick = onClicked,

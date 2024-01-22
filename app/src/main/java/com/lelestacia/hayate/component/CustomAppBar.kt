@@ -48,6 +48,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
@@ -209,8 +210,10 @@ fun CustomAppBar(
                     }
                 },
                 actions = {
-                    Box {
-                        //  Button Share
+                    Box(
+                        contentAlignment = Alignment.CenterEnd
+                    ) {
+                        //  Button Search
                         AnimatedButton(
                             showCondition = state.shouldSearchIconBeVisible,
                             icon = when (state.isSearchModeActive) {
@@ -271,12 +274,12 @@ fun CustomAppBar(
                         onEvent(HayateEvent.OnSearchQueryChanged(newSearchQuery))
                     },
                     placeholder = {
-                        Text(text = "Searching for ...")
+                        Text(text = stringResource(R.string.search_box_placeholder))
                     },
                     prefix = {
                         if (state.searchQuery.isNotBlank()) {
                             Text(
-                                text = "Searching for ",
+                                text = stringResource(R.string.search_box_prefix),
                                 style = MaterialTheme.typography.titleMedium.copy(
                                     fontWeight = FontWeight.Bold
                                 )
@@ -308,9 +311,16 @@ fun CustomAppBar(
                                 //  Later this should be able to search more than once
                                 onEvent(HayateEvent.OnSearchClicked)
                             } else {
-                                val message = "Query cannot be empty"
-                                onEvent(HayateEvent.ShowSnackBar(UiText.MessageString(message)))
+                                onEvent(
+                                    HayateEvent.ShowSnackBar(
+                                        UiText.ResourceID(
+                                            id = R.string.error_empty_query,
+                                            args = emptyList()
+                                        )
+                                    )
+                                )
                             }
+
                             focusManager.clearFocus()
                         }
                     ),
