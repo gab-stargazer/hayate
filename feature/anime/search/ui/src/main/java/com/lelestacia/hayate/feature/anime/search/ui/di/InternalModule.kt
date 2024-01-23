@@ -1,6 +1,6 @@
 package com.lelestacia.hayate.feature.anime.search.ui.di
 
-import com.lelestacia.hayate.common.shared.api.FeatureApi
+import com.lelestacia.hayate.core.common.api.FeatureApi
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -13,5 +13,5 @@ internal interface InternalModule {
 
     @Binds
     @IntoSet
-    fun provideSearchFeature(feature: FeatureImplementation): FeatureApi
+    fun provideSearchFeature(feature: SearchFeatureImplementation): FeatureApi
 }

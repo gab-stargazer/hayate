@@ -43,9 +43,9 @@ android {
 dependencies {
 
     // =====Feature Anime=====
-    implementation(projects.common.firebase)
-    implementation(projects.common.preferences)
-    api(projects.common.shared)
+    implementation(projects.core.firebase)
+    implementation(projects.core.preferences)
+    api(projects.core.common)
     api(projects.feature.anime.core.domain)
 
     //  Compose BOM

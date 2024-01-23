@@ -22,11 +22,11 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/buildSrc" />
-            <option value="$PROJECT_DIR$/common" />
-            <option value="$PROJECT_DIR$/common/firebase" />
-            <option value="$PROJECT_DIR$/common/preferences" />
-            <option value="$PROJECT_DIR$/common/shared" />
-            <option value="$PROJECT_DIR$/common/theme" />
+            <option value="$PROJECT_DIR$/core" />
+            <option value="$PROJECT_DIR$/core/common" />
+            <option value="$PROJECT_DIR$/core/firebase" />
+            <option value="$PROJECT_DIR$/core/preferences" />
+            <option value="$PROJECT_DIR$/core/theme" />
             <option value="$PROJECT_DIR$/feature" />
             <option value="$PROJECT_DIR$/feature/anime" />
             <option value="$PROJECT_DIR$/feature/anime/collection" />

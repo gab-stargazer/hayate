@@ -36,7 +36,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-
+            applicationIdSuffix = ".stable"
         }
 
         create("r8_testing") {
@@ -84,8 +84,8 @@ android {
 
 dependencies {
 
-    implementation(projects.common.shared)
-    implementation(projects.common.theme)
+    implementation(projects.core.common)
+    implementation(projects.core.theme)
 
     //  =====Feature Anime=====
     implementation(projects.feature.anime.core.data)
@@ -114,7 +114,7 @@ dependencies {
     //  Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.crashlytic)
-    implementation(projects.common.firebase)
+    implementation(projects.core.firebase)
 
     //  Ktx
     implementation(libs.core.ktx)

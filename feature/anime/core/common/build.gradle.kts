@@ -48,8 +48,8 @@ android {
 dependencies {
 
     //=====App Shared=====
-    implementation(projects.common.shared)
-    implementation(projects.common.theme)
+    implementation(projects.core.common)
+    implementation(projects.core.theme)
 
     //=====Feature Anime=====
     implementation(projects.feature.anime.core.domain)

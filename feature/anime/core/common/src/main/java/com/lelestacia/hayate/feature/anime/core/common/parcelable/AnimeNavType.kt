@@ -3,8 +3,8 @@ package com.lelestacia.hayate.feature.anime.core.common.parcelable
 import android.net.Uri
 import android.os.Bundle
 import androidx.navigation.NavType
-import com.lelestacia.hayate.common.shared.util.fromJson
-import com.lelestacia.hayate.common.shared.util.parcelable
+import com.lelestacia.hayate.core.common.util.fromJson
+import com.lelestacia.hayate.core.common.util.parcelable
 import com.lelestacia.hayate.feature.anime.core.domain.model.Anime
 
 /**

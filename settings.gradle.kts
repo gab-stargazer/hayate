@@ -22,15 +22,17 @@ include(":app")
 include(":feature:settings:ui")
 include(":feature:settings:domain")
 include(":feature:settings:data")
-include(":common:theme")
-include(":common:preferences")
-include(":common:shared")
 
 include(":feature:anime:detail:ui")
 include(":feature:anime:initialization:ui")
 include(":feature:anime:initialization:domain")
-include(":common:firebase")
 include(":feature:anime:detail:domain")
+
+//=====Core=====
+include(":core:theme")
+include(":core:common")
+include(":core:preferences")
+include(":core:firebase")
 
 //=====Feature Anime=====
 include(":feature:anime:core:common")

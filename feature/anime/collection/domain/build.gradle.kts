@@ -43,7 +43,7 @@ android {
 dependencies {
 
     // =====Feature Anime=====
-    implementation(projects.common.preferences)
+    implementation(projects.core.preferences)
     api(projects.feature.anime.core.domain)
     api(projects.feature.anime.core.common)
 

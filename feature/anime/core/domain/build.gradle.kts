@@ -48,8 +48,7 @@ android {
 
 dependencies {
 
-    api(projects.common.shared)
-    implementation(projects.common.shared)
+    api(projects.core.common)
 
     //  =====Compose=====
     implementation(platform(libs.compose.bom))

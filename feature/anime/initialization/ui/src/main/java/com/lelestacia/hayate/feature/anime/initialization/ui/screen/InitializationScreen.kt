@@ -1,6 +1,5 @@
 package com.lelestacia.hayate.feature.anime.initialization.ui.screen
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,13 +10,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.compose.AppTheme
-import com.lelestacia.hayate.common.theme.spacing
+import com.lelestacia.hayate.core.theme.AppTheme
+import com.lelestacia.hayate.core.theme.spacing
+import com.lelestacia.hayate.feature.anime.initialization.ui.R
 
 @Composable
-internal fun InitializationScreen() {
+internal fun InitializationScreen(
+    isDarkTheme: Boolean,
+) {
     Column(
         verticalArrangement = Arrangement.spacedBy(
             space = spacing.small,
@@ -28,10 +31,10 @@ internal fun InitializationScreen() {
     ) {
         CircularProgressIndicator()
         Text(
-            text = "Setting up few stuff for you",
+            text = stringResource(R.string.loading_message),
             style = MaterialTheme.typography.titleMedium.copy(
                 fontWeight = FontWeight.Bold,
-                color = when (isSystemInDarkTheme()) {
+                color = when (isDarkTheme) {
                     true -> Color.White
                     false -> Color.Black
                 }
@@ -46,6 +49,8 @@ internal fun PreviewInitializationScreen() {
     AppTheme(
         dynamicColor = false
     ) {
-        InitializationScreen()
+        InitializationScreen(
+            isDarkTheme = false
+        )
     }
 }

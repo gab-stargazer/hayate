@@ -43,7 +43,7 @@ android {
 dependencies {
 
     //  =====API=====
-    implementation(projects.common.shared)
+    implementation(projects.core.common)
     implementation(projects.feature.anime.core.source.remote.api)
 
     //  Coroutine

@@ -18,12 +18,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.compose.AppTheme
-import com.lelestacia.hayate.common.shared.R
-import com.lelestacia.hayate.common.shared.component.HayateCustomDropDownItem
-import com.lelestacia.hayate.common.shared.component.HayateCustomFilterChip
-import com.lelestacia.hayate.common.theme.padding
-import com.lelestacia.hayate.common.theme.spacing
+import com.lelestacia.hayate.core.common.component.HayateCustomDropDownItem
+import com.lelestacia.hayate.core.common.component.HayateCustomFilterChip
+import com.lelestacia.hayate.core.theme.AppTheme
+import com.lelestacia.hayate.core.theme.padding
+import com.lelestacia.hayate.core.theme.spacing
 import com.lelestacia.hayate.feature.anime.core.common.filter.AnimeFilter
 import com.lelestacia.hayate.feature.anime.core.common.filter.AnimeRating
 import com.lelestacia.hayate.feature.anime.core.common.filter.AnimeType
@@ -82,9 +81,9 @@ fun HayateAnimeDropDownFilter(
                         onAnimeTypeToggled.invoke()
                     },
                     text = stringResource(
-                        id = R.string.anime_type_with_value,
+                        id = com.lelestacia.hayate.core.common.R.string.anime_type_with_value,
                         selectedAnimeType?.name
-                            ?: stringResource(id = R.string.all)
+                            ?: stringResource(id = com.lelestacia.hayate.core.common.R.string.all)
                     )
                 )
                 DropdownMenu(
@@ -94,7 +93,7 @@ fun HayateAnimeDropDownFilter(
                     },
                 ) {
                     HayateCustomDropDownItem(
-                        text = stringResource(id = R.string.all),
+                        text = stringResource(id = com.lelestacia.hayate.core.common.R.string.all),
                         onClick = {
                             onAnimeTypeSelected(null)
                         }
@@ -120,9 +119,9 @@ fun HayateAnimeDropDownFilter(
                         onAnimeFilterToggled?.invoke()
                     },
                     text = stringResource(
-                        id = R.string.anime_filter_with_value,
+                        id = com.lelestacia.hayate.core.common.R.string.anime_filter_with_value,
                         selectedAnimeFilter?.title
-                            ?: stringResource(id = R.string.all)
+                            ?: stringResource(id = com.lelestacia.hayate.core.common.R.string.all)
                     )
                 )
                 DropdownMenu(
@@ -132,7 +131,7 @@ fun HayateAnimeDropDownFilter(
                     },
                 ) {
                     HayateCustomDropDownItem(
-                        text = stringResource(id = R.string.all),
+                        text = stringResource(id = com.lelestacia.hayate.core.common.R.string.all),
                         onClick = {
                             if (onAnimeFilterSelected != null) {
                                 onAnimeFilterSelected(null)
@@ -162,9 +161,9 @@ fun HayateAnimeDropDownFilter(
                         onAnimeRatingToggled?.invoke()
                     },
                     text = stringResource(
-                        id = R.string.anime_rating_with_value,
+                        id = com.lelestacia.hayate.core.common.R.string.anime_rating_with_value,
                         selectedAnimeRating?.title
-                            ?: stringResource(id = R.string.all)
+                            ?: stringResource(id = com.lelestacia.hayate.core.common.R.string.all)
                     )
                 )
                 DropdownMenu(
@@ -174,7 +173,7 @@ fun HayateAnimeDropDownFilter(
                     },
                 ) {
                     HayateCustomDropDownItem(
-                        text = stringResource(id = R.string.all),
+                        text = stringResource(id = com.lelestacia.hayate.core.common.R.string.all),
                         onClick = {
                             if (onAnimeRatingSelected != null) {
                                 onAnimeRatingSelected(null)

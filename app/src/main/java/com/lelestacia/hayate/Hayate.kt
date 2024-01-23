@@ -19,10 +19,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -31,18 +29,20 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.systemuicontroller.SystemUiController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.lelestacia.hayate.common.shared.Screen
-import com.lelestacia.hayate.common.shared.api.FeatureApi
-import com.lelestacia.hayate.common.shared.event.HayateEvent
-import com.lelestacia.hayate.common.shared.util.CollectInLaunchEffect
-import com.lelestacia.hayate.common.shared.util.HandleEvent
 import com.lelestacia.hayate.component.CustomAppBar
 import com.lelestacia.hayate.component.CustomBottomNavigation
+import com.lelestacia.hayate.core.common.Screen
+import com.lelestacia.hayate.core.common.api.FeatureApi
+import com.lelestacia.hayate.core.common.event.HayateEvent
+import com.lelestacia.hayate.core.common.state.HayateState
+import com.lelestacia.hayate.domain.state.AppBarState
+import com.lelestacia.hayate.domain.state.BottomNavigationState
 import com.lelestacia.hayate.domain.viewmodel.HayateViewModel
 import com.lelestacia.hayate.feature.settings.ui.SettingScreen
 import com.lelestacia.hayate.util.HandleNavigation
-import kotlinx.coroutines.launch
+import com.lelestacia.hayate.util.HandleSnackBar
 import timber.log.Timber
 
 @Composable
@@ -51,22 +51,19 @@ fun Hayate(
     vm: HayateViewModel = hiltViewModel(),
 ) {
 
-    val appBarState by vm.appBarState.collectAsStateWithLifecycle()
-    val bottomNavigationState by vm.bottomNavigationState.collectAsStateWithLifecycle()
+    val appBarState: AppBarState by vm.appBarState.collectAsStateWithLifecycle()
+    val bottomNavigationState: BottomNavigationState by vm.bottomNavigationState.collectAsStateWithLifecycle()
 
     val navController: NavHostController = rememberNavController()
-    val snackBarHostState by remember {
+    val snackBarHostState: SnackbarHostState by remember {
         mutableStateOf(SnackbarHostState())
     }
 
-    val scope = rememberCoroutineScope()
-    val context = LocalContext.current
+    val uiController: SystemUiController = rememberSystemUiController()
+    val isDarkTheme: Boolean = isSystemInDarkTheme()
+    val surfaceColor: Color = MaterialTheme.colorScheme.surface
 
-    val uiController = rememberSystemUiController()
-    val isDarkTheme = isSystemInDarkTheme()
-    val surfaceColor = MaterialTheme.colorScheme.surface
-
-    val backStackEntry by navController
+    val backStackEntry: NavBackStackEntry? by navController
         .currentBackStackEntryFlow
         .collectAsStateWithLifecycle(initialValue = null)
 
@@ -81,19 +78,23 @@ fun Hayate(
         }
     }
 
-    LaunchedEffect(key1 = Unit) {
-        vm.onEvent(HayateEvent.OnDarkThemeChanged(isDarkTheme))
+    DisposableEffect(Unit) {
+        vm.onEvent(HayateEvent.DarkThemeChanged(isDarkTheme))
+
+        onDispose {
+            Timber.w("Hayate leaves composition tree")
+        }
     }
 
     /**
-     * Observes the [HayateViewModel.navigationRoute] StateFlow from the [HayateViewModel] and collects it as a State using the
+     * Observes the [HayateViewModel.navigationState] StateFlow from the [HayateViewModel] and collects it as a State using the
      * [collectAsStateWithLifecycle] extension function. It then uses the collected route to update the
      * navigation within the application by invoking the [HandleNavigation] function.
      *
      * @param vm The [HayateViewModel] responsible for managing navigation states.
      * @param navController The NavController used for navigation within the application.
      *
-     * @see HayateViewModel.navigationRoute
+     * @see HayateViewModel.navigationState
      * @see collectAsStateWithLifecycle
      * @see HandleNavigation
      *
@@ -107,12 +108,49 @@ fun Hayate(
      * )
      * ```
      */
-    val navigationRoute by vm.navigationRoute.collectAsStateWithLifecycle()
+    val navigationState by vm.navigationState.collectAsStateWithLifecycle()
     HandleNavigation(
         navController = navController,
-        navigation = navigationRoute,
+        state = navigationState,
         postNavigate = vm::handleNavigation
     )
+
+    /**
+     * Collects the snackBarState from the [vm] (ViewModel) using [collectAsStateWithLifecycle],
+     * and then uses [HandleSnackBar] composable to display a Snackbar based on the collected state.
+     *
+     * This code snippet is part of a Compose UI setup, where the snackBarState is observed and
+     * converted into a state that Compose can recompose on. The [HandleSnackBar] composable is then
+     * invoked to handle the Snackbar display based on the current state. The [SnackbarHostState] is
+     * used as the [SnackbarHostState] responsible for showing the Snackbar, and postSnackBar is a
+     * lambda function to be executed after showing the Snackbar.
+     *
+     * Example usage:
+     * ```kotlin
+     * val snackBarState by vm.snackBarState.collectAsStateWithLifecycle()
+     * HandleSnackBar(
+     *     snackBarHost = snackBarHostState,
+     *     state = snackBarState,
+     *     postSnackBar = vm::handleSnackBar
+     * )
+     * ```
+     *
+     * @param snackBarHost The [SnackbarHostState] responsible for showing the Snackbar.
+     * @param state The UI state that determines whether to show the Snackbar or not.
+     * @param postSnackBar Lambda function to be executed after showing the Snackbar.
+     * @see vm
+     * @see snackBarState
+     * @see HandleSnackBar
+     * @see collectAsStateWithLifecycle
+     */
+    val snackBarState by vm.snackBarState.collectAsStateWithLifecycle()
+    HandleSnackBar(
+        snackBarHost = snackBarHostState,
+        state = snackBarState,
+        postSnackBar = vm::handleSnackBar
+    )
+
+    val applicationState: HayateState by vm.applicationState.collectAsStateWithLifecycle()
 
     Scaffold(
         topBar = {
@@ -165,7 +203,7 @@ fun Hayate(
             featureProvider.forEach { feature ->
                 feature.registerGraph(
                     navGraphBuilder = this,
-                    snackBarHostState = snackBarHostState,
+                    state = applicationState,
                     onEvent = vm::onEvent
                 )
             }
@@ -180,66 +218,9 @@ fun Hayate(
         }
     }
 
-    val snackBarState by vm.snackBarMessage.collectAsStateWithLifecycle()
-    HandleEvent(
-        event = snackBarState,
-        onEvent = { state ->
-            state?.let { uiText ->
-                scope.launch {
-                    snackBarHostState.showSnackbar(uiText.asString(context = context))
-                }
-            }
-        },
-        postEvent = vm::onSnackBarMessageHandled
-    )
-
-    /*
-     *  New navigation system works by having a channel that host a custom data class
-     *  representing a navigation with route as string and nullable options.
-     *  Basically after navigation happened, channel should be cleared since it was consumed
-     *  as flow (FAILED).
-     *
-     *  Created on 16th January 2024
-     *
-     *  Issues list:
-     *      1. App will crash when theme changes due to consume as flow triggered once again
-     *          condition: Using Channel then consumeAsFlow to convert the channel into flow
-     *             The reason why it crashed is because when the app reconstructed because of
-     *             system UI changed, the flow got recollected even tho it supposed to be
-     *             collected only once
-     *  NOTE:
-     *      If you have a fix for this or know something about this, please let me know.
-     *      handling the navigation as a stateflow means i need to handle the state after
-     *      the event is fired, that's why i'm thinking of staying on Channel when found a
-     *      fix for that
-     */
-
-//
-//    val navigationState by vm.navigationState.collectAsStateWithLifecycle()
-//    HandleEvent(
-//        event = navigationState,
-//        onEvent = { navigation ->
-//            navigation?.let {
-//                when (navigation) {
-//                    is HayateNavigationType.Navigate -> navController.navigate(
-//                        route = navigation.route,
-//                        navOptions = navigation.options
-//                    )
-//
-//                    HayateNavigationType.PopBackstack -> navController.popBackStack()
-//                }
-//            }
-//        },
-//        postEvent = vm::onNavigationStateHandled
-//    )
-
-
-    navController.currentBackStackEntryFlow.CollectInLaunchEffect(
-        key = Unit,
-        block = { navBackStackEntry: NavBackStackEntry ->
-            navBackStackEntry.destination.route?.let { currentRoute: String ->
-                vm.onEvent(HayateEvent.OnDestinationChanged(currentRoute))
-            }
+    LaunchedEffect(key1 = backStackEntry) {
+        backStackEntry?.destination?.route?.let { currentRoute ->
+            vm.onEvent(HayateEvent.DestinationChanged(currentRoute))
         }
-    )
+    }
 }

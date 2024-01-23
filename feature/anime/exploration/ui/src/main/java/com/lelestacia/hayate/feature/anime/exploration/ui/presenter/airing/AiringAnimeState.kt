@@ -8,7 +8,7 @@ import com.lelestacia.hayate.feature.anime.core.common.filter.AnimeType
 import com.lelestacia.hayate.feature.anime.core.domain.model.Anime
 
 @Immutable
-data class AiringAnimeState(
+internal data class AiringAnimeState(
     val anime: PagingData<Anime> = PagingData.empty(),
     val animeType: AnimeType? = null,
     val gridState: LazyGridState = LazyGridState(),

@@ -1,6 +1,6 @@
 package com.lelestacia.hayate.domain.state
 
-import com.lelestacia.hayate.common.shared.Screen
+import com.lelestacia.hayate.core.common.Screen
 import com.lelestacia.hayate.navigation.CustomNavigationItem
 import com.lelestacia.hayate.navigation.HayateNavigationItem
 

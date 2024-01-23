@@ -8,8 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.example.compose.AppTheme
-import com.lelestacia.hayate.common.shared.api.FeatureApi
+import com.lelestacia.hayate.core.common.api.FeatureApi
+import com.lelestacia.hayate.core.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

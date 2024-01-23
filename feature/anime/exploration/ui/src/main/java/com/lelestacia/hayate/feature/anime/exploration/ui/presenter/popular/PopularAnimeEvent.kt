@@ -4,7 +4,7 @@ import com.lelestacia.hayate.feature.anime.core.common.filter.AnimeFilter
 import com.lelestacia.hayate.feature.anime.core.common.filter.AnimeRating
 import com.lelestacia.hayate.feature.anime.core.common.filter.AnimeType
 
-sealed class PopularAnimeEvent {
+internal sealed class PopularAnimeEvent {
     data class OnAnimeTypeChanged(val type: AnimeType?) : PopularAnimeEvent()
     data object OnBottomSheetToggled : PopularAnimeEvent()
     data object OnAnimeTypeMenuToggled : PopularAnimeEvent()

@@ -1,6 +1,6 @@
 package com.lelestacia.hayate.feature.anime.core.source.remote.impl.di
 
-import com.lelestacia.hayate.common.shared.util.IoDispatcher
+import com.lelestacia.hayate.core.common.util.IoDispatcher
 import com.lelestacia.hayate.feature.anime.core.source.remote.api.api.AnimeRemoteDataSourceApi
 import com.lelestacia.hayate.feature.anime.core.source.remote.impl.endpoint.ScheduleEndpoint
 import com.lelestacia.hayate.feature.anime.core.source.remote.impl.endpoint.SearchEndpoint

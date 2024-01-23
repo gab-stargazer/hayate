@@ -2,7 +2,7 @@ package com.lelestacia.hayate.feature.anime.core.source.local.impl.di
 
 import android.content.Context
 import androidx.room.Room
-import com.lelestacia.hayate.common.shared.util.IoDispatcher
+import com.lelestacia.hayate.core.common.util.IoDispatcher
 import com.lelestacia.hayate.feature.anime.core.source.local.api.api.AnimeLocalDataSourceApi
 import com.lelestacia.hayate.feature.anime.core.source.local.impl.AnimeLocalDataSourceImpl
 import com.lelestacia.hayate.feature.anime.core.source.local.impl.dao.AnimeDao

@@ -2,7 +2,7 @@ package com.lelestacia.hayate.domain.state
 
 import androidx.annotation.StringRes
 import com.lelestacia.hayate.R
-import com.lelestacia.hayate.common.shared.Screen
+import com.lelestacia.hayate.core.common.Screen
 
 data class AppBarState(
 

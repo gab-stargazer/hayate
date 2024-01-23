@@ -1,7 +1,7 @@
 package com.lelestacia.hayate.feature.anime.core.source.remote.impl.source
 
 import androidx.paging.PagingSource
-import com.lelestacia.hayate.common.shared.util.IoDispatcher
+import com.lelestacia.hayate.core.common.util.IoDispatcher
 import com.lelestacia.hayate.feature.anime.core.source.remote.api.api.AnimeRemoteDataSourceApi
 import com.lelestacia.hayate.feature.anime.core.source.remote.api.dto.anime.AnimeDto
 import com.lelestacia.hayate.feature.anime.core.source.remote.api.dto.anime.demographic.AnimeDemographicDto

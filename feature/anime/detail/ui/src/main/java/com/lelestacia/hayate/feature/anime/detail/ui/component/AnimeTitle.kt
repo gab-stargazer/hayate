@@ -5,7 +5,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import com.lelestacia.hayate.common.theme.quickSandFamily
+import com.lelestacia.hayate.core.theme.quickSandFamily
 
 @Composable
 internal fun AnimeTitle(

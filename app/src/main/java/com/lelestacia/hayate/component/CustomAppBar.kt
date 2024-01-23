@@ -61,19 +61,18 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.compose.AppTheme
 import com.lelestacia.hayate.R
-import com.lelestacia.hayate.common.shared.event.HayateEvent
-import com.lelestacia.hayate.common.shared.event.HayateNavigationType
-import com.lelestacia.hayate.common.shared.util.UiText
-import com.lelestacia.hayate.common.theme.padding
-import com.lelestacia.hayate.common.theme.spacing
+import com.lelestacia.hayate.core.common.event.HayateEvent
+import com.lelestacia.hayate.core.common.event.HayateNavigationType
+import com.lelestacia.hayate.core.common.util.UiText
+import com.lelestacia.hayate.core.theme.AppTheme
+import com.lelestacia.hayate.core.theme.padding
+import com.lelestacia.hayate.core.theme.quickSandFamily
+import com.lelestacia.hayate.core.theme.spacing
 import com.lelestacia.hayate.domain.state.AppBarState
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Brands
 import compose.icons.fontawesomeicons.brands.Youtube
-
-//  TODO: Extract string resource later on
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -192,7 +191,7 @@ fun CustomAppBar(
                     ) {
                         IconButton(
                             onClick = {
-                                onEvent(HayateEvent.OnNavigate(HayateNavigationType.PopBackstack))
+                                onEvent(HayateEvent.Navigate(HayateNavigationType.PopBackstack))
                                 onEvent(
                                     HayateEvent.OnDetailAnimeToolbar(
                                         animeID = null,
@@ -221,7 +220,7 @@ fun CustomAppBar(
                                 false -> Icons.Default.Search
                             },
                             onClick = {
-                                onEvent(HayateEvent.OnSearchModeToggle)
+                                onEvent(HayateEvent.SearchModeToggle)
                             },
                             color = iconColor,
                             contentDescription = "Search Button"
@@ -271,23 +270,34 @@ fun CustomAppBar(
                 TextField(
                     value = state.searchQuery,
                     onValueChange = { newSearchQuery ->
-                        onEvent(HayateEvent.OnSearchQueryChanged(newSearchQuery))
+                        onEvent(HayateEvent.SearchQueryChanged(newSearchQuery))
                     },
                     placeholder = {
-                        Text(text = stringResource(R.string.search_box_placeholder))
+                        Text(
+                            text = stringResource(R.string.search_box_placeholder),
+                            style = MaterialTheme.typography.titleMedium.copy(
+                                fontWeight = FontWeight.Bold,
+                                fontFamily = quickSandFamily
+                            )
+                        )
                     },
                     prefix = {
                         if (state.searchQuery.isNotBlank()) {
                             Text(
                                 text = stringResource(R.string.search_box_prefix),
                                 style = MaterialTheme.typography.titleMedium.copy(
-                                    fontWeight = FontWeight.Bold
+                                    fontWeight = FontWeight.Bold,
+                                    fontFamily = quickSandFamily
                                 )
                             )
                         } else {
                             Unit
                         }
                     },
+                    textStyle = MaterialTheme.typography.titleMedium.copy(
+                        fontWeight = FontWeight.SemiBold,
+                        fontFamily = quickSandFamily
+                    ),
                     shape = RoundedCornerShape(
                         15
                     ),
@@ -300,7 +310,7 @@ fun CustomAppBar(
                         unfocusedTextColor = MaterialTheme.colorScheme.onSurface
                     ),
                     keyboardOptions = KeyboardOptions(
-                        capitalization = KeyboardCapitalization.Words,
+                        capitalization = KeyboardCapitalization.Sentences,
                         autoCorrect = false,
                         keyboardType = KeyboardType.Text,
                         imeAction = ImeAction.Search
@@ -309,7 +319,7 @@ fun CustomAppBar(
                         onSearch = {
                             if (state.searchQuery.isNotBlank()) {
                                 //  Later this should be able to search more than once
-                                onEvent(HayateEvent.OnSearchClicked)
+                                onEvent(HayateEvent.SearchClicked)
                             } else {
                                 onEvent(
                                     HayateEvent.ShowSnackBar(
@@ -327,7 +337,10 @@ fun CustomAppBar(
                     singleLine = true,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = padding.medium, vertical = padding.small)
+                        .padding(
+                            horizontal = padding.medium,
+                            vertical = padding.small
+                        )
                         .focusable()
                         .onFocusChanged {
                             isSearchFieldFocused = it.isFocused

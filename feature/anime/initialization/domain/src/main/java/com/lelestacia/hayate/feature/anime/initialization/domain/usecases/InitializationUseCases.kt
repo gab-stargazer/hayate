@@ -1,9 +1,9 @@
 package com.lelestacia.hayate.feature.anime.initialization.domain.usecases
 
-import com.lelestacia.hayate.common.firebase.FirebaseConfig
-import com.lelestacia.hayate.common.preferences.ConfigPreferences
-import com.lelestacia.hayate.common.shared.DataState
-import com.lelestacia.hayate.common.shared.util.UiText
+import com.lelestacia.hayate.core.common.state.DataState
+import com.lelestacia.hayate.core.common.util.UiText
+import com.lelestacia.hayate.core.firebase.FirebaseConfig
+import com.lelestacia.hayate.core.preferences.ConfigPreferences
 import com.lelestacia.hayate.feature.anime.core.domain.repository.AnimeRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch

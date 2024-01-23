@@ -22,10 +22,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.navOptions
 import com.google.accompanist.systemuicontroller.SystemUiController
-import com.lelestacia.hayate.common.shared.Screen
-import com.lelestacia.hayate.common.shared.event.HayateEvent
-import com.lelestacia.hayate.common.shared.event.HayateNavigationType
-import com.lelestacia.hayate.common.theme.quickSandFamily
+import com.lelestacia.hayate.core.common.Screen
+import com.lelestacia.hayate.core.common.event.HayateEvent
+import com.lelestacia.hayate.core.common.event.HayateNavigationType
+import com.lelestacia.hayate.core.theme.quickSandFamily
 import com.lelestacia.hayate.domain.state.BottomNavigationState
 
 @Composable
@@ -70,7 +70,7 @@ fun CustomBottomNavigation(
                 NavigationBarItem(
                     selected = state.selectedRoute == item.route,
                     onClick = {
-                        val navigationEvent = HayateEvent.OnNavigate(
+                        val navigationEvent = HayateEvent.Navigate(
                             HayateNavigationType.Navigate(
                                 route = item.route,
                                 options = navOptions {

@@ -41,7 +41,7 @@ android {
 dependencies {
 
     // =====Common=====
-    implementation(projects.common.shared)
+    implementation(projects.core.common)
 
     // Room
     implementation(libs.room)

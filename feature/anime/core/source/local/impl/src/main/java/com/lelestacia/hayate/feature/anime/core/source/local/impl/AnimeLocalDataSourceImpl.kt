@@ -4,7 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
-import com.lelestacia.hayate.common.shared.util.IoDispatcher
+import com.lelestacia.hayate.core.common.util.IoDispatcher
 import com.lelestacia.hayate.feature.anime.core.source.local.api.api.AnimeLocalDataSourceApi
 import com.lelestacia.hayate.feature.anime.core.source.local.api.entity.AnimeEntity
 import com.lelestacia.hayate.feature.anime.core.source.local.api.entity.demographic.AnimeDemographicEntity

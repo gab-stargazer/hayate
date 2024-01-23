@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.paging.compose.LazyPagingItems
-import com.lelestacia.hayate.common.theme.padding
+import com.lelestacia.hayate.core.theme.padding
 import com.lelestacia.hayate.feature.anime.core.common.component.HayateAnimeDropDownFilter
 import com.lelestacia.hayate.feature.anime.core.common.component.SearchAnimePaging
 import com.lelestacia.hayate.feature.anime.core.domain.model.Anime
@@ -21,6 +21,7 @@ import com.lelestacia.hayate.feature.anime.search.ui.presenter.SearchState
 fun SearchScreen(
     query: String,
     state: SearchState,
+    isDarkTheme: Boolean,
     onEvent: (SearchEvent) -> Unit,
     anime: LazyPagingItems<Anime>,
     onClicked: (Anime) -> Unit,
@@ -62,6 +63,7 @@ fun SearchScreen(
         SearchAnimePaging(
             query = query,
             state = rememberLazyGridState(),
+            isDarkTheme = isDarkTheme,
             animePaging = anime,
             onClick = onClicked,
             modifier = Modifier.weight(1f)

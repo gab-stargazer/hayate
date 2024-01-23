@@ -1,7 +1,6 @@
 package com.lelestacia.hayate.feature.anime.detail.ui.component
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -35,8 +34,8 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.CachePolicy
 import coil.request.ImageRequest
-import com.lelestacia.hayate.common.theme.padding
-import com.lelestacia.hayate.common.theme.quickSandFamily
+import com.lelestacia.hayate.core.theme.padding
+import com.lelestacia.hayate.core.theme.quickSandFamily
 import com.lelestacia.hayate.feature.anime.detail.ui.R
 
 @Composable
@@ -49,7 +48,7 @@ fun AnimeHeader(
     score: Double?,
     scoredBy: Int?,
     status: String,
-    isDarkTheme: Boolean = isSystemInDarkTheme()
+    isDarkTheme: Boolean,
 ) {
 
     //  TODO: Fix Coloring

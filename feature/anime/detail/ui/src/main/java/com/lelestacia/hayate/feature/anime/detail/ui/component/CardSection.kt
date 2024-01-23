@@ -13,8 +13,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.lelestacia.hayate.common.theme.padding
-import com.lelestacia.hayate.common.theme.spacing
+import com.lelestacia.hayate.core.theme.padding
+import com.lelestacia.hayate.core.theme.spacing
 
 @Composable
 internal fun CardSection(

@@ -8,7 +8,7 @@ import com.lelestacia.hayate.feature.anime.core.common.filter.AnimeRating
 import com.lelestacia.hayate.feature.anime.core.common.filter.AnimeType
 
 @Immutable
-data class PopularAnimeState(
+internal data class PopularAnimeState(
     val animeType: AnimeType? = null,
     val animeFilter: AnimeFilter? = null,
     val animeRating: AnimeRating? = null,
@@ -17,5 +17,5 @@ data class PopularAnimeState(
     val isBottomSheetOpened: Boolean = false,
     val isAnimeTypeMenuOpened: Boolean = false,
     val isAnimeFilterMenuOpened: Boolean = false,
-    val isAnimeRatingMenuOpened: Boolean = false
+    val isAnimeRatingMenuOpened: Boolean = false,
 )

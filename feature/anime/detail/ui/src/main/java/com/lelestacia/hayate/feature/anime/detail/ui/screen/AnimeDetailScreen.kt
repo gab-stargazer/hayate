@@ -33,10 +33,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.lelestacia.hayate.common.shared.component.HayateCustomChip
-import com.lelestacia.hayate.common.theme.padding
-import com.lelestacia.hayate.common.theme.quickSandFamily
-import com.lelestacia.hayate.common.theme.spacing
+import com.lelestacia.hayate.core.common.component.HayateCustomChip
+import com.lelestacia.hayate.core.theme.padding
+import com.lelestacia.hayate.core.theme.quickSandFamily
+import com.lelestacia.hayate.core.theme.spacing
 import com.lelestacia.hayate.feature.anime.core.domain.model.Anime
 import com.lelestacia.hayate.feature.anime.detail.ui.component.AnimeHeader
 import com.lelestacia.hayate.feature.anime.detail.ui.component.AnimeInformation
@@ -56,7 +56,7 @@ internal fun AnimeDetailScreen(
     isOnWatchList: Boolean,
     onEvent: (DetailAnimeEvent) -> Unit,
     modifier: Modifier = Modifier,
-    isDarkTheme: Boolean = isSystemInDarkTheme(),
+    isDarkTheme: Boolean,
 ) {
 
     //  TODO: Try to remember what is this for
@@ -135,7 +135,8 @@ internal fun AnimeDetailScreen(
                 rank = anime.rank ?: 0,
                 score = anime.score,
                 scoredBy = anime.scoredBy,
-                status = anime.status
+                status = anime.status,
+                isDarkTheme = isDarkTheme
             )
 
             LazyRow(
@@ -223,7 +224,10 @@ internal fun AnimeDetailScreen(
 
             CardSection(
                 content = {
-                    AnimeInformation(anime = anime)
+                    AnimeInformation(
+                        anime = anime,
+                        isDarkTheme = true
+                    )
                 },
                 isDarkTheme = isSystemInDarkTheme()
             )

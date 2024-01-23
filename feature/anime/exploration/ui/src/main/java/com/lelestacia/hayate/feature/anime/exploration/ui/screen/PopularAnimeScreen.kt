@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.paging.compose.LazyPagingItems
-import com.lelestacia.hayate.common.theme.padding
+import com.lelestacia.hayate.core.theme.padding
 import com.lelestacia.hayate.feature.anime.core.common.component.AnimePagingLazyGrid
 import com.lelestacia.hayate.feature.anime.core.common.component.HayateAnimeDropDownFilter
 import com.lelestacia.hayate.feature.anime.core.domain.model.Anime
@@ -20,6 +20,7 @@ import com.lelestacia.hayate.feature.anime.exploration.ui.presenter.popular.Popu
 internal fun PopularAnimeScreen(
     popularAnimePaging: LazyPagingItems<Anime>,
     state: PopularAnimeState,
+    isDarkTheme: Boolean,
     onEvent: (PopularAnimeEvent) -> Unit,
     onAnimeClicked: (Anime) -> Unit,
     modifier: Modifier = Modifier,
@@ -65,11 +66,15 @@ internal fun PopularAnimeScreen(
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = padding.small, vertical = padding.extraSmall)
+                .padding(
+                    horizontal = padding.small,
+                    vertical = padding.extraSmall
+                )
         )
 
         AnimePagingLazyGrid(
             state = state.gridState,
+            isDarkTheme = isDarkTheme,
             animePaging = popularAnimePaging,
             onClick = onAnimeClicked,
             modifier = Modifier.weight(1f)

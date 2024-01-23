@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.lelestacia.hayate.common.shared.DataState
-import com.lelestacia.hayate.common.shared.util.UiText
+import com.lelestacia.hayate.core.common.state.DataState
+import com.lelestacia.hayate.core.common.util.UiText
 import com.lelestacia.hayate.feature.anime.collection.domain.usecases.AnimeCollectionUseCases
 import com.lelestacia.hayate.feature.anime.collection.ui.presenter.CollectionState
 import com.lelestacia.hayate.feature.anime.core.domain.model.Anime

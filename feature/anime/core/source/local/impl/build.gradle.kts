@@ -53,7 +53,7 @@ dependencies {
 
     //  =====API=====
     implementation(projects.feature.anime.core.source.local.api)
-    implementation(projects.common.shared)
+    implementation(projects.core.common)
 
     //  Coroutine
     implementation(libs.coroutine)

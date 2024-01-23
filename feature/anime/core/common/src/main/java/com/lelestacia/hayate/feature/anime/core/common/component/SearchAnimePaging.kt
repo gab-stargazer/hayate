@@ -1,7 +1,6 @@
 package com.lelestacia.hayate.feature.anime.core.common.component
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -24,9 +23,9 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.itemContentType
 import androidx.paging.compose.itemKey
-import com.lelestacia.hayate.common.shared.screen.ErrorScreen
-import com.lelestacia.hayate.common.shared.screen.LoadingScreen
-import com.lelestacia.hayate.common.theme.quickSandFamily
+import com.lelestacia.hayate.core.common.screen.ErrorScreen
+import com.lelestacia.hayate.core.common.screen.LoadingScreen
+import com.lelestacia.hayate.core.theme.quickSandFamily
 import com.lelestacia.hayate.feature.anime.core.domain.model.Anime
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -34,6 +33,7 @@ import com.lelestacia.hayate.feature.anime.core.domain.model.Anime
 fun SearchAnimePaging(
     query: String,
     state: LazyGridState,
+    isDarkTheme: Boolean,
     animePaging: LazyPagingItems<Anime>,
     onClick: (Anime) -> Unit,
     modifier: Modifier = Modifier,
@@ -44,7 +44,7 @@ fun SearchAnimePaging(
             ErrorScreen(
                 errorMessage = (animePaging.loadState.refresh as LoadState.Error).error.message.orEmpty(),
                 onRetry = animePaging::retry,
-                isDarkTheme = isSystemInDarkTheme(),
+                isDarkTheme = isDarkTheme,
                 modifier = Modifier.fillMaxSize()
             )
         }
@@ -64,7 +64,7 @@ fun SearchAnimePaging(
                         style = MaterialTheme.typography.titleMedium.copy(
                             fontWeight = FontWeight.Bold,
                             fontFamily = quickSandFamily,
-                            color = when (isSystemInDarkTheme()) {
+                            color = when (isDarkTheme) {
                                 true -> Color.White
                                 false -> Color.Black
                             }
@@ -103,7 +103,7 @@ fun SearchAnimePaging(
                             AnimeCard(
                                 anime = validAnime,
                                 onClick = onClick,
-                                isDarkTheme = isSystemInDarkTheme(),
+                                isDarkTheme = isDarkTheme,
                                 modifier = Modifier.animateItemPlacement()
                             )
                         }
@@ -121,7 +121,7 @@ fun SearchAnimePaging(
                                     onRetry = {
                                         animePaging.retry()
                                     },
-                                    isDarkTheme = isSystemInDarkTheme(),
+                                    isDarkTheme = isDarkTheme,
                                     modifier = Modifier
                                         .height(250.dp)
                                         .fillMaxWidth()

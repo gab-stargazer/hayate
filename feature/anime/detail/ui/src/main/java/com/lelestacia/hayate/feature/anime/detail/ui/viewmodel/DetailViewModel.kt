@@ -2,8 +2,8 @@ package com.lelestacia.hayate.feature.anime.detail.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lelestacia.hayate.common.shared.DataState
-import com.lelestacia.hayate.common.shared.util.UiText
+import com.lelestacia.hayate.core.common.state.DataState
+import com.lelestacia.hayate.core.common.util.UiText
 import com.lelestacia.hayate.feature.anime.core.domain.model.Anime
 import com.lelestacia.hayate.feature.anime.detail.domain.usecases.DetailAnimeUseCases
 import com.lelestacia.hayate.feature.anime.detail.ui.presenter.DetailAnimeEvent

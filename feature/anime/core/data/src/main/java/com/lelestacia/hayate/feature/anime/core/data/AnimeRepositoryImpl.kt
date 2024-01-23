@@ -4,8 +4,8 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
-import com.lelestacia.hayate.common.shared.DataState
-import com.lelestacia.hayate.common.shared.util.UiText
+import com.lelestacia.hayate.core.common.state.DataState
+import com.lelestacia.hayate.core.common.util.UiText
 import com.lelestacia.hayate.feature.anime.core.data.mapper.asAnime
 import com.lelestacia.hayate.feature.anime.core.data.mapper.asDemographic
 import com.lelestacia.hayate.feature.anime.core.data.mapper.asEntity

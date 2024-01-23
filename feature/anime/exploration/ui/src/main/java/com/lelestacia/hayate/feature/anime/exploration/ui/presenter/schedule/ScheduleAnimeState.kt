@@ -6,7 +6,7 @@ import androidx.compose.runtime.Immutable
 import com.lelestacia.hayate.feature.anime.exploration.domain.util.getCurrentDay
 
 @Immutable
-data class ScheduleAnimeState(
+internal data class ScheduleAnimeState(
     val currentDay: String = getCurrentDay(),
     val gridState: LazyGridState = LazyGridState(),
     val listState: LazyListState = LazyListState(),
