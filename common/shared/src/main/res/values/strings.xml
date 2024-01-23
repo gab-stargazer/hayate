@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="all">All</string>
-    <string name="loading">Loading…</string>
-    <string name="anime_type">Type</string>
-    <string name="anime_type_with_value">Type: %1s</string>
-    <string name="anime_filter_with_value">Filter: %1s</string>
-    <string name="anime_rating_with_value">Rating: %1s</string>
-</resources>
