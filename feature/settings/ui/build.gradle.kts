@@ -50,18 +50,26 @@ android {
 
 dependencies {
 
+    //  =====Common=====
+    implementation(projects.core.common)
+    implementation(projects.core.theme)
+
+    //  =====Feature Anime=====
+    implementation(projects.feature.anime.core.common)
+    implementation(projects.feature.anime.core.domain)
+    implementation(projects.feature.anime.search.domain)
+
     //  Ktx
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
+    implementation(libs.lifecycle.viewmodel)
 
     //  Coil
     implementation(libs.coil)
 
-    //  Compose Activity
-    implementation(libs.compose.activity)
-
     //  Compose BOM
     implementation(platform(libs.compose.bom))
+    implementation(projects.feature.anime.core.domain)
     androidTestImplementation(platform(libs.compose.bom))
 
     //  Compose
@@ -72,34 +80,12 @@ dependencies {
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.icon)
     implementation(libs.compose.font)
-
-    //  Coroutine
-    implementation(libs.coroutine)
-
-    //  Firebase
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.crashlytic)
+    implementation(libs.compose.icons.font.awesome)
 
     //  Hilt
     implementation(libs.hilt)
     implementation(libs.hilt.compose)
     ksp(libs.hilt.compiler)
-
-    //  Logging Interceptor
-    implementation(libs.logging.interceptor)
-
-    //  Navigation
-    implementation(libs.navigation)
-
-    //  Paging
-    implementation(libs.paging)
-    implementation(libs.paging.compose)
-
-    //  Retrofit
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.moshi)
-    implementation(libs.moshi)
-    ksp(libs.moshi.codegen)
 
     //  Timber
     implementation(libs.timber)
@@ -114,6 +100,7 @@ dependencies {
     implementation(libs.lifecycle.ktx)
     implementation(libs.lifecycle.viewmodel)
     implementation(libs.lifecycle.viewmodel.compose)
+    implementation(libs.lifecycle.viewmodel.runtime.compose)
 
     /*============================ Testing ==============================*/
     // (Required) Writing and executing Unit Tests on the JUnit Platform

@@ -1,5 +1,6 @@
 package com.lelestacia.hayate.core.common.event
 
+import androidx.annotation.StringRes
 import androidx.navigation.NavOptions
 import com.lelestacia.hayate.core.common.event.HayateNavigationType.Navigate
 import com.lelestacia.hayate.core.common.event.HayateNavigationType.PopBackstack
@@ -29,11 +30,19 @@ sealed class HayateNavigationType {
         val options: NavOptions?,
     ) : HayateNavigationType()
 
+    data class NavigateWithTitle(
+        @StringRes val title: Int,
+        val route: String,
+        val options: NavOptions?,
+    ) : HayateNavigationType()
+
     /**
      * Represents a navigation action to pop the back stack, typically used to navigate
      * back to the previous screen or fragment.
      */
     data object PopBackstack : HayateNavigationType()
+
+    data object PopBackstackFromTitle : HayateNavigationType()
 }
 
 

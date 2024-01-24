@@ -3,6 +3,7 @@ package com.lelestacia.hayate.domain.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.navOptions
+import com.lelestacia.hayate.R
 import com.lelestacia.hayate.core.common.Screen
 import com.lelestacia.hayate.core.common.event.HayateEvent
 import com.lelestacia.hayate.core.common.event.HayateNavigationType
@@ -137,19 +138,44 @@ class HayateViewModel @Inject constructor() : ViewModel() {
                     )
                 }
 
-                if (event.navigation is HayateNavigationType.Navigate) {
-                    _appBarState.update { currentState ->
-                        currentState.copy(
-                            currentRoute = (event.navigation as HayateNavigationType.Navigate).route
-                        )
+                if (
+                    event.navigation is HayateNavigationType.Navigate ||
+                    event.navigation is HayateNavigationType.NavigateWithTitle
+                ) {
+
+                    if (event.navigation is HayateNavigationType.Navigate) {
+                        _appBarState.update { currentState ->
+                            currentState.copy(
+                                currentRoute = (event.navigation as HayateNavigationType.Navigate).route
+                            )
+                        }
+                    } else {
+                        _appBarState.update { currentState ->
+                            currentState.copy(
+                                currentRoute = (event.navigation as HayateNavigationType.NavigateWithTitle).route,
+                                appBarTitle = (event.navigation as HayateNavigationType.NavigateWithTitle).title
+                            )
+                        }
                     }
                 }
 
-                if (event.navigation is HayateNavigationType.PopBackstack) {
+                val localAppBarState: AppBarState = appBarState.value
+                if (
+                    event.navigation is HayateNavigationType.PopBackstack &&
+                    (localAppBarState.animeID != null || localAppBarState.trailerURL != null)
+                ) {
                     _appBarState.update { currentState ->
                         currentState.copy(
                             animeID = null,
                             trailerURL = null
+                        )
+                    }
+                }
+
+                if (event.navigation is HayateNavigationType.PopBackstackFromTitle) {
+                    _appBarState.update { currentState ->
+                        currentState.copy(
+                            appBarTitle = R.string.japanese_app_name
                         )
                     }
                 }

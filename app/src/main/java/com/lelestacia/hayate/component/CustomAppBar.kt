@@ -191,13 +191,11 @@ fun CustomAppBar(
                     ) {
                         IconButton(
                             onClick = {
-                                onEvent(HayateEvent.Navigate(HayateNavigationType.PopBackstack))
-                                onEvent(
-                                    HayateEvent.OnDetailAnimeToolbar(
-                                        animeID = null,
-                                        trailerURL = null
-                                    )
-                                )
+                                if (state.appBarTitle != R.string.japanese_app_name) {
+                                    onEvent(HayateEvent.Navigate(HayateNavigationType.PopBackstackFromTitle))
+                                } else {
+                                    onEvent(HayateEvent.Navigate(HayateNavigationType.PopBackstack))
+                                }
                             }
                         ) {
                             Icon(

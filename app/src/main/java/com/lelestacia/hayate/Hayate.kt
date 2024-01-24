@@ -27,7 +27,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.SystemUiController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -40,7 +39,6 @@ import com.lelestacia.hayate.core.common.state.HayateState
 import com.lelestacia.hayate.domain.state.AppBarState
 import com.lelestacia.hayate.domain.state.BottomNavigationState
 import com.lelestacia.hayate.domain.viewmodel.HayateViewModel
-import com.lelestacia.hayate.feature.settings.ui.SettingScreen
 import com.lelestacia.hayate.util.HandleNavigation
 import com.lelestacia.hayate.util.HandleSnackBar
 import timber.log.Timber
@@ -205,14 +203,6 @@ fun Hayate(
                     navGraphBuilder = this,
                     state = applicationState,
                     onEvent = vm::onEvent
-                )
-            }
-
-            composable(Screen.More.route) {
-                SettingScreen(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(paddingValues)
                 )
             }
         }

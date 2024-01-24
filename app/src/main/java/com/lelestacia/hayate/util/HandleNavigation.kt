@@ -41,7 +41,13 @@ fun HandleNavigation(
                     navOptions = (state.data as HayateNavigationType.Navigate).options
                 )
 
+                is HayateNavigationType.NavigateWithTitle -> navController.navigate(
+                    route = (state.data as HayateNavigationType.NavigateWithTitle).route,
+                    navOptions = (state.data as HayateNavigationType.NavigateWithTitle).options
+                )
+
                 HayateNavigationType.PopBackstack -> navController.popBackStack()
+                HayateNavigationType.PopBackstackFromTitle -> navController.popBackStack()
             }
             postNavigate()
         }

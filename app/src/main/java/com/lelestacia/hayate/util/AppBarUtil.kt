@@ -23,12 +23,14 @@ fun shouldAppBarBeVisible(route: String): Boolean {
     val initializationScreen = Screen.Init.route
     val detailScreen = Screen.Detail.route
     val searchScreen = Screen.Search.route
+    val appInfoScreen = Screen.AppInfo.route
 
     return when {
         rootDestination.contains(route) -> true
         initializationScreen.contains(route) -> false
         detailScreen.contains(route) -> true
         searchScreen.contains(route) -> true
+        appInfoScreen.contains(route) -> true
         else -> false
     }
 }
