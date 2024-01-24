@@ -1,5 +1,7 @@
 package com.lelestacia.hayate.feature.settings.ui.di
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.animation.AnimatedContentTransitionScope.SlideDirection.Companion.Down
 import androidx.compose.animation.AnimatedContentTransitionScope.SlideDirection.Companion.Left
 import androidx.compose.animation.AnimatedContentTransitionScope.SlideDirection.Companion.Right
@@ -10,8 +12,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -31,7 +33,6 @@ import javax.inject.Inject
 
 internal class MoreFeatureImplementation @Inject constructor() : FeatureApi {
 
-    @OptIn(ExperimentalMaterial3Api::class)
     override fun registerGraph(
         navGraphBuilder: NavGraphBuilder,
         state: HayateState,
@@ -62,6 +63,7 @@ internal class MoreFeatureImplementation @Inject constructor() : FeatureApi {
                     fadeIn()
                 }
             ) {
+                val context = LocalContext.current
                 Column(
                     modifier = Modifier.fillMaxSize()
                 ) {
@@ -86,7 +88,11 @@ internal class MoreFeatureImplementation @Inject constructor() : FeatureApi {
                         label = "Privacy and Policy",
                         icon = FontAwesomeIcons.Regular.File,
                         onClick = {
-
+                            val intent = Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse("https://github.com/gab-stargazer/hayate/blob/dev/docs/privacy_policy.md")
+                            )
+                            context.startActivity(intent)
                         },
                         isDarkTheme = state.isDarkTheme,
                         modifier = Modifier
@@ -95,7 +101,11 @@ internal class MoreFeatureImplementation @Inject constructor() : FeatureApi {
                         label = "Terms of Service",
                         icon = FontAwesomeIcons.Regular.File,
                         onClick = {
-
+                            val intent = Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse("https://github.com/gab-stargazer/hayate/blob/dev/docs/Terms_of_service.md")
+                            )
+                            context.startActivity(intent)
                         },
                         isDarkTheme = state.isDarkTheme,
                         modifier = Modifier
