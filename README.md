@@ -67,7 +67,7 @@ Here's an overview of the technologies and libraries that power Hayate:
    Android. It checks feature availability in real-time through remote configuration, simplifying
    the management of app settings for a smoother user experience.
 
-# License
+# License and Legality
 MIT License
 
 Copyright (c) 2024 Insannur kamil Malik
