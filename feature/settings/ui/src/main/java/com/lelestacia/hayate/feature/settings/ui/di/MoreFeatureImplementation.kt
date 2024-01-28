@@ -55,7 +55,6 @@ internal class MoreFeatureImplementation @Inject constructor() : FeatureApi {
                     when (targetState.destination.route) {
                         Screen.Exploration.route -> slideOutOfContainer(Left)
                         Screen.Collection.route -> slideOutOfContainer(Right)
-                        Screen.AppInfo.route -> fadeOut()
                         else -> null
                     }
                 },
@@ -130,6 +129,7 @@ internal class MoreFeatureImplementation @Inject constructor() : FeatureApi {
             ) {
                 AppInfoScreen(
                     isDarkTheme = state.isDarkTheme,
+                    onEvent = onEvent,
                     modifier = Modifier
                         .fillMaxSize()
                 )

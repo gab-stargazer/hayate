@@ -2,6 +2,7 @@ package com.lelestacia.hayate.feature.settings.ui.screen
 
 import android.content.Intent
 import android.net.Uri
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -26,6 +27,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.lelestacia.hayate.core.common.component.HayateCustomIconChip
+import com.lelestacia.hayate.core.common.event.HayateEvent
+import com.lelestacia.hayate.core.common.event.HayateNavigationType
 import com.lelestacia.hayate.core.theme.AppTheme
 import com.lelestacia.hayate.core.theme.padding
 import com.lelestacia.hayate.core.theme.quickSandFamily
@@ -33,13 +36,18 @@ import com.lelestacia.hayate.core.theme.spacing
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Brands
 import compose.icons.fontawesomeicons.brands.Github
+import compose.icons.fontawesomeicons.brands.GooglePlay
 
 @Composable
 fun AppInfoScreen(
     isDarkTheme: Boolean,
+    onEvent: (HayateEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
+    BackHandler {
+        onEvent(HayateEvent.Navigate(HayateNavigationType.PopBackstackFromTitle))
+    }
     Column(
         verticalArrangement = Arrangement.spacedBy(spacing.medium),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -108,12 +116,19 @@ fun AppInfoScreen(
                 }
             )
 
-//            HayateCustomIconChip(
-//                icon = FontAwesomeIcons.Brands.GooglePlay,
-//                title = "Google Play",
-//                contentDescription = null,
-//                onClick = {}
-//            )
+            HayateCustomIconChip(
+                icon = FontAwesomeIcons.Brands.GooglePlay,
+                title = "Google Play",
+                contentDescription = null,
+                isDarkTheme = isDarkTheme,
+                onClick = {
+                    val intent = Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("https://play.google.com/store/apps/details?id=com.lelestacia.hayate.stable")
+                    )
+                    context.startActivity(intent)
+                }
+            )
         }
     }
 }
@@ -123,7 +138,10 @@ fun AppInfoScreen(
 fun PreviewAppInfoScreen() {
     AppTheme {
         Surface {
-            AppInfoScreen(isDarkTheme = false)
+            AppInfoScreen(
+                isDarkTheme = false,
+                onEvent = {}
+            )
         }
     }
 }
