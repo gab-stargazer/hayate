@@ -68,7 +68,7 @@ Here's an overview of the technologies and libraries that power Hayate:
    the management of app settings for a smoother user experience.
 
 # License
-</br>MIT License
+MIT License
 
 Copyright (c) 2024 Insannur kamil Malik
 
