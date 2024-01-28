@@ -18,17 +18,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.paging.compose.LazyPagingItems
-import com.lelestacia.hayate.common.theme.padding
-import com.lelestacia.hayate.common.theme.quickSandFamily
+import com.lelestacia.hayate.core.theme.padding
+import com.lelestacia.hayate.core.theme.quickSandFamily
 import com.lelestacia.hayate.feature.anime.core.common.component.AnimePagingLazyGrid
 import com.lelestacia.hayate.feature.anime.core.domain.model.Anime
-import com.lelestacia.hayate.feature.anime.exploration.domain.presenter.schedule.ScheduleAnimeState
 import com.lelestacia.hayate.feature.anime.exploration.ui.R
+import com.lelestacia.hayate.feature.anime.exploration.ui.presenter.schedule.ScheduleAnimeState
 
 @Composable
 internal fun ScheduleAnimeScreen(
     scheduledAnimePaging: LazyPagingItems<Anime>,
     state: ScheduleAnimeState,
+    isDarkTheme: Boolean,
     onAnimeClicked: (Anime) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -47,7 +48,10 @@ internal fun ScheduleAnimeScreen(
             contentAlignment = Alignment.CenterStart,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = padding.small, vertical = padding.medium)
+                .padding(
+                    horizontal = padding.small,
+                    vertical = padding.medium
+                )
         ) {
             val listOfTitles = stringArrayResource(id = R.array.scheduled_anime_title)
             val title by rememberSaveable {
@@ -64,6 +68,7 @@ internal fun ScheduleAnimeScreen(
 
         AnimePagingLazyGrid(
             state = state.gridState,
+            isDarkTheme = isDarkTheme,
             animePaging = scheduledAnimePaging,
             onClick = onAnimeClicked,
             modifier = Modifier.weight(1f)

@@ -2,9 +2,6 @@ package com.lelestacia.hayate.component
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.material3.Icon
@@ -20,16 +17,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
+import androidx.navigation.navOptions
 import com.google.accompanist.systemuicontroller.SystemUiController
-import com.lelestacia.hayate.common.theme.quickSandFamily
+import com.lelestacia.hayate.core.common.Screen
+import com.lelestacia.hayate.core.common.event.HayateEvent
+import com.lelestacia.hayate.core.common.event.HayateNavigationType
+import com.lelestacia.hayate.core.theme.quickSandFamily
 import com.lelestacia.hayate.domain.state.BottomNavigationState
 
 @Composable
 fun CustomBottomNavigation(
-    navController: NavHostController,
+    state: BottomNavigationState,
+    onEvent: (HayateEvent) -> Unit,
     uiController: SystemUiController,
-    state: BottomNavigationState
 ) {
     val bottomNavigationColor = MaterialTheme.colorScheme.surfaceColorAtElevation(2.dp)
     val surfaceColor = MaterialTheme.colorScheme.surface
@@ -52,13 +52,11 @@ fun CustomBottomNavigation(
     AnimatedVisibility(
         visible = state.isRootDestination,
         enter = slideInVertically(
-            initialOffsetY = { it },
-            animationSpec = tween(250) // adjust duration as needed
-        ) + fadeIn(animationSpec = tween(250)), // adjust duration as needed
+            initialOffsetY = { it }
+        ),
         exit = slideOutVertically(
-            targetOffsetY = { it },
-            animationSpec = tween(250) // adjust duration as needed
-        ) + fadeOut(animationSpec = tween(250)) // adjust duration as needed
+            targetOffsetY = { it }
+        )
     ) {
         NavigationBar(
             containerColor = MaterialTheme.colorScheme.background
@@ -67,13 +65,29 @@ fun CustomBottomNavigation(
                 NavigationBarItem(
                     selected = state.selectedRoute == item.route,
                     onClick = {
-                        navController.navigate(item.route) {
-                            popUpTo(id = navController.graph.startDestinationId) {
-                                saveState = true
-                            }
-                            restoreState = true
-                            launchSingleTop = true
-                        }
+                        val navigationEvent = HayateEvent.Navigate(
+                            HayateNavigationType.Navigate(
+                                route = item.route,
+                                options = navOptions {
+                                    popUpTo(route = Screen.Exploration.route) {
+                                        saveState = true
+                                    }
+                                    restoreState = true
+                                    launchSingleTop = true
+                                }
+                            )
+                        )
+                        onEvent(navigationEvent)
+
+//                        TODO: Test for new navigation system stability
+//                        >>> Old Navigation System, now should be centralized
+//                        navController.navigate(item.route) {
+//                            popUpTo(route = Screen.Exploration.route) {
+//                                saveState = true
+//                            }
+//                            restoreState = true
+//                            launchSingleTop = true
+//                        }
                     },
                     icon = {
                         AnimatedContent(

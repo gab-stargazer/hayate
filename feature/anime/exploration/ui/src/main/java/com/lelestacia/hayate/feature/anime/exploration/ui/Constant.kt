@@ -8,4 +8,10 @@ internal object Constant {
     const val POPULAR_ANIME_RATING_KEY = "popular_anime_rating"
 
     const val UPCOMING_ANIME_TYPE_KEY = "upcoming_anime_type"
+
+    //  RC Keys
+    const val FIREBASE_RC_FEATURE_DAILY = "daily"
+    const val FIREBASE_RC_FEATURE_POPULAR = "popular"
+    const val FIREBASE_RC_FEATURE_AIRING = "airing"
+    const val FIREBASE_RC_FEATURE_UPCOMING = "upcoming"
 }

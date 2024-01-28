@@ -7,6 +7,8 @@ plugins {
     alias(libs.plugins.kotlin.ksp)
     alias(libs.plugins.hilt)
     alias(libs.plugins.junit.adapter)
+    alias(libs.plugins.firebase)
+    alias(libs.plugins.firebase.crashlytic)
 }
 
 android {
@@ -34,11 +36,12 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            applicationIdSuffix = ".stable"
         }
 
         create("r8_testing") {
             initWith(buildTypes.getByName("release"))
-            isDebuggable = true
+            isDebuggable = false
             isMinifyEnabled = true
             signingConfig = signingConfigs.getByName("debug")
             matchingFallbacks += listOf("release")
@@ -81,16 +84,16 @@ android {
 
 dependencies {
 
-    implementation(projects.common.shared)
-    implementation(projects.common.theme)
+    implementation(projects.core.common)
+    implementation(projects.core.theme)
 
     //  =====Feature Anime=====
     implementation(projects.feature.anime.core.data)
-//    implementation(project(":feature:anime:core:source:remote:impl-test"))
+    implementation(projects.feature.anime.core.domain)
     implementation(projects.feature.anime.core.source.remote.impl)
+    implementation(projects.feature.anime.core.source.local.impl)
 
     //  Exploration Module
-    implementation(projects.feature.anime.exploration.domain)
     implementation(projects.feature.anime.exploration.ui)
 
     //  Detail Module
@@ -99,8 +102,19 @@ dependencies {
     //  Collection Module
     implementation(projects.feature.anime.collection.ui)
 
+    //  Search Module
+    implementation(projects.feature.anime.search.ui)
+
+    //  Init Module
+    implementation(projects.feature.anime.initialization.ui)
+
     //  Setting Module
     implementation(projects.feature.settings.ui)
+
+    //  Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.crashlytic)
+    implementation(projects.core.firebase)
 
     //  Ktx
     implementation(libs.core.ktx)
@@ -130,6 +144,7 @@ dependencies {
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.icon)
     implementation(libs.compose.font)
+    implementation(libs.compose.icons.font.awesome)
 
     //  Coroutine
     implementation(libs.coroutine)

@@ -5,7 +5,6 @@ import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,10 +21,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import com.lelestacia.hayate.common.shared.util.isNotEmpty
-import com.lelestacia.hayate.common.shared.util.isNotNullOrEmpty
-import com.lelestacia.hayate.common.theme.quickSandFamily
-import com.lelestacia.hayate.common.theme.spacing
+import com.lelestacia.hayate.core.common.util.isNotEmpty
+import com.lelestacia.hayate.core.common.util.isNotNullOrEmpty
+import com.lelestacia.hayate.core.theme.quickSandFamily
+import com.lelestacia.hayate.core.theme.spacing
 import com.lelestacia.hayate.feature.anime.core.domain.model.Anime
 import com.lelestacia.hayate.feature.anime.detail.ui.R
 import com.lelestacia.hayate.feature.anime.detail.ui.util.asFormattedDate
@@ -34,7 +33,7 @@ import com.lelestacia.hayate.feature.anime.detail.ui.util.asText
 @Composable
 internal fun AnimeInformation(
     anime: Anime,
-    isDarkTheme: Boolean = isSystemInDarkTheme()
+    isDarkTheme: Boolean,
 ) {
 
     //  TODO: Decide if the information should expand first or not

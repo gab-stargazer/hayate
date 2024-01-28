@@ -41,6 +41,7 @@ android {
 dependencies {
 
     implementation(projects.feature.anime.core.source.remote.api)
+    implementation(projects.feature.anime.core.source.local.api)
     implementation(projects.feature.anime.core.domain)
 
     //  Coroutine

@@ -2,8 +2,10 @@ package com.lelestacia.hayate.feature.anime.core.source.remote.impl.di
 
 import com.lelestacia.hayate.feature.anime.core.source.remote.impl.Constant.BASE_URL
 import com.lelestacia.hayate.feature.anime.core.source.remote.impl.endpoint.ScheduleEndpoint
+import com.lelestacia.hayate.feature.anime.core.source.remote.impl.endpoint.SearchEndpoint
 import com.lelestacia.hayate.feature.anime.core.source.remote.impl.endpoint.SeasonEndpoint
 import com.lelestacia.hayate.feature.anime.core.source.remote.impl.endpoint.TopEndpoint
+import com.lelestacia.hayate.feature.anime.core.source.remote.impl.endpoint.UtilityEndpoint
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -51,5 +53,21 @@ internal object RetrofitModule {
         retrofit: Retrofit
     ): ScheduleEndpoint {
         return retrofit.create(ScheduleEndpoint::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUtilityEndpoint(
+        retrofit: Retrofit,
+    ): UtilityEndpoint {
+        return retrofit.create(UtilityEndpoint::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSearchEndpoint(
+        retrofit: Retrofit,
+    ): SearchEndpoint {
+        return retrofit.create(SearchEndpoint::class.java)
     }
 }

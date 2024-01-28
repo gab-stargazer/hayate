@@ -1,0 +1,13 @@
+package com.lelestacia.hayate.feature.anime.exploration.ui.presenter.schedule
+
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.grid.LazyGridState
+import androidx.compose.runtime.Immutable
+import com.lelestacia.hayate.feature.anime.exploration.domain.util.getCurrentDay
+
+@Immutable
+internal data class ScheduleAnimeState(
+    val currentDay: String = getCurrentDay(),
+    val gridState: LazyGridState = LazyGridState(),
+    val listState: LazyListState = LazyListState(),
+)

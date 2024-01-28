@@ -42,6 +42,11 @@ android {
 
 dependencies {
 
+    // =====Feature Anime=====
+    implementation(projects.core.preferences)
+    api(projects.feature.anime.core.domain)
+    api(projects.feature.anime.core.common)
+
     //  Ktx
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
@@ -68,17 +73,10 @@ dependencies {
     //  Coroutine
     implementation(libs.coroutine)
 
-    //  Firebase
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.crashlytic)
-
     //  Hilt
     implementation(libs.hilt)
     implementation(libs.hilt.compose)
     ksp(libs.hilt.compiler)
-
-    //  Logging Interceptor
-    implementation(libs.logging.interceptor)
 
     //  Navigation
     implementation(libs.navigation)
@@ -86,17 +84,6 @@ dependencies {
     //  Paging
     implementation(libs.paging)
     implementation(libs.paging.compose)
-
-    //  Retrofit
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.moshi)
-    implementation(libs.moshi)
-    ksp(libs.moshi.codegen)
-
-    //  Room
-    implementation(libs.room)
-    implementation(libs.room.ktx)
-    ksp(libs.room.compiler)
 
     //  Timber
     implementation(libs.timber)

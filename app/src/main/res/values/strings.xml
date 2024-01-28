@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">Hayate</string>
     <string name="japanese_app_name" translatable="false">颯</string>
+    <string name="search_box_placeholder" translatable="false">Searching for …</string>
+    <string name="search_box_prefix" translatable="false">"Searching for "</string>
+    <string name="error_empty_query" translatable="false">Query cannot be empty</string>
 </resources>

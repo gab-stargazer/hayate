@@ -1,5 +1,6 @@
 package com.lelestacia.hayate.feature.anime.exploration.domain.di
 
+import com.lelestacia.hayate.core.preferences.ConfigPreferences
 import com.lelestacia.hayate.feature.anime.core.domain.repository.AnimeRepository
 import com.lelestacia.hayate.feature.anime.exploration.domain.usecases.AnimeUseCases
 import dagger.Module
@@ -15,8 +16,12 @@ object UseCasesModule {
     @Provides
     @ViewModelScoped
     fun provideAnimeUseCases(
-        repository: AnimeRepository
+        repository: AnimeRepository,
+        preferences: ConfigPreferences
     ): AnimeUseCases {
-        return AnimeUseCases(repository)
+        return AnimeUseCases(
+            repository = repository,
+            preferences = preferences
+        )
     }
 }

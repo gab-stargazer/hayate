@@ -44,7 +44,11 @@ dependencies {
 
     // =====Feature Anime=====
     api(projects.feature.anime.core.domain)
-    api(projects.feature.anime.core.common)
+
+    // =====Common=====
+    implementation(projects.core.preferences)
+    api(projects.core.common)
+    api(projects.core.theme)
 
     //  Compose BOM
     implementation(platform(libs.compose.bom))

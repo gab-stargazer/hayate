@@ -54,7 +54,7 @@ internal class TopAnimePaging(
                 nextKey = nextKey
             )
         } catch (e: Exception) {
-            Timber.e(e)
+            Timber.e(e.stackTraceToString())
             LoadResult.Error(e)
         }
     }

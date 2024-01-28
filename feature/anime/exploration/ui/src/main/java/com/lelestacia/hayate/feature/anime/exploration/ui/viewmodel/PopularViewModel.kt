@@ -4,17 +4,16 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.lelestacia.hayate.common.shared.BaseViewModel
 import com.lelestacia.hayate.feature.anime.core.common.filter.AnimeFilter
 import com.lelestacia.hayate.feature.anime.core.common.filter.AnimeRating
 import com.lelestacia.hayate.feature.anime.core.common.filter.AnimeType
 import com.lelestacia.hayate.feature.anime.core.domain.model.Anime
-import com.lelestacia.hayate.feature.anime.exploration.domain.presenter.popular.PopularAnimeEvent
-import com.lelestacia.hayate.feature.anime.exploration.domain.presenter.popular.PopularAnimeState
 import com.lelestacia.hayate.feature.anime.exploration.domain.usecases.AnimeUseCases
 import com.lelestacia.hayate.feature.anime.exploration.ui.Constant.POPULAR_ANIME_FILTER_KEY
 import com.lelestacia.hayate.feature.anime.exploration.ui.Constant.POPULAR_ANIME_RATING_KEY
 import com.lelestacia.hayate.feature.anime.exploration.ui.Constant.POPULAR_ANIME_TYPE_KEY
+import com.lelestacia.hayate.feature.anime.exploration.ui.presenter.popular.PopularAnimeEvent
+import com.lelestacia.hayate.feature.anime.exploration.ui.presenter.popular.PopularAnimeState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -33,18 +32,20 @@ import javax.inject.Inject
 internal class PopularViewModel @Inject constructor(
     private val animeUseCases: AnimeUseCases,
     private val savedStateHandle: SavedStateHandle
-) : BaseViewModel() {
+) : BaseExploreViewModel(animeUseCases) {
 
     private val animeType: StateFlow<AnimeType?> = savedStateHandle
         .getStateFlow(
             key = POPULAR_ANIME_TYPE_KEY,
             initialValue = null
         )
+
     private val animeFilter: StateFlow<AnimeFilter?> = savedStateHandle
         .getStateFlow(
             key = POPULAR_ANIME_FILTER_KEY,
             initialValue = null
         )
+
     private val animeRating: StateFlow<AnimeRating?> = savedStateHandle
         .getStateFlow(
             key = POPULAR_ANIME_RATING_KEY,
@@ -159,7 +160,7 @@ internal class PopularViewModel @Inject constructor(
         }
     }
 
-    data class PopularAnimeFilter(
+    private data class PopularAnimeFilter(
         val type: AnimeType? = null,
         val filter: AnimeFilter? = null,
         val rating: AnimeRating? = null

@@ -28,15 +28,16 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.CachePolicy
 import coil.request.ImageRequest
-import com.lelestacia.hayate.common.theme.padding
-import com.lelestacia.hayate.common.theme.spacing
+import com.lelestacia.hayate.core.theme.padding
+import com.lelestacia.hayate.core.theme.spacing
 import com.lelestacia.hayate.feature.anime.core.domain.model.Anime
 
 @Composable
 internal fun AnimeCard(
     anime: Anime,
     onClick: (Anime) -> Unit,
-    isDarkTheme: Boolean
+    isDarkTheme: Boolean,
+    modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
     val lifecycle = LocalLifecycleOwner.current
@@ -50,7 +51,7 @@ internal fun AnimeCard(
     ) {
         Box(
             contentAlignment = Alignment.BottomStart,
-            modifier = Modifier
+            modifier = modifier
                 .clip(RoundedCornerShape(4))
                 .border(
                     width = 1.dp,
@@ -75,7 +76,7 @@ internal fun AnimeCard(
                     .build(),
                 contentDescription = anime.title,
                 contentScale = ContentScale.Crop,
-                placeholder = painterResource(id = com.lelestacia.hayate.common.shared.R.drawable.placeholder),
+                placeholder = painterResource(id = com.lelestacia.hayate.core.common.R.drawable.placeholder),
                 modifier = Modifier
                     .fillMaxWidth()
                     .aspectRatio(3 / 4F)

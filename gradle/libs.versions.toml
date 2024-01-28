@@ -6,6 +6,7 @@ accompanist-version = "0.30.0"
 #   Compose
 compose-activity = "1.8.1"
 compose-bom = "2023.10.01"
+compose-icons-version = "1.1.0"
 compose-compiler = "1.5.2"
 
 #   Coil
@@ -14,13 +15,16 @@ coil = "2.4.0"
 #   Coroutine
 coroutine = "1.7.3"
 
+#   Datastore
+datastore = "1.0.0"
+
 #   Firebase
-firebase-bom = "32.6.0"
+firebase-bom = "32.7.0"
 firebase-crashlytic-plugin = "2.9.9"
 firebase-plugin = "4.4.0"
 
 #   Gradle
-android-gradle-plugin = "8.2.0-rc03"
+android-gradle-plugin = "8.2.0"
 
 #   Hilt
 hilt = "2.48"
@@ -61,7 +65,7 @@ paging-compose = "3.2.1"
 retrofit = "2.9.0"
 
 #   Room
-room = "2.6.0"
+room = "2.6.1"
 
 # Ui Test
 ui-test-espresso-core = "3.5.1"
@@ -76,12 +80,12 @@ test-junit-5-adapter = "1.9.3.0"
 timber = "5.0.1"
 
 #   Viewmodel
-viewmodel-version = "2.6.2"
+viewmodel-version = "2.7.0"
 
 #   Worker
-worker = "2.8.1"
+worker = "2.9.0"
 appcompat = "1.6.1"
-material = "1.10.0"
+material = "1.11.0"
 
 [libraries]
 
@@ -106,14 +110,30 @@ compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 compose-runtime = { group = "androidx.compose.runtime", name = "runtime" }
 
+#   Compose Icon
+composeIcons-cssGg = { module = "br.com.devsrsouza.compose.icons:css-gg", version.ref = "compose-icons-version" }
+composeIcons-weatherIcons = { module = "br.com.devsrsouza.compose.icons:erikflowers-weather-icons", version.ref = "compose-icons-version" }
+composeIcons-evaIcons = { module = "br.com.devsrsouza.compose.icons:eva-icons", version.ref = "compose-icons-version" }
+composeIcons-feather = { module = "br.com.devsrsouza.compose.icons:feather", version.ref = "compose-icons-version" }
+compose-icons-font-awesome = { module = "br.com.devsrsouza.compose.icons:font-awesome", version.ref = "compose-icons-version" }
+composeIcons-lineAwesome = { module = "br.com.devsrsouza.compose.icons:line-awesome", version.ref = "compose-icons-version" }
+composeIcons-linea = { module = "br.com.devsrsouza.compose.icons:linea", version.ref = "compose-icons-version" }
+composeIcons-octicons = { module = "br.com.devsrsouza.compose.icons:octicons", version.ref = "compose-icons-version" }
+composeIcons-simpleIcons = { module = "br.com.devsrsouza.compose.icons:simple-icons", version.ref = "compose-icons-version" }
+composeIcons-tablerIcons = { module = "br.com.devsrsouza.compose.icons:tabler-icons", version.ref = "compose-icons-version" }
+
 #   Coroutine
 coroutine = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutine" }
 coroutine-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutine" }
 
+#   Datastore
+datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
+
 #   Firebase
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase-bom" }
 firebase-analytic = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
-firebase-crashlytic = { group = "com.google.firebase", name = "firebase-crashlytics" }
+firebase-config = { group = "com.google.firebase", name = "firebase-config-ktx" }
+firebase-crashlytic = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
 
 
 #   Hilt
@@ -151,6 +171,7 @@ retrofit-moshi = { group = "com.squareup.retrofit2", name = "converter-moshi", v
 room = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+room-paging = { group = "androidx.room", name = "room-paging", version.ref = "room" }
 
 #   Ui Test
 ui-test-android-junit = { group = "androidx.test.ext", name = "junit", version.ref = "ui-test-android-junit" }

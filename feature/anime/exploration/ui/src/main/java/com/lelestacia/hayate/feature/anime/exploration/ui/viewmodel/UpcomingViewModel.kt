@@ -4,20 +4,22 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.lelestacia.hayate.common.shared.BaseViewModel
 import com.lelestacia.hayate.feature.anime.core.common.filter.AnimeType
 import com.lelestacia.hayate.feature.anime.core.domain.model.Anime
-import com.lelestacia.hayate.feature.anime.exploration.domain.presenter.upcoming.UpcomingAnimeEvent
-import com.lelestacia.hayate.feature.anime.exploration.domain.presenter.upcoming.UpcomingAnimeState
 import com.lelestacia.hayate.feature.anime.exploration.domain.usecases.AnimeUseCases
+import com.lelestacia.hayate.feature.anime.exploration.ui.Constant.FIREBASE_RC_FEATURE_UPCOMING
 import com.lelestacia.hayate.feature.anime.exploration.ui.Constant.UPCOMING_ANIME_TYPE_KEY
+import com.lelestacia.hayate.feature.anime.exploration.ui.presenter.upcoming.UpcomingAnimeEvent
+import com.lelestacia.hayate.feature.anime.exploration.ui.presenter.upcoming.UpcomingAnimeState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,7 +28,14 @@ import javax.inject.Inject
 internal class UpcomingViewModel @Inject constructor(
     private val animeUseCases: AnimeUseCases,
     private val savedStateHandle: SavedStateHandle
-) : BaseViewModel() {
+) : BaseExploreViewModel(animeUseCases) {
+
+    val isFeatureEnabled = animeUseCases.isFeatureEnabled(FIREBASE_RC_FEATURE_UPCOMING)
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Eagerly,
+            initialValue = true
+        )
 
     private val animeType: StateFlow<AnimeType?> = savedStateHandle
         .getStateFlow(
