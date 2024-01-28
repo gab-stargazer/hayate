@@ -42,7 +42,7 @@ internal fun AnimeCard(
     val context = LocalContext.current
     val lifecycle = LocalLifecycleOwner.current
 
-    val cacheKey = anime.malId.toString()
+    val cacheKey = "${anime.malId}-normal"
 
     Column(
         verticalArrangement = Arrangement.spacedBy(
@@ -66,7 +66,7 @@ internal fun AnimeCard(
             AsyncImage(
                 model = ImageRequest
                     .Builder(context)
-                    .data(anime.images.webp.largeImageUrl)
+                    .data(anime.images.webp.imageUrl)
                     .diskCachePolicy(CachePolicy.ENABLED)
                     .diskCacheKey(cacheKey)
                     .lifecycle(lifecycle)
@@ -77,6 +77,7 @@ internal fun AnimeCard(
                 contentDescription = anime.title,
                 contentScale = ContentScale.Crop,
                 placeholder = painterResource(id = com.lelestacia.hayate.core.common.R.drawable.placeholder),
+                error = painterResource(id = com.lelestacia.hayate.core.common.R.drawable.placeholder),
                 modifier = Modifier
                     .fillMaxWidth()
                     .aspectRatio(3 / 4F)
