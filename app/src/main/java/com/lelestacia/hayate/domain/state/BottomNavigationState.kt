@@ -7,6 +7,6 @@ import com.lelestacia.hayate.navigation.HayateNavigationItem
 data class BottomNavigationState(
     val isDarkTheme: Boolean = false,
     val selectedRoute: String = Screen.Exploration.route,
-    val isRootDestination: Boolean = true,
+    val isRootDestination: Boolean = false,
     val navigationItem: List<CustomNavigationItem> = HayateNavigationItem
 )
