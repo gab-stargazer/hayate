@@ -2,27 +2,10 @@ package com.lelestacia.hayate.feature.anime.core.source.local.impl.entity.cross_
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.ForeignKey
-import com.lelestacia.hayate.feature.anime.core.source.local.api.entity.theme.AnimeThemeEntity
-import com.lelestacia.hayate.feature.anime.core.source.local.impl.entity.AnimeBasicEntity
 
 @Entity(
     tableName = "anime_theme_cross_reference",
-    primaryKeys = ["anime_id", "theme_id"],
-    foreignKeys = [
-        ForeignKey(
-            entity = AnimeBasicEntity::class,
-            parentColumns = ["mal_id"],
-            childColumns = ["anime_id"],
-            onDelete = ForeignKey.CASCADE
-        ),
-        ForeignKey(
-            entity = AnimeThemeEntity::class,
-            parentColumns = ["mal_id"],
-            childColumns = ["theme_id"],
-            onDelete = ForeignKey.CASCADE
-        ),
-    ]
+    primaryKeys = ["anime_id", "theme_id"]
 )
 data class AnimeThemeCrossReference(
 
