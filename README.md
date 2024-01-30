@@ -15,6 +15,12 @@ Here is the current plan for Hayate Development:
    <img src="img/roadmap.png" alt="Roadmap"/>
 </div>
 
+# Showcase
+Here is the current looks on Hayate:
+<div align="center">
+   <img src="img/showcase.png" alt="Roadmap"/>
+</div>
+
 ## Features
 Hayate currently consist of the following features:
 
