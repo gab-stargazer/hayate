@@ -20,8 +20,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringArrayResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -52,7 +56,7 @@ import javax.inject.Inject
 
 internal class ExploreFeatureImplementation @Inject constructor() : FeatureApi {
 
-    @OptIn(ExperimentalFoundationApi::class)
+    @OptIn(ExperimentalFoundationApi::class, ExperimentalComposeUiApi::class)
     override fun registerGraph(
         navGraphBuilder: NavGraphBuilder,
         state: HayateState,
@@ -146,7 +150,11 @@ internal class ExploreFeatureImplementation @Inject constructor() : FeatureApi {
             }
 
             Column(
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxSize()
+                    .semantics {
+                        testTagsAsResourceId = true
+                    }
             ) {
                 TabRow(
                     selectedTabIndex = selectedTabIndex,
@@ -167,7 +175,8 @@ internal class ExploreFeatureImplementation @Inject constructor() : FeatureApi {
                                     overflow = TextOverflow.Ellipsis,
                                     maxLines = 1
                                 )
-                            }
+                            },
+                            modifier = Modifier.testTag("button:${title.lowercase()}")
                         )
                     }
                 }

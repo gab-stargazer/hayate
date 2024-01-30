@@ -2,10 +2,7 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="PreviewAppInfoScreen">
-        <State />
-      </entry>
-      <entry key="PreviewCustomAppBar">
+      <entry key="Generate Baseline Profile for app">
         <State />
       </entry>
       <entry key="app">
@@ -23,6 +20,12 @@
           </targetSelectedWithDropDown>
           <timeTargetWasSelectedWithDropDown value="2023-12-19T22:57:26.624245600Z" />
         </State>
+      </entry>
+      <entry key="generate()">
+        <State />
+      </entry>
+      <entry key="userRouteProfiler() (1)">
+        <State />
       </entry>
     </value>
   </component>

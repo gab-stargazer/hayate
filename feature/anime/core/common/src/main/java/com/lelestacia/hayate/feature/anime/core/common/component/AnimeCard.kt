@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -47,7 +48,12 @@ internal fun AnimeCard(
     Column(
         verticalArrangement = Arrangement.spacedBy(
             space = spacing.extraSmall
-        )
+        ),
+        modifier = Modifier
+            .clickable {
+                onClick(anime)
+            }
+            .testTag("anime:${anime.malId}")
     ) {
         Box(
             contentAlignment = Alignment.BottomStart,
@@ -59,9 +65,6 @@ internal fun AnimeCard(
                         alpha = 0.15f
                     )
                 )
-                .clickable {
-                    onClick(anime)
-                }
         ) {
             AsyncImage(
                 model = ImageRequest

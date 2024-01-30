@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.junit.adapter)
     alias(libs.plugins.firebase)
     alias(libs.plugins.firebase.crashlytic)
+    alias(libs.plugins.baseline.profile)
 }
 
 android {
@@ -36,12 +37,13 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            applicationIdSuffix = ".stable"
+            applicationIdSuffix = ".testing"
         }
 
         create("r8_testing") {
             initWith(buildTypes.getByName("release"))
             isDebuggable = false
+            isProfileable = true
             isMinifyEnabled = true
             signingConfig = signingConfigs.getByName("debug")
             matchingFallbacks += listOf("release")
@@ -134,6 +136,7 @@ dependencies {
 
     //  Compose BOM
     implementation(platform(libs.compose.bom))
+    implementation(libs.profile.installer)
     androidTestImplementation(platform(libs.compose.bom))
 
     //  Compose
@@ -156,6 +159,7 @@ dependencies {
     //  Hilt
     implementation(libs.hilt)
     implementation(libs.hilt.compose)
+    "baselineProfile"(projects.baselineProfiler)
     ksp(libs.hilt.compiler)
 
     //  Logging Interceptor

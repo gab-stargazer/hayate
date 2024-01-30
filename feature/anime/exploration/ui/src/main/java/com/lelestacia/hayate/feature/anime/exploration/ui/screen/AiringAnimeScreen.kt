@@ -45,6 +45,7 @@ internal fun AiringAnimeScreen(
             onAnimeTypeToggled = {
                 onEvent(AiringAnimeEvent.OnTypeFilterMenuToggled)
             },
+            isDarkTheme = isDarkTheme,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(

@@ -56,6 +56,7 @@ fun SearchScreen(
             onAnimeRatingToggled = {
                 onEvent(SearchEvent.OnAnimeRatingMenuToggled)
             },
+            isDarkTheme = isDarkTheme,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = padding.medium)

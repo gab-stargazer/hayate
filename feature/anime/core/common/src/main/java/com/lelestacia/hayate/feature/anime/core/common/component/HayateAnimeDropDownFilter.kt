@@ -1,10 +1,11 @@
 package com.lelestacia.hayate.feature.anime.core.common.component
 
+import android.content.res.Configuration
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -15,8 +16,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.tooling.preview.Preview
 import com.lelestacia.hayate.core.common.component.HayateCustomDropDownItem
 import com.lelestacia.hayate.core.common.component.HayateCustomFilterChip
@@ -47,6 +52,7 @@ import com.lelestacia.hayate.feature.anime.core.common.filter.AnimeType
  * @param onAnimeRatingSelected Callback function for when an anime rating is selected.
  * @param onAnimeRatingToggled Callback function for toggling the visibility of the anime rating dropdown.
  */
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun HayateAnimeDropDownFilter(
     modifier: Modifier = Modifier,
@@ -65,12 +71,16 @@ fun HayateAnimeDropDownFilter(
     selectedAnimeRating: AnimeRating? = null,
     onAnimeRatingSelected: ((AnimeRating?) -> Unit)? = null,
     onAnimeRatingToggled: (() -> Unit)? = null,
+    isDarkTheme: Boolean,
 ) {
     val scrollState = rememberScrollState()
     Row(
         horizontalArrangement = Arrangement.spacedBy(spacing.small),
         modifier = modifier
             .horizontalScroll(scrollState, true)
+            .semantics {
+                testTagsAsResourceId = true
+            }
     ) {
         if (shouldAnimeTypeBeVisible) {
             Column {
@@ -84,7 +94,8 @@ fun HayateAnimeDropDownFilter(
                         id = com.lelestacia.hayate.core.common.R.string.anime_type_with_value,
                         selectedAnimeType?.name
                             ?: stringResource(id = com.lelestacia.hayate.core.common.R.string.all)
-                    )
+                    ),
+                    modifier = Modifier.testTag("button:filter:type")
                 )
                 DropdownMenu(
                     expanded = isAnimeTypeOpened,
@@ -94,6 +105,7 @@ fun HayateAnimeDropDownFilter(
                 ) {
                     HayateCustomDropDownItem(
                         text = stringResource(id = com.lelestacia.hayate.core.common.R.string.all),
+                        isDarkTheme = isDarkTheme,
                         onClick = {
                             onAnimeTypeSelected(null)
                         }
@@ -101,9 +113,12 @@ fun HayateAnimeDropDownFilter(
                     AnimeType.entries.forEach { selectedFilter ->
                         HayateCustomDropDownItem(
                             text = selectedFilter.name,
+                            isDarkTheme = isDarkTheme,
                             onClick = {
                                 onAnimeTypeSelected(selectedFilter)
-                            }
+                            },
+                            modifier = Modifier
+                                .testTag("dropdown:item:${selectedFilter.name.lowercase()}")
                         )
                     }
                 }
@@ -122,7 +137,8 @@ fun HayateAnimeDropDownFilter(
                         id = com.lelestacia.hayate.core.common.R.string.anime_filter_with_value,
                         selectedAnimeFilter?.title
                             ?: stringResource(id = com.lelestacia.hayate.core.common.R.string.all)
-                    )
+                    ),
+                    modifier = Modifier.testTag("button:filter:filter")
                 )
                 DropdownMenu(
                     expanded = isAnimeFilterOpened,
@@ -132,6 +148,7 @@ fun HayateAnimeDropDownFilter(
                 ) {
                     HayateCustomDropDownItem(
                         text = stringResource(id = com.lelestacia.hayate.core.common.R.string.all),
+                        isDarkTheme = isDarkTheme,
                         onClick = {
                             if (onAnimeFilterSelected != null) {
                                 onAnimeFilterSelected(null)
@@ -141,11 +158,13 @@ fun HayateAnimeDropDownFilter(
                     AnimeFilter.entries.forEach { selectedFilter ->
                         HayateCustomDropDownItem(
                             text = selectedFilter.title,
+                            isDarkTheme = isDarkTheme,
                             onClick = {
                                 if (onAnimeFilterSelected != null) {
                                     onAnimeFilterSelected(selectedFilter)
                                 }
-                            }
+                            },
+                            modifier = Modifier.testTag("dropdown:item:${selectedFilter.query}")
                         )
                     }
                 }
@@ -164,7 +183,8 @@ fun HayateAnimeDropDownFilter(
                         id = com.lelestacia.hayate.core.common.R.string.anime_rating_with_value,
                         selectedAnimeRating?.title
                             ?: stringResource(id = com.lelestacia.hayate.core.common.R.string.all)
-                    )
+                    ),
+                    modifier = Modifier.testTag("button:filter:rating")
                 )
                 DropdownMenu(
                     expanded = isAnimeRatingOpened,
@@ -174,6 +194,7 @@ fun HayateAnimeDropDownFilter(
                 ) {
                     HayateCustomDropDownItem(
                         text = stringResource(id = com.lelestacia.hayate.core.common.R.string.all),
+                        isDarkTheme = isDarkTheme,
                         onClick = {
                             if (onAnimeRatingSelected != null) {
                                 onAnimeRatingSelected(null)
@@ -183,11 +204,13 @@ fun HayateAnimeDropDownFilter(
                     AnimeRating.entries.forEach { selectedFilter ->
                         HayateCustomDropDownItem(
                             text = selectedFilter.title,
+                            isDarkTheme = isDarkTheme,
                             onClick = {
                                 if (onAnimeRatingSelected != null) {
                                     onAnimeRatingSelected(selectedFilter)
                                 }
-                            }
+                            },
+                            modifier = Modifier.testTag("dropdown:item:${selectedFilter.query}")
                         )
                     }
                 }
@@ -196,12 +219,15 @@ fun HayateAnimeDropDownFilter(
     }
 }
 
-@Preview
+@Preview("Dark Mode", uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview("Day Mode", uiMode = Configuration.UI_MODE_NIGHT_NO)
 @Composable
-fun PreviewHayateAnimeDropDownFilter() {
-    AppTheme {
+private fun PreviewDropDownFilter() {
+    AppTheme(
+        dynamicColor = false
+    ) {
         Surface(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.padding(padding.medium)
         ) {
 
             var selectedFilterType: AnimeType? by remember {
@@ -239,6 +265,7 @@ fun PreviewHayateAnimeDropDownFilter() {
                 onAnimeFilterToggled = {
                     isAnimeFilterOpened = !isAnimeFilterOpened
                 },
+                isDarkTheme = isSystemInDarkTheme(),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(padding.small)
