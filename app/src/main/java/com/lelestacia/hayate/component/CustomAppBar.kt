@@ -23,7 +23,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -49,12 +48,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -74,7 +77,7 @@ import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Brands
 import compose.icons.fontawesomeicons.brands.Youtube
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun CustomAppBar(
     state: AppBarState,
@@ -147,7 +150,11 @@ fun CustomAppBar(
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(spacing.small),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
+                .semantics {
+                    testTagsAsResourceId = true
+                }
         ) {
             TopAppBar(
                 title = {
@@ -221,7 +228,8 @@ fun CustomAppBar(
                                 onEvent(HayateEvent.SearchModeToggle)
                             },
                             color = iconColor,
-                            contentDescription = "Search Button"
+                            contentDescription = "Search Button",
+                            modifier = Modifier.testTag("button:search")
                         )
 
                         Row {
@@ -254,7 +262,7 @@ fun CustomAppBar(
                                 },
                                 color = iconColor,
                                 contentDescription = "Watch Anime Trailer",
-                                modifier = Modifier.size(24.dp)
+                                iconSize = 24.dp
                             )
                         }
                     }

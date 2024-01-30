@@ -140,7 +140,7 @@ internal fun AnimeDetailScreen(
             )
 
             LazyRow(
-                contentPadding = PaddingValues(horizontal = padding.small),
+                contentPadding = PaddingValues(horizontal = padding.medium),
                 horizontalArrangement = Arrangement.spacedBy(spacing.small)
             ) {
 
@@ -196,7 +196,7 @@ internal fun AnimeDetailScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(
-                            horizontal = padding.small
+                            horizontal = padding.medium
                         )
                 )
 
@@ -204,7 +204,10 @@ internal fun AnimeDetailScreen(
                     onClick = {
                         isSynopsisExpanded = true
                     },
-                    contentPadding = PaddingValues(horizontal = padding.medium, vertical = 0.dp)
+                    contentPadding = PaddingValues(
+                        horizontal = padding.medium,
+                        vertical = 0.dp
+                    )
                 ) {
                     Text(
                         text = "Read More",

@@ -11,5 +11,7 @@ plugins {
     alias(libs.plugins.parcelize) apply false
     alias(libs.plugins.firebase) apply false
     alias(libs.plugins.firebase.crashlytic) apply false
+    alias(libs.plugins.androidTest) apply false
+    alias(libs.plugins.baseline.profile) apply false
 }
 true // Needed to make the Suppress annotation work for the plugins block

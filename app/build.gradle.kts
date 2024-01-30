@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.junit.adapter)
     alias(libs.plugins.firebase)
     alias(libs.plugins.firebase.crashlytic)
+    alias(libs.plugins.baseline.profile)
 }
 
 android {
@@ -19,8 +20,8 @@ android {
         applicationId = "com.lelestacia.hayate"
         minSdk = ProjectConfig.minSdk
         targetSdk = ProjectConfig.targetSdk
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "1.0.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -42,6 +43,7 @@ android {
         create("r8_testing") {
             initWith(buildTypes.getByName("release"))
             isDebuggable = false
+            isProfileable = true
             isMinifyEnabled = true
             signingConfig = signingConfigs.getByName("debug")
             matchingFallbacks += listOf("release")
@@ -134,6 +136,7 @@ dependencies {
 
     //  Compose BOM
     implementation(platform(libs.compose.bom))
+    implementation(libs.profile.installer)
     androidTestImplementation(platform(libs.compose.bom))
 
     //  Compose
@@ -156,6 +159,7 @@ dependencies {
     //  Hilt
     implementation(libs.hilt)
     implementation(libs.hilt.compose)
+    "baselineProfile"(projects.baselineProfiler)
     ksp(libs.hilt.compiler)
 
     //  Logging Interceptor

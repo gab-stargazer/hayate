@@ -13,8 +13,13 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.navOptions
@@ -25,6 +30,7 @@ import com.lelestacia.hayate.core.common.event.HayateNavigationType
 import com.lelestacia.hayate.core.theme.quickSandFamily
 import com.lelestacia.hayate.domain.state.BottomNavigationState
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun CustomBottomNavigation(
     state: BottomNavigationState,
@@ -59,7 +65,10 @@ fun CustomBottomNavigation(
         )
     ) {
         NavigationBar(
-            containerColor = MaterialTheme.colorScheme.background
+            containerColor = MaterialTheme.colorScheme.background,
+            modifier = Modifier.semantics {
+                testTagsAsResourceId = true
+            }
         ) {
             state.navigationItem.forEach { item ->
                 NavigationBarItem(
@@ -78,16 +87,6 @@ fun CustomBottomNavigation(
                             )
                         )
                         onEvent(navigationEvent)
-
-//                        TODO: Test for new navigation system stability
-//                        >>> Old Navigation System, now should be centralized
-//                        navController.navigate(item.route) {
-//                            popUpTo(route = Screen.Exploration.route) {
-//                                saveState = true
-//                            }
-//                            restoreState = true
-//                            launchSingleTop = true
-//                        }
                     },
                     icon = {
                         AnimatedContent(
@@ -145,7 +144,8 @@ fun CustomBottomNavigation(
                             true -> Color.White
                             false -> MaterialTheme.colorScheme.primary
                         }
-                    )
+                    ),
+                    modifier = Modifier.testTag("button:${stringResource(id = item.title).lowercase()}")
                 )
             }
         }

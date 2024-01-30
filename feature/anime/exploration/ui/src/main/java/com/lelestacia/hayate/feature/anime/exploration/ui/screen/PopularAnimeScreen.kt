@@ -64,6 +64,7 @@ internal fun PopularAnimeScreen(
             onAnimeRatingToggled = {
                 onEvent(PopularAnimeEvent.OnAnimeRatingMenuToggled)
             },
+            isDarkTheme = isDarkTheme,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(

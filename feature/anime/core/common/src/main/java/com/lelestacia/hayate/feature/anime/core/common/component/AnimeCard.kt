@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -42,12 +43,17 @@ internal fun AnimeCard(
     val context = LocalContext.current
     val lifecycle = LocalLifecycleOwner.current
 
-    val cacheKey = anime.malId.toString()
+    val cacheKey = "${anime.malId}-normal"
 
     Column(
         verticalArrangement = Arrangement.spacedBy(
             space = spacing.extraSmall
-        )
+        ),
+        modifier = Modifier
+            .clickable {
+                onClick(anime)
+            }
+            .testTag("anime:${anime.malId}")
     ) {
         Box(
             contentAlignment = Alignment.BottomStart,
@@ -59,14 +65,11 @@ internal fun AnimeCard(
                         alpha = 0.15f
                     )
                 )
-                .clickable {
-                    onClick(anime)
-                }
         ) {
             AsyncImage(
                 model = ImageRequest
                     .Builder(context)
-                    .data(anime.images.webp.largeImageUrl)
+                    .data(anime.images.webp.imageUrl)
                     .diskCachePolicy(CachePolicy.ENABLED)
                     .diskCacheKey(cacheKey)
                     .lifecycle(lifecycle)
@@ -77,6 +80,7 @@ internal fun AnimeCard(
                 contentDescription = anime.title,
                 contentScale = ContentScale.Crop,
                 placeholder = painterResource(id = com.lelestacia.hayate.core.common.R.drawable.placeholder),
+                error = painterResource(id = com.lelestacia.hayate.core.common.R.drawable.placeholder),
                 modifier = Modifier
                     .fillMaxWidth()
                     .aspectRatio(3 / 4F)

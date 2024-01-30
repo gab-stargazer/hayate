@@ -66,3 +66,6 @@ Here's an overview of the technologies and libraries that power Hayate:
 9. **DataStore Preferences**: Hayate improves data storage efficiency with DataStore Preferences on
    Android. It checks feature availability in real-time through remote configuration, simplifying
    the management of app settings for a smoother user experience.
+
+## License 
+Hayate is open-source and released under the [MIT License](LICENSE).

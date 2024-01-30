@@ -7,12 +7,14 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.unit.Dp
 
 @Composable
 fun AnimatedButton(
@@ -22,6 +24,7 @@ fun AnimatedButton(
     modifier: Modifier = Modifier,
     contentDescription: String? = null,
     color: Color? = null,
+    iconSize: Dp? = null,
 ) {
     AnimatedVisibility(
         visible = showCondition,
@@ -58,16 +61,25 @@ fun AnimatedButton(
                         imageVector = icon,
                         tint = color,
                         contentDescription = contentDescription,
-                        modifier = modifier
+                        modifier =
+                        when (iconSize != null) {
+                            true -> Modifier.size(iconSize)
+                            false -> Modifier
+                        }
                     )
                 } else {
                     Icon(
                         imageVector = icon,
                         contentDescription = contentDescription,
-                        modifier = modifier
+                        modifier =
+                        when (iconSize != null) {
+                            true -> Modifier.size(iconSize)
+                            false -> Modifier
+                        }
                     )
                 }
-            }
+            },
+            modifier = modifier
         )
     }
 }

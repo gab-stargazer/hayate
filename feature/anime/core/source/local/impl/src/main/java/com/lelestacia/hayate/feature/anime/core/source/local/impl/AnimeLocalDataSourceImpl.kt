@@ -244,7 +244,15 @@ internal class AnimeLocalDataSourceImpl @Inject constructor(
                 demographics = entity.demographics
             )
 
-            animeEntity
+            Timber.d("Queried Anime: %s", entity.anime.toString())
+            Timber.d("Queried Producer: %s", animeEntity.producers.toString())
+            Timber.d("Queried Licensor: %s", animeEntity.licensors.toString())
+            Timber.d("Queried Studio: %s", animeEntity.studios.toString())
+            Timber.d("Queried Genre: %s", entity.genres.toString())
+            Timber.d("Queried Explicit Genre: %s", animeEntity.explicitGenres.toString())
+            Timber.d("Queried Theme: %s", entity.themes.toString())
+            Timber.d("Queried Demographic: %s", animeEntity.demographics.toString())
+            return@withContext animeEntity
         }
     }
 

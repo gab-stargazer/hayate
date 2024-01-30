@@ -40,7 +40,7 @@ internal fun CardSection(
         ),
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = padding.small)
+            .padding(horizontal = padding.medium)
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(space = spacing.small),
