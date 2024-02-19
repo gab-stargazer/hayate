@@ -20,6 +20,8 @@ import com.lelestacia.hayate.core.common.api.FeatureApi
 import com.lelestacia.hayate.core.common.event.HayateEvent
 import com.lelestacia.hayate.core.common.event.HayateNavigationType
 import com.lelestacia.hayate.core.common.state.HayateState
+import com.lelestacia.hayate.core.common.util.Route
+import com.lelestacia.hayate.core.common.util.Title
 import com.lelestacia.hayate.core.common.util.toJson
 import com.lelestacia.hayate.feature.anime.core.domain.model.Anime
 import com.lelestacia.hayate.feature.anime.search.ui.component.SearchScreen
@@ -67,12 +69,17 @@ internal class SearchFeatureImplementation @Inject constructor() : FeatureApi {
                     val jsonAnime: String = toJson(clickedAnime)
                     val event = HayateEvent.Navigate(
                         HayateNavigationType.Navigate(
-                            route = Screen.Detail.createRoute(
-                                jsonAnime = Uri.encode(jsonAnime)
+                            route = Route(
+                                Screen.Detail.createRoute(
+                                    jsonAnime = Uri.encode(jsonAnime)
+                                )
                             ),
                             options = navOptions {
                                 launchSingleTop = true
-                            }
+                            },
+                            navTitle = Title(
+                                Screen.Detail::class.simpleName.orEmpty()
+                            )
                         )
                     )
                     onEvent(event)

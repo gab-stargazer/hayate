@@ -12,8 +12,8 @@ package com.lelestacia.hayate.core.common
  * @see Detail Represents the screen for detailed information about an anime, with a dynamic data parameter.
  * @see Search Represents the screen for searching anime.
  * @see MoreNavigation Represents a navigation point (not a composable route) to access more options.
- * @see More Represents the main screen with additional options.
- * @see AppInfo Represents the screen for displaying application information.
+ * @see MoreNavigation.More Represents the main screen with additional options.
+ * @see MoreNavigation.AppInfo Represents the screen for displaying application information.
  *
  * with the provided JSON anime data dynamically.
  */
@@ -58,19 +58,19 @@ sealed class Screen(val route: String) {
      */
     data object Search : Screen("search")
 
-
     /**
      * Represents a navigation point (not a composable route) to access more options.
      */
-    data object MoreNavigation : Screen("more")
+    data object MoreNavigation : Screen("more") {
 
-    /**
-     * Represents the screen with additional options.
-     */
-    data object More : Screen("main")
+        /**
+         * Represents the screen with additional options.
+         */
+        data object More : Screen("main")
 
-    /**
-     * Represents the screen for displaying application information.
-     */
-    data object AppInfo : Screen("app_info")
+        /**
+         * Represents the screen for displaying application information.
+         */
+        data object AppInfo : Screen("app_info")
+    }
 }

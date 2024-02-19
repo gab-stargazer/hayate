@@ -1,6 +1,6 @@
 package com.lelestacia.hayate.feature.anime.initialization.domain.usecases
 
-import com.lelestacia.hayate.core.common.state.DataState
+import com.lelestacia.hayate.core.common.state.UiState
 import com.lelestacia.hayate.core.common.util.UiText
 import com.lelestacia.hayate.core.firebase.FirebaseConfig
 import com.lelestacia.hayate.core.preferences.ConfigPreferences
@@ -28,13 +28,13 @@ class InitializationUseCases @Inject constructor(
 //        return animeRepository.initiateApp()
 //    }
 
-    fun checkForFirebaseConfig(): Flow<DataState<Boolean>> =
-        flow<DataState<Boolean>> {
+    fun checkForFirebaseConfig(): Flow<UiState<Boolean>> =
+        flow<UiState<Boolean>> {
             val configs: Map<String, Boolean> = FirebaseConfig.getConfig()
             configPreferences.updateFeature(configs)
-            emit(DataState.Success(true))
+            emit(UiState.Success(true))
         }.catch { t ->
             Timber.e(t.stackTraceToString())
-            emit(DataState.Failed(UiText.MessageString(t.message.orEmpty())))
+            emit(UiState.Failed(UiText.MessageString(t.message.orEmpty())))
         }
 }

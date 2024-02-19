@@ -5,10 +5,14 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.navOptions
 import com.lelestacia.hayate.R
 import com.lelestacia.hayate.core.common.Screen
+import com.lelestacia.hayate.core.common.api.LoggerApi
 import com.lelestacia.hayate.core.common.event.HayateEvent
 import com.lelestacia.hayate.core.common.event.HayateNavigationType
 import com.lelestacia.hayate.core.common.state.HayateState
-import com.lelestacia.hayate.core.common.state.UiState
+import com.lelestacia.hayate.core.common.util.Msg
+import com.lelestacia.hayate.core.common.util.Route
+import com.lelestacia.hayate.core.common.util.Source
+import com.lelestacia.hayate.core.common.util.Title
 import com.lelestacia.hayate.core.common.util.UiText
 import com.lelestacia.hayate.domain.state.AppBarState
 import com.lelestacia.hayate.domain.state.BottomNavigationState
@@ -16,6 +20,8 @@ import com.lelestacia.hayate.navigation.isRootDestination
 import com.lelestacia.hayate.util.shouldAppBarBeVisible
 import com.lelestacia.hayate.util.shouldSearchIconBeVisible
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -23,48 +29,24 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-/**
- * ViewModel responsible for managing the state and logic of the Hayate application.
- *
- * This ViewModel handles various UI states such as navigation, Snackbar display, AppBar configuration,
- * and Bottom Navigation state. It processes events triggered by the UI and updates the corresponding
- * state flows accordingly.
- *
- * @property _navigationState MutableStateFlow representing the navigation state.
- * @property navigationState Immutable StateFlow exposing the navigation state to observers.
- * @property _snackBarState MutableStateFlow representing the Snackbar state.
- * @property snackBarState Immutable StateFlow exposing the Snackbar state to observers.
- * @property _appBarState MutableStateFlow representing the AppBar state.
- * @property appBarState Immutable StateFlow exposing the AppBar state to observers.
- * @property _bottomNavigationState MutableStateFlow representing the Bottom Navigation state.
- * @property bottomNavigationState Immutable StateFlow exposing the Bottom Navigation state to observers.
- *
- * @see UiState
- * @see AppBarState
- * @see BottomNavigationState
- * @see UiText
- * @see HayateEvent
- * @see HayateNavigationType
- * @author Kamil Malik
- * @since 23 January 2024
- */
+
 @HiltViewModel
-class HayateViewModel @Inject constructor() : ViewModel() {
+class HayateViewModel @Inject constructor(
+    private val loggerApi: LoggerApi,
+) : ViewModel() {
+
+    private val source = Source(name = "VIEWMODEL")
 
     private val _applicationState: MutableStateFlow<HayateState> =
         MutableStateFlow(HayateState())
     val applicationState: StateFlow<HayateState> =
         _applicationState.asStateFlow()
 
-    private val _navigationState: MutableStateFlow<UiState<HayateNavigationType>> =
-        MutableStateFlow(UiState.Handled)
-    val navigationState: StateFlow<UiState<HayateNavigationType>> =
-        _navigationState.asStateFlow()
+    private val _navigationChannel: Channel<HayateNavigationType> = Channel()
+    val navigationChannel: ReceiveChannel<HayateNavigationType> = _navigationChannel
 
-    private val _snackBarState: MutableStateFlow<UiState<UiText>> =
-        MutableStateFlow(UiState.Handled)
-    val snackBarState: StateFlow<UiState<UiText>> =
-        _snackBarState.asStateFlow()
+    private val _snackBarChannel: Channel<UiText> = Channel()
+    val snackBarChannel: ReceiveChannel<UiText> = _snackBarChannel
 
     private val _appBarState: MutableStateFlow<AppBarState> =
         MutableStateFlow(AppBarState())
@@ -125,18 +107,22 @@ class HayateViewModel @Inject constructor() : ViewModel() {
                 }
             }
 
-            is HayateEvent.ShowSnackBar -> _snackBarState.update {
-                UiState.NotHandled(
-                    data = event.message
-                )
-            }
+            is HayateEvent.ShowSnackBar -> _snackBarChannel.trySend(event.message)
 
             is HayateEvent.Navigate -> {
-                _navigationState.update {
-                    UiState.NotHandled(
-                        data = event.navigation
-                    )
+
+                val navigationLog = when (event.navigation) {
+                    is HayateNavigationType.Navigate -> "Navigating into ${(event.navigation as HayateNavigationType.Navigate).navTitle.value}"
+                    is HayateNavigationType.NavigateWithTitle -> "Navigating into ${(event.navigation as HayateNavigationType.NavigateWithTitle).navTitle.value}"
+                    else -> "Popping Navigation Backstack"
                 }
+
+                loggerApi.logDebug(
+                    source = source,
+                    msg = Msg(navigationLog)
+                )
+
+                _navigationChannel.trySend(event.navigation)
 
                 if (
                     event.navigation is HayateNavigationType.Navigate ||
@@ -146,13 +132,13 @@ class HayateViewModel @Inject constructor() : ViewModel() {
                     if (event.navigation is HayateNavigationType.Navigate) {
                         _appBarState.update { currentState ->
                             currentState.copy(
-                                currentRoute = (event.navigation as HayateNavigationType.Navigate).route
+                                currentRoute = (event.navigation as HayateNavigationType.Navigate).route.value
                             )
                         }
                     } else {
                         _appBarState.update { currentState ->
                             currentState.copy(
-                                currentRoute = (event.navigation as HayateNavigationType.NavigateWithTitle).route,
+                                currentRoute = (event.navigation as HayateNavigationType.NavigateWithTitle).route.value,
                                 appBarTitle = (event.navigation as HayateNavigationType.NavigateWithTitle).title
                             )
                         }
@@ -199,16 +185,15 @@ class HayateViewModel @Inject constructor() : ViewModel() {
 
             HayateEvent.SearchClicked -> {
                 if (appBarState.value.currentRoute != Screen.Search.route) {
-                    _navigationState.update {
-                        UiState.NotHandled(
-                            data = HayateNavigationType.Navigate(
-                                route = Screen.Search.route,
-                                options = navOptions {
-                                    launchSingleTop = true
-                                }
-                            )
+                    _navigationChannel.trySend(
+                        HayateNavigationType.Navigate(
+                            route = Route(Screen.Search.route),
+                            options = navOptions {
+                                launchSingleTop = true
+                            },
+                            navTitle = Title(Screen.Search::class.java.simpleName)
                         )
-                    }
+                    )
                 }
 
                 _applicationState.update { state ->
@@ -218,21 +203,6 @@ class HayateViewModel @Inject constructor() : ViewModel() {
                 }
             }
         }
-    }
-
-
-    /**
-     * Handles the Snackbar state by updating it to [UiState.Handled].
-     */
-    fun handleSnackBar() = viewModelScope.launch {
-        _snackBarState.update { UiState.Handled }
-    }
-
-    /**
-     * Handles the navigation state by updating it to [UiState.Handled].
-     */
-    fun handleNavigation() = viewModelScope.launch {
-        _navigationState.update { UiState.Handled }
     }
 }
 

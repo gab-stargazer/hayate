@@ -2,10 +2,9 @@ package com.lelestacia.hayate.feature.settings.ui.di
 
 import android.content.Intent
 import android.net.Uri
-import androidx.compose.animation.AnimatedContentTransitionScope.SlideDirection.Companion.Down
 import androidx.compose.animation.AnimatedContentTransitionScope.SlideDirection.Companion.Left
 import androidx.compose.animation.AnimatedContentTransitionScope.SlideDirection.Companion.Right
-import androidx.compose.animation.AnimatedContentTransitionScope.SlideDirection.Companion.Up
+import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Column
@@ -23,6 +22,8 @@ import com.lelestacia.hayate.core.common.api.FeatureApi
 import com.lelestacia.hayate.core.common.event.HayateEvent
 import com.lelestacia.hayate.core.common.event.HayateNavigationType
 import com.lelestacia.hayate.core.common.state.HayateState
+import com.lelestacia.hayate.core.common.util.Route
+import com.lelestacia.hayate.core.common.util.Title
 import com.lelestacia.hayate.feature.settings.ui.R
 import com.lelestacia.hayate.feature.settings.ui.component.MoreCustomButton
 import com.lelestacia.hayate.feature.settings.ui.screen.AppInfoScreen
@@ -39,11 +40,11 @@ internal class MoreFeatureImplementation @Inject constructor() : FeatureApi {
         onEvent: (HayateEvent) -> Unit,
     ) {
         navGraphBuilder.navigation(
-            startDestination = Screen.More.route,
+            startDestination = Screen.MoreNavigation.More.route,
             route = Screen.MoreNavigation.route,
         ) {
             composable(
-                route = Screen.More.route,
+                route = Screen.MoreNavigation.More.route,
                 enterTransition = {
                     when (initialState.destination.route) {
                         Screen.Exploration.route -> slideIntoContainer(Right)
@@ -52,11 +53,7 @@ internal class MoreFeatureImplementation @Inject constructor() : FeatureApi {
                     }
                 },
                 exitTransition = {
-                    when (targetState.destination.route) {
-                        Screen.Exploration.route -> slideOutOfContainer(Left)
-                        Screen.Collection.route -> slideOutOfContainer(Right)
-                        else -> null
-                    }
+                    fadeOut()
                 },
                 popEnterTransition = {
                     fadeIn()
@@ -64,7 +61,9 @@ internal class MoreFeatureImplementation @Inject constructor() : FeatureApi {
             ) {
                 val context = LocalContext.current
                 Column(
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .animateContentSize()
                 ) {
                     MoreCustomButton(
                         label = stringResource(R.string.application_information),
@@ -74,8 +73,9 @@ internal class MoreFeatureImplementation @Inject constructor() : FeatureApi {
                                 HayateEvent.Navigate(
                                     HayateNavigationType.NavigateWithTitle(
                                         title = R.string.application_information,
-                                        route = Screen.AppInfo.route,
-                                        options = null
+                                        route = Route(Screen.MoreNavigation.AppInfo.route),
+                                        options = null,
+                                        navTitle = Title(Screen.MoreNavigation.AppInfo::class.simpleName.orEmpty())
                                     )
                                 )
                             )
@@ -113,16 +113,16 @@ internal class MoreFeatureImplementation @Inject constructor() : FeatureApi {
             }
 
             composable(
-                route = Screen.AppInfo.route,
+                route = Screen.MoreNavigation.AppInfo.route,
                 enterTransition = {
                     when (initialState.destination.route) {
-                        Screen.More.route -> slideIntoContainer(Up) + fadeIn()
+                        Screen.MoreNavigation.More.route -> fadeIn()
                         else -> null
                     }
                 },
                 popExitTransition = {
                     when (targetState.destination.route) {
-                        Screen.More.route -> slideOutOfContainer(Down) + fadeOut()
+                        Screen.MoreNavigation.More.route -> fadeOut()
                         else -> null
                     }
                 }

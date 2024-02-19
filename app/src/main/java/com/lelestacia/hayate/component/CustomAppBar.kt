@@ -27,7 +27,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.SearchOff
 import androidx.compose.material.icons.filled.Share
@@ -43,6 +43,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -64,6 +65,8 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.systemuicontroller.SystemUiController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.lelestacia.hayate.R
 import com.lelestacia.hayate.core.common.event.HayateEvent
 import com.lelestacia.hayate.core.common.event.HayateNavigationType
@@ -82,7 +85,16 @@ import compose.icons.fontawesomeicons.brands.Youtube
 fun CustomAppBar(
     state: AppBarState,
     onEvent: (HayateEvent) -> Unit,
+    uiController: SystemUiController,
 ) {
+    val surfaceColor: Color = MaterialTheme.colorScheme.surface
+    SideEffect {
+        uiController.setStatusBarColor(
+            color = surfaceColor,
+            darkIcons = !state.isDarkTheme
+        )
+    }
+
     val focusManager = LocalFocusManager.current
     val context = LocalContext.current
     val textColor by animateColorAsState(
@@ -206,7 +218,7 @@ fun CustomAppBar(
                             }
                         ) {
                             Icon(
-                                imageVector = Icons.Default.ArrowBack,
+                                imageVector = Icons.AutoMirrored.Default.ArrowBack,
                                 contentDescription = null,
                                 tint = iconColor
                             )
@@ -386,7 +398,8 @@ fun PreviewCustomAppBar() {
                 state = state,
                 onEvent = {
 
-                }
+                },
+                uiController = rememberSystemUiController()
             )
         }
     }

@@ -36,7 +36,6 @@ internal fun AnimeInformation(
     isDarkTheme: Boolean,
 ) {
 
-    //  TODO: Decide if the information should expand first or not
     val isExpanded by remember {
         mutableStateOf(true)
     }

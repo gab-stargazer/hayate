@@ -1,4 +1,5 @@
 import com.lelestacia.hayate.buildsrc.ProjectConfig
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
@@ -56,4 +57,10 @@ dependencies {
 
     // =====Paging=====
     implementation(libs.paging)
+}
+
+tasks.withType<KotlinCompile>().configureEach {
+    kotlinOptions {
+        freeCompilerArgs = freeCompilerArgs + "-Xcontext-receivers"
+    }
 }

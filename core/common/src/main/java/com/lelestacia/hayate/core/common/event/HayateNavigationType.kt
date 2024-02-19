@@ -4,6 +4,8 @@ import androidx.annotation.StringRes
 import androidx.navigation.NavOptions
 import com.lelestacia.hayate.core.common.event.HayateNavigationType.Navigate
 import com.lelestacia.hayate.core.common.event.HayateNavigationType.PopBackstack
+import com.lelestacia.hayate.core.common.util.Route
+import com.lelestacia.hayate.core.common.util.Title
 
 /**
  * Represents the different types of navigation actions for the Hayate application.
@@ -26,14 +28,16 @@ sealed class HayateNavigationType {
      * @property options Optional navigation options to customize the navigation behavior.
      */
     data class Navigate(
-        val route: String,
+        val route: Route,
         val options: NavOptions?,
+        val navTitle: Title,
     ) : HayateNavigationType()
 
     data class NavigateWithTitle(
         @StringRes val title: Int,
-        val route: String,
+        val route: Route,
         val options: NavOptions?,
+        val navTitle: Title,
     ) : HayateNavigationType()
 
     /**

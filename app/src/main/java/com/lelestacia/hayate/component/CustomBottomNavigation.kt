@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -24,13 +25,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.navOptions
 import com.google.accompanist.systemuicontroller.SystemUiController
+import com.lelestacia.hayate.R
 import com.lelestacia.hayate.core.common.Screen
 import com.lelestacia.hayate.core.common.event.HayateEvent
 import com.lelestacia.hayate.core.common.event.HayateNavigationType
+import com.lelestacia.hayate.core.common.util.Route
+import com.lelestacia.hayate.core.common.util.Title
 import com.lelestacia.hayate.core.theme.quickSandFamily
 import com.lelestacia.hayate.domain.state.BottomNavigationState
 
-@OptIn(ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun CustomBottomNavigation(
     state: BottomNavigationState,
@@ -76,14 +80,21 @@ fun CustomBottomNavigation(
                     onClick = {
                         val navigationEvent = HayateEvent.Navigate(
                             HayateNavigationType.Navigate(
-                                route = item.route,
+                                route = Route(item.route),
                                 options = navOptions {
                                     popUpTo(route = Screen.Exploration.route) {
                                         saveState = true
                                     }
                                     restoreState = true
                                     launchSingleTop = true
-                                }
+                                },
+                                navTitle = Title(
+                                    when (item.title) {
+                                        R.string.exploration -> Screen.Exploration::class.simpleName.orEmpty()
+                                        R.string.collection -> Screen.Collection::class.simpleName.orEmpty()
+                                        else -> Screen.MoreNavigation.More::class.simpleName.orEmpty()
+                                    }
+                                )
                             )
                         )
                         onEvent(navigationEvent)

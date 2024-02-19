@@ -17,13 +17,13 @@ fun shouldAppBarBeVisible(route: String): Boolean {
     val rootDestination = listOf(
         Screen.Exploration.route,
         Screen.Collection.route,
-        Screen.More.route
+        Screen.MoreNavigation.More.route
     )
 
     val initializationScreen = Screen.Init.route
     val detailScreen = Screen.Detail.route
     val searchScreen = Screen.Search.route
-    val appInfoScreen = Screen.AppInfo.route
+    val appInfoScreen = Screen.MoreNavigation.AppInfo.route
 
     return when {
         rootDestination.contains(route) -> true

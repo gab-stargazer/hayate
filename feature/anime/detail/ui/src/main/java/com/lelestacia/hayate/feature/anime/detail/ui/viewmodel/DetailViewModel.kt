@@ -2,7 +2,7 @@ package com.lelestacia.hayate.feature.anime.detail.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lelestacia.hayate.core.common.state.DataState
+import com.lelestacia.hayate.core.common.state.UiState
 import com.lelestacia.hayate.core.common.util.UiText
 import com.lelestacia.hayate.feature.anime.core.domain.model.Anime
 import com.lelestacia.hayate.feature.anime.detail.domain.usecases.DetailAnimeUseCases
@@ -52,7 +52,7 @@ class DetailViewModel @Inject constructor(
 
     fun getAnimeByAnimeID(animeID: Int) = viewModelScope.launch {
         useCases.getAnimeByAnimeID(animeID).collectLatest { result ->
-            if (result is DataState.Success) {
+            if (result is UiState.Success) {
                 _state.update {
                     it.copy(
                         anime = result.data
@@ -75,10 +75,10 @@ class DetailViewModel @Inject constructor(
     fun insertAnime(anime: Anime) = viewModelScope.launch {
         useCases.insertAnime(anime).collectLatest { dataState ->
             when (dataState) {
-                is DataState.Failed -> Timber.e("Inserting Anime Failed. Reason: ${(dataState.error as UiText.MessageString).message}")
-                DataState.Loading -> Timber.d("Inserting Anime into DB")
-                DataState.None -> Unit
-                is DataState.Success -> Timber.d("Anime insertion completed")
+                is UiState.Failed -> Timber.e("Inserting Anime Failed. Reason: ${(dataState.error as UiText.MessageString).message}")
+                UiState.Loading -> Timber.d("Inserting Anime into DB")
+                UiState.None -> Unit
+                is UiState.Success -> Timber.d("Anime insertion completed")
             }
         }
     }

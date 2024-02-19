@@ -209,4 +209,15 @@ dependencies {
     testImplementation(libs.test.junit.old)
     testRuntimeOnly(libs.junit.vintage.engine)
     /*====================================================================*/
+
+    androidTestImplementation("androidx.test:runner:1.4.0")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    androidTestImplementation("androidx.test:runner:1.4.0")
+    androidTestImplementation("androidx.test:rules:1.4.0")
+
+    // Test rules and transitive dependencies:
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.6.1")
+// Needed for createAndroidComposeRule, but not createComposeRule:
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.6.1")
+
 }

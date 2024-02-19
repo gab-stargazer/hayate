@@ -1,5 +1,6 @@
 package com.lelestacia.hayate.feature.anime.core.data.di
 
+import com.lelestacia.hayate.core.common.api.LoggerApi
 import com.lelestacia.hayate.feature.anime.core.data.AnimeRepositoryImpl
 import com.lelestacia.hayate.feature.anime.core.domain.repository.AnimeRepository
 import com.lelestacia.hayate.feature.anime.core.source.local.api.api.AnimeLocalDataSourceApi
@@ -17,12 +18,15 @@ internal object RepositoryModule {
     @Provides
     @Singleton
     fun provideAnimeRepository(
-        animeRemoteDataSource: AnimeRemoteDataSourceApi,
-        localDataSource: AnimeLocalDataSourceApi
-    ): AnimeRepository {
-        return AnimeRepositoryImpl(
-            remoteDataSource = animeRemoteDataSource,
-            localDataSource = localDataSource
-        )
-    }
+        remoteDataSource: AnimeRemoteDataSourceApi,
+        localDataSource: AnimeLocalDataSourceApi,
+        loggerApi: LoggerApi,
+    ): AnimeRepository =
+        with(loggerApi) {
+            AnimeRepositoryImpl(
+                remoteDataSource = remoteDataSource,
+                localDataSource = localDataSource,
+                loggerApi = loggerApi
+            )
+        }
 }

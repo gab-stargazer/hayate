@@ -1,32 +1,38 @@
 package com.lelestacia.hayate.core.common.state
 
+import com.lelestacia.hayate.core.common.util.UiText
+
 /**
- * Represents the different states of a user interface operation or event.
- * This sealed class is designed to encapsulate the outcome of a UI action, providing a clear
- * distinction between states that have been handled and those that haven't.
+ * Represents different states for data loading and retrieval within the Hayate application.
+ * This sealed interface encapsulates the possible outcomes of data operations, including loading,
+ * success with data, failure with an error message, or no data state.
  *
- * The sealed class has two possible states:
- * - [NotHandled]: Represents a UI state where the associated data has not been handled yet.
- *   It holds the data related to the UI operation.
- * - [Handled]: Represents a UI state where the operation has been handled.
- *
- * @param T The type of data associated with the UI state when it has not been handled.
+ * @param T The type of data associated with the state when it represents success.
  *
  * @author Kamil Malik
  * @since 23 January 2024
  */
-sealed class UiState<out T> {
+sealed interface UiState<out T> {
 
     /**
-     * Represents a UI state where the associated data has not been handled yet.
-     * @property data The data associated with the UI state.
+     * Represents a data state indicating that data is currently being loaded.
      */
-    data class NotHandled<T>(val data: T) : UiState<T>()
+    data object Loading : UiState<Nothing>
 
     /**
-     * Represents a UI state where the operation has been handled.
-     * This is an object without any associated data.
+     * Represents a data state indicating a successful operation with associated data.
+     * @property data The data associated with the success state.
      */
-    data object Handled : UiState<Nothing>()
+    data class Success<T>(val data: T) : UiState<T>
+
+    /**
+     * Represents a data state indicating a failure with a specific error message.
+     * @property error The error message associated with the failure state.
+     */
+    data class Failed(val error: UiText) : UiState<Nothing>
+
+    /**
+     * Represents a data state indicating that there is no data to display or retrieve.
+     */
+    data object None : UiState<Nothing>
 }
-

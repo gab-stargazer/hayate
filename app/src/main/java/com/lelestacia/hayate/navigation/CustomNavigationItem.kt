@@ -34,7 +34,7 @@ val HayateNavigationItem = listOf(
     ),
     CustomNavigationItem(
         title = R.string.more,
-        route = Screen.More.route,
+        route = Screen.MoreNavigation.More.route,
         selectedIcon = Icons.Filled.MoreHoriz,
         unselectedIcon = Icons.Outlined.MoreHoriz
     ),
@@ -44,7 +44,7 @@ fun isRootDestination(route: String): Boolean {
     val rootDestination = listOf(
         Screen.Exploration.route,
         Screen.Collection.route,
-        Screen.More.route
+        Screen.MoreNavigation.More.route
     )
 
     return rootDestination.contains(route)

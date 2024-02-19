@@ -40,6 +40,8 @@ import com.lelestacia.hayate.core.common.event.HayateEvent
 import com.lelestacia.hayate.core.common.event.HayateNavigationType
 import com.lelestacia.hayate.core.common.screen.DisableScreen
 import com.lelestacia.hayate.core.common.state.HayateState
+import com.lelestacia.hayate.core.common.util.Route
+import com.lelestacia.hayate.core.common.util.Title
 import com.lelestacia.hayate.core.common.util.toJson
 import com.lelestacia.hayate.core.theme.quickSandFamily
 import com.lelestacia.hayate.feature.anime.core.domain.model.Anime
@@ -52,6 +54,7 @@ import com.lelestacia.hayate.feature.anime.exploration.ui.viewmodel.AiringViewMo
 import com.lelestacia.hayate.feature.anime.exploration.ui.viewmodel.PopularViewModel
 import com.lelestacia.hayate.feature.anime.exploration.ui.viewmodel.ScheduleViewModel
 import com.lelestacia.hayate.feature.anime.exploration.ui.viewmodel.UpcomingViewModel
+import timber.log.Timber
 import javax.inject.Inject
 
 internal class ExploreFeatureImplementation @Inject constructor() : FeatureApi {
@@ -71,18 +74,14 @@ internal class ExploreFeatureImplementation @Inject constructor() : FeatureApi {
                 }
             },
             exitTransition = {
-                when (targetState.destination.route) {
-                    Screen.Detail.route -> fadeOut()
-                    Screen.Collection.route -> slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Left)
-                    Screen.More.route -> slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Right)
-                    Screen.Search.route -> slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Left) + fadeOut()
-                    else -> null
-                }
+                fadeOut()
             },
             popEnterTransition = {
                 when (initialState.destination.route) {
                     Screen.Collection.route -> slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Right)
-                    Screen.More.route -> slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Left)
+                    Screen.MoreNavigation.More.route -> slideIntoContainer(
+                        AnimatedContentTransitionScope.SlideDirection.Left
+                    )
                     Screen.Detail.route -> fadeIn()
                     Screen.Search.route -> slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Right) + fadeIn()
                     else -> null
@@ -123,29 +122,23 @@ internal class ExploreFeatureImplementation @Inject constructor() : FeatureApi {
             val scheduleAnimeState by scheduleAnimeVm.state.collectAsStateWithLifecycle()
             val isScheduleFeatureEnabled by scheduleAnimeVm.isFeatureEnabled.collectAsStateWithLifecycle()
 
-
             val handleAnimeClicked: (Anime) -> Unit = { clickedAnime ->
+                Timber.d("Anime Clicked")
                 val jsonAnime: String = toJson(clickedAnime)
                 val event = HayateEvent.Navigate(
                     HayateNavigationType.Navigate(
-                        route = Screen.Detail.createRoute(
-                            jsonAnime = Uri.encode(jsonAnime)
+                        route = Route(
+                            Screen.Detail.createRoute(
+                                jsonAnime = Uri.encode(jsonAnime)
+                            )
                         ),
                         options = navOptions {
                             launchSingleTop = true
-                        }
+                        },
+                        navTitle = Title(Screen.Detail::class.simpleName.orEmpty())
                     )
                 )
                 onEvent(event)
-
-                //  navController.navigate(
-                //      Screen.Detail.createRoute(
-                //          jsonAnime = Uri.encode(jsonAnime)
-                //  )
-                //      ) {
-                //          launchSingleTop = true
-                //      }
-
                 popularAnimeVm.insertAnime(clickedAnime)
             }
 
@@ -194,7 +187,7 @@ internal class ExploreFeatureImplementation @Inject constructor() : FeatureApi {
                                     state = scheduleAnimeState,
                                     isDarkTheme = state.isDarkTheme,
                                     onAnimeClicked = handleAnimeClicked,
-                                    modifier = Modifier.weight(1f),
+                                    modifier = Modifier.fillMaxSize()
                                 )
                             } else {
                                 DisableScreen(
@@ -211,7 +204,7 @@ internal class ExploreFeatureImplementation @Inject constructor() : FeatureApi {
                                 isDarkTheme = state.isDarkTheme,
                                 onEvent = popularAnimeVm::onEvent,
                                 onAnimeClicked = handleAnimeClicked,
-                                modifier = Modifier.weight(1f)
+                                modifier = Modifier.fillMaxSize()
                             )
                         }
 
@@ -222,7 +215,7 @@ internal class ExploreFeatureImplementation @Inject constructor() : FeatureApi {
                                 isDarkTheme = state.isDarkTheme,
                                 onEvent = airingAnimeVm::onEvent,
                                 onAnimeClicked = handleAnimeClicked,
-                                modifier = Modifier.weight(1f)
+                                modifier = Modifier.fillMaxSize()
                             )
                         }
 
@@ -234,7 +227,7 @@ internal class ExploreFeatureImplementation @Inject constructor() : FeatureApi {
                                     isDarkTheme = state.isDarkTheme,
                                     onEvent = upcomingAnimeVm::onEvent,
                                     onAnimeClicked = handleAnimeClicked,
-                                    modifier = Modifier.weight(1f)
+                                    modifier = Modifier.fillMaxSize()
                                 )
                             } else {
                                 DisableScreen(
