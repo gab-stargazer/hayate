@@ -217,7 +217,7 @@ dependencies {
 
     // Test rules and transitive dependencies:
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.6.1")
-// Needed for createAndroidComposeRule, but not createComposeRule:
+    // Needed for createAndroidComposeRule, but not createComposeRule:
     debugImplementation("androidx.compose.ui:ui-test-manifest:1.6.1")
 
 }
