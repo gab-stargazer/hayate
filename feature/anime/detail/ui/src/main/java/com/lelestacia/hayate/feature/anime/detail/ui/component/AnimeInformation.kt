@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,7 +36,6 @@ internal fun AnimeInformation(
     isDarkTheme: Boolean,
 ) {
 
-    //  TODO: Decide if the information should expand first or not
     val isExpanded by remember {
         mutableStateOf(true)
     }
@@ -84,7 +83,7 @@ internal fun AnimeInformation(
                     )
                 )
             }
-            Divider(color = dividerColor)
+            HorizontalDivider(color = dividerColor)
 
             //  Episodes
             if (anime.episodes.isNotEmpty()) {
@@ -108,7 +107,7 @@ internal fun AnimeInformation(
                         )
                     )
                 }
-                Divider(color = dividerColor)
+                HorizontalDivider(color = dividerColor)
             }
 
             //  Season & Year
@@ -142,7 +141,7 @@ internal fun AnimeInformation(
                         )
                     )
                 }
-                Divider(color = dividerColor)
+                HorizontalDivider(color = dividerColor)
             }
 
             //  Airing Information
@@ -179,7 +178,7 @@ internal fun AnimeInformation(
                         )
                     )
                 }
-                Divider(color = dividerColor)
+                HorizontalDivider(color = dividerColor)
             }
 
             //  Studio
@@ -205,7 +204,7 @@ internal fun AnimeInformation(
                         )
                     )
                 }
-                Divider(color = dividerColor)
+                HorizontalDivider(color = dividerColor)
             }
 
             //  Duration
@@ -229,7 +228,7 @@ internal fun AnimeInformation(
                     )
                 )
             }
-            Divider(color = dividerColor)
+            HorizontalDivider(color = dividerColor)
 
             //  Rating
             Row(

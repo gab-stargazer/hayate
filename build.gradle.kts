@@ -13,5 +13,6 @@ plugins {
     alias(libs.plugins.firebase.crashlytic) apply false
     alias(libs.plugins.androidTest) apply false
     alias(libs.plugins.baseline.profile) apply false
+    alias(libs.plugins.apollo) apply false
 }
 true // Needed to make the Suppress annotation work for the plugins block

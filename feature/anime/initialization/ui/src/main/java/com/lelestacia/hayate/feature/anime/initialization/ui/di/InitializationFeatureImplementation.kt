@@ -9,8 +9,11 @@ import com.lelestacia.hayate.core.common.api.FeatureApi
 import com.lelestacia.hayate.core.common.event.HayateEvent
 import com.lelestacia.hayate.core.common.event.HayateNavigationType
 import com.lelestacia.hayate.core.common.state.HayateState
+import com.lelestacia.hayate.core.common.util.Route
+import com.lelestacia.hayate.core.common.util.Title
 import com.lelestacia.hayate.feature.anime.initialization.ui.screen.InitializationScreen
 import kotlinx.coroutines.delay
+import timber.log.Timber
 import javax.inject.Inject
 
 internal class InitializationFeatureImplementation @Inject constructor() : FeatureApi {
@@ -27,14 +30,17 @@ internal class InitializationFeatureImplementation @Inject constructor() : Featu
 
             LaunchedEffect(key1 = Unit) {
                 delay(1500)
+
+                Timber.d("NAVIGATE")
                 val navigationEvent = HayateEvent.Navigate(
                     HayateNavigationType.Navigate(
-                        route = Screen.Exploration.route,
+                        route = Route(Screen.Exploration.route),
                         options = navOptions {
                             popUpTo(Screen.Init.route) {
                                 inclusive = true
                             }
-                        }
+                        },
+                        navTitle = Title(Screen.Init::class.simpleName.orEmpty())
                     )
                 )
 

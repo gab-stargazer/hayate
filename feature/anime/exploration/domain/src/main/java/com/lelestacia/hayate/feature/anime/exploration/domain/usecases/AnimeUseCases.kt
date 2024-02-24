@@ -1,7 +1,7 @@
 package com.lelestacia.hayate.feature.anime.exploration.domain.usecases
 
 import androidx.paging.PagingData
-import com.lelestacia.hayate.core.common.state.DataState
+import com.lelestacia.hayate.core.common.state.UiState
 import com.lelestacia.hayate.core.preferences.ConfigPreferences
 import com.lelestacia.hayate.feature.anime.core.domain.model.Anime
 import com.lelestacia.hayate.feature.anime.core.domain.repository.AnimeRepository
@@ -43,7 +43,7 @@ class AnimeUseCases @Inject constructor(
         return repository.getScheduledAnime(filter)
     }
 
-    fun insertAnime(anime: Anime): Flow<DataState<Boolean>> {
+    fun insertAnime(anime: Anime): Flow<UiState<Boolean>> {
         return repository.insertAnime(anime)
     }
 

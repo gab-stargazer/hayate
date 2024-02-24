@@ -1,7 +1,7 @@
 package com.lelestacia.hayate.feature.anime.initialization.domain.state
 
-import com.lelestacia.hayate.core.common.state.DataState
+import com.lelestacia.hayate.core.common.state.UiState
 
 data class InitializationScreenState(
-    val initializationResult: DataState<Boolean> = DataState.None
+    val initializationResult: UiState<Boolean> = UiState.None,
 )

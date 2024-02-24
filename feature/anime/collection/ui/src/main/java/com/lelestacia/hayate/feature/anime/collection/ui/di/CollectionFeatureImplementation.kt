@@ -34,6 +34,8 @@ import com.lelestacia.hayate.core.common.api.FeatureApi
 import com.lelestacia.hayate.core.common.event.HayateEvent
 import com.lelestacia.hayate.core.common.event.HayateNavigationType
 import com.lelestacia.hayate.core.common.state.HayateState
+import com.lelestacia.hayate.core.common.util.Route
+import com.lelestacia.hayate.core.common.util.Title
 import com.lelestacia.hayate.core.common.util.toJson
 import com.lelestacia.hayate.core.theme.quickSandFamily
 import com.lelestacia.hayate.feature.anime.collection.ui.R
@@ -55,21 +57,17 @@ internal class CollectionFeatureImplementation @Inject constructor() : FeatureAp
             enterTransition = {
                 when (initialState.destination.route) {
                     Screen.Exploration.route -> slideIntoContainer(towards = AnimatedContentTransitionScope.SlideDirection.Left)
-                    Screen.More.route -> slideIntoContainer(towards = AnimatedContentTransitionScope.SlideDirection.Right)
+                    Screen.MoreNavigation.More.route -> slideIntoContainer(towards = AnimatedContentTransitionScope.SlideDirection.Right)
                     else -> fadeIn()
                 }
             },
             exitTransition = {
-                when (targetState.destination.route) {
-                    Screen.Exploration.route -> slideOutOfContainer(towards = AnimatedContentTransitionScope.SlideDirection.Right)
-                    Screen.More.route -> slideOutOfContainer(towards = AnimatedContentTransitionScope.SlideDirection.Left)
-                    else -> fadeOut()
-                }
+                fadeOut()
             },
             popExitTransition = {
                 when (initialState.destination.route) {
                     Screen.Exploration.route -> slideOutOfContainer(towards = AnimatedContentTransitionScope.SlideDirection.Right)
-                    Screen.More.route -> slideOutOfContainer(towards = AnimatedContentTransitionScope.SlideDirection.Left)
+                    Screen.MoreNavigation.More.route -> slideOutOfContainer(towards = AnimatedContentTransitionScope.SlideDirection.Left)
                     else -> fadeOut()
                 }
             }
@@ -80,12 +78,15 @@ internal class CollectionFeatureImplementation @Inject constructor() : FeatureAp
                 val jsonAnime: String = toJson(clickedAnime)
                 val event = HayateEvent.Navigate(
                     HayateNavigationType.Navigate(
-                        route = Screen.Detail.createRoute(
-                            jsonAnime = Uri.encode(jsonAnime)
+                        route = Route(
+                            Screen.Detail.createRoute(
+                                jsonAnime = Uri.encode(jsonAnime)
+                            )
                         ),
                         options = navOptions {
                             launchSingleTop = true
-                        }
+                        },
+                        navTitle = Title(Screen.Detail::class.simpleName.orEmpty())
                     )
                 )
                 onEvent(event)

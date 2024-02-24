@@ -5,6 +5,9 @@
       <entry key="Generate Baseline Profile for app">
         <State />
       </entry>
+      <entry key="StartupBenchmarks">
+        <State />
+      </entry>
       <entry key="app">
         <State>
           <targetSelectedWithDropDown>
@@ -21,7 +24,10 @@
           <timeTargetWasSelectedWithDropDown value="2023-12-19T22:57:26.624245600Z" />
         </State>
       </entry>
-      <entry key="generate()">
+      <entry key="startupCompilationNone()">
+        <State />
+      </entry>
+      <entry key="useAppContext()">
         <State />
       </entry>
       <entry key="userRouteProfiler() (1)">

@@ -4,7 +4,10 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
-import com.lelestacia.hayate.core.common.state.DataState
+import com.lelestacia.hayate.core.common.api.LoggerApi
+import com.lelestacia.hayate.core.common.state.UiState
+import com.lelestacia.hayate.core.common.util.Msg
+import com.lelestacia.hayate.core.common.util.Source
 import com.lelestacia.hayate.core.common.util.UiText
 import com.lelestacia.hayate.feature.anime.core.data.mapper.asAnime
 import com.lelestacia.hayate.feature.anime.core.data.mapper.asDemographic
@@ -31,14 +34,16 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
-import timber.log.Timber
 import javax.inject.Inject
 import kotlin.time.measureTime
 
 internal class AnimeRepositoryImpl @Inject constructor(
     private val remoteDataSource: AnimeRemoteDataSourceApi,
     private val localDataSource: AnimeLocalDataSourceApi,
+    private val loggerApi: LoggerApi,
 ) : AnimeRepository {
+
+    private val source = Source(name = "REPOSITORY")
 
     override fun getTopAnime(
         type: String?,
@@ -141,86 +146,182 @@ internal class AnimeRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun initiateApp(): Flow<DataState<Boolean>> {
-        return flow<DataState<Boolean>> {
+    override fun initiateApp(): Flow<UiState<Boolean>> {
+        return flow<UiState<Boolean>> {
+            with(loggerApi) {
 
-            val genres = remoteDataSource.getGenres()
-            val explicitGenres = remoteDataSource.getExplicitGenres()
+                // ================================Retrieval======================================//
+                logDebug(
+                    source = source,
+                    msg = Msg("Starting to fetch Genres and Explicit Genres From API")
+                )
+                val genres = remoteDataSource.getGenres()
+                val explicitGenres = remoteDataSource.getExplicitGenres()
+                logDebug(
+                    source = source,
+                    msg = Msg("Finished fetching Genres and Explicit Genres From API")
+                )
+                // ===============================================================================//
 
-            localDataSource.insertGenres(
-                genres
-                    .asSequence()
-                    .map(AnimeGenreDto::asGenre)
-                    .map(AnimeGenre::asEntity)
-                    .toList()
-            )
+                // ================================Insertion======================================//
+                logDebug(
+                    source = source,
+                    msg = Msg("Starting Genres Insertion")
+                )
+                localDataSource.insertGenres(
+                    genres
+                        .asSequence()
+                        .map(AnimeGenreDto::asGenre)
+                        .map(AnimeGenre::asEntity)
+                        .toList()
+                )
+                logDebug(
+                    source = source,
+                    msg = Msg("Finished Genres Insertion")
+                )
+                // ===============================================================================//
 
-            localDataSource.insertExplicitGenres(
-                explicitGenres
-                    .asSequence()
-                    .map(AnimeGenreDto::asGenre)
-                    .map(AnimeGenre::asExplicitEntity)
-                    .toList()
-            )
+                // ================================Insertion======================================//
+                logDebug(
+                    source = source,
+                    msg = Msg("Starting Explicit Genres Insertion")
+                )
+                localDataSource.insertExplicitGenres(
+                    explicitGenres
+                        .asSequence()
+                        .map(AnimeGenreDto::asGenre)
+                        .map(AnimeGenre::asExplicitEntity)
+                        .toList()
+                )
+                logDebug(
+                    source = source,
+                    msg = Msg("Finished Explicit Genres Insertion")
+                )
+                // ===============================================================================//
 
-            delay(1500)
+                //  Short delay to avoid API Limit
+                delay(1500)
 
-            val themes = remoteDataSource.getThemes()
-            val demographics = remoteDataSource.getDemographics()
+                // ================================Retrieval======================================//
+                logDebug(
+                    source = source,
+                    msg = Msg("Starting to fetch Themes and Demographics From API")
+                )
+                val themes = remoteDataSource.getThemes()
+                val demographics = remoteDataSource.getDemographics()
+                logDebug(
+                    source = source,
+                    msg = Msg("Finished fetching Themes and Demographics From API")
+                )
+                // ===============================================================================//
 
-            localDataSource.insertThemes(
-                themes
-                    .asSequence()
-                    .map(AnimeThemeDto::asTheme)
-                    .map(AnimeTheme::asEntity)
-                    .toList()
-            )
+                // ================================Insertion======================================//
+                logDebug(
+                    source = source,
+                    msg = Msg("Starting Themes Insertion")
+                )
+                localDataSource.insertThemes(
+                    themes
+                        .asSequence()
+                        .map(AnimeThemeDto::asTheme)
+                        .map(AnimeTheme::asEntity)
+                        .toList()
+                )
+                logDebug(
+                    source = source,
+                    msg = Msg("Finished Themes Insertion")
+                )
+                // ===============================================================================//
 
-            localDataSource.insertDemographics(
-                demographics
-                    .asSequence()
-                    .map(AnimeDemographicDto::asDemographic)
-                    .map(AnimeDemographic::asEntity)
-                    .toList()
-            )
+                // ================================Insertion======================================//
+                logDebug(
+                    source = source,
+                    msg = Msg("Starting Demographics Insertion")
+                )
+                localDataSource.insertDemographics(
+                    demographics
+                        .asSequence()
+                        .map(AnimeDemographicDto::asDemographic)
+                        .map(AnimeDemographic::asEntity)
+                        .toList()
+                )
+                logDebug(
+                    source = source,
+                    msg = Msg("Finished Demographics Insertion")
+                )
+                // ===============================================================================//
 
-            delay(1500)
+                //  Short delay to avoid API Limit
+                delay(1500)
 
-            emit(DataState.Success(true))
-        }.onStart {
-            emit(DataState.Loading)
-        }.catch { t ->
-            Timber.e(t.stackTraceToString())
-            emit(DataState.Failed(UiText.MessageString(t.message.orEmpty())))
-        }
-    }
-
-    override fun insertAnime(anime: Anime): Flow<DataState<Boolean>> {
-        return flow<DataState<Boolean>> {
-            val durations = measureTime {
-                localDataSource.insertAnime(anime.asNewEntity())
+                //  Final Emission
+                logDebug(
+                    source = source,
+                    msg = Msg("Finished every process, starting emission")
+                )
+                emit(UiState.Success(true))
             }
-            Timber.d("Insert new Anime duration is: ${durations.inWholeMilliseconds}ms")
-
-            emit(DataState.Success(true))
         }.onStart {
-            emit(DataState.Loading)
+            emit(UiState.Loading)
         }.catch { t ->
-            Timber.e(t.stackTraceToString())
-            emit(DataState.Failed(UiText.MessageString(t.message.orEmpty())))
+            with(loggerApi) {
+                logDebug(
+                    source = source,
+                    msg = Msg(t.stackTraceToString())
+                )
+                emit(UiState.Failed(UiText.MessageString(t.message.orEmpty())))
+            }
         }
     }
 
-    override fun getAnimeByAnimeID(animeID: Int): Flow<DataState<Anime>> {
-        return flow<DataState<Anime>> {
+    override fun insertAnime(anime: Anime): Flow<UiState<Boolean>> {
+        return flow<UiState<Boolean>> {
+            with(loggerApi) {
+
+                logDebug(
+                    source = source,
+                    msg = Msg("Anime insertion started")
+                )
+
+                val duration = measureTime {
+                    localDataSource.insertAnime(anime.asNewEntity())
+                }
+
+                logDebug(
+                    source = source,
+                    msg = Msg("Anime insertion finished within ${duration.inWholeMilliseconds}ms")
+                )
+
+                emit(UiState.Success(true))
+            }
+        }.onStart {
+            emit(UiState.Loading)
+        }.catch { t ->
+            with(loggerApi) {
+                logDebug(
+                    source = source,
+                    msg = Msg(t.stackTraceToString())
+                )
+                emit(UiState.Failed(UiText.MessageString(t.message.orEmpty())))
+            }
+        }
+    }
+
+    override fun getAnimeByAnimeID(animeID: Int): Flow<UiState<Anime>> {
+        return flow<UiState<Anime>> {
             val animeEntity: AnimeEntity = localDataSource.getAnimeByAnimeID(animeID)
             val anime: Anime = animeEntity.asAnime()
-            emit(DataState.Success(data = anime))
+            emit(UiState.Success(data = anime))
         }.onStart {
 
         }.catch { t ->
-            Timber.e(t.stackTraceToString())
-            emit(DataState.Failed(UiText.MessageString(t.message.orEmpty())))
+            with(loggerApi) {
+                logDebug(
+                    source = source,
+                    msg = Msg(t.stackTraceToString())
+                )
+                emit(UiState.Failed(UiText.MessageString(t.message.orEmpty())))
+            }
         }
     }
 

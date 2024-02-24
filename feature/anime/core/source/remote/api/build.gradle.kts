@@ -38,6 +38,9 @@ android {
 
 dependencies {
 
+    //  =====Common=====
+    implementation(projects.core.common)
+
     //  Moshi
     implementation(libs.moshi)
     ksp(libs.moshi.codegen)

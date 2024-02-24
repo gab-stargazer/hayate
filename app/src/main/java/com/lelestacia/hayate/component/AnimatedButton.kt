@@ -23,8 +23,8 @@ fun AnimatedButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     contentDescription: String? = null,
-    color: Color? = null,
-    iconSize: Dp? = null,
+    color: Color = Color.Unspecified,
+    iconSize: Dp = Dp.Unspecified,
 ) {
     AnimatedVisibility(
         visible = showCondition,
@@ -56,28 +56,12 @@ fun AnimatedButton(
         IconButton(
             onClick = onClick,
             content = {
-                if (color != null) {
-                    Icon(
-                        imageVector = icon,
-                        tint = color,
-                        contentDescription = contentDescription,
-                        modifier =
-                        when (iconSize != null) {
-                            true -> Modifier.size(iconSize)
-                            false -> Modifier
-                        }
-                    )
-                } else {
-                    Icon(
-                        imageVector = icon,
-                        contentDescription = contentDescription,
-                        modifier =
-                        when (iconSize != null) {
-                            true -> Modifier.size(iconSize)
-                            false -> Modifier
-                        }
-                    )
-                }
+                Icon(
+                    imageVector = icon,
+                    tint = color,
+                    contentDescription = contentDescription,
+                    modifier = Modifier.size(iconSize)
+                )
             },
             modifier = modifier
         )

@@ -1,7 +1,7 @@
 package com.lelestacia.hayate.feature.anime.core.domain.repository
 
 import androidx.paging.PagingData
-import com.lelestacia.hayate.core.common.state.DataState
+import com.lelestacia.hayate.core.common.state.UiState
 import com.lelestacia.hayate.feature.anime.core.domain.model.Anime
 import kotlinx.coroutines.flow.Flow
 
@@ -34,11 +34,11 @@ interface AnimeRepository {
         rating: String? = null,
     ): Flow<PagingData<Anime>>
 
-    fun initiateApp(): Flow<DataState<Boolean>>
+    fun initiateApp(): Flow<UiState<Boolean>>
 
-    fun insertAnime(anime: Anime): Flow<DataState<Boolean>>
+    fun insertAnime(anime: Anime): Flow<UiState<Boolean>>
 
-    fun getAnimeByAnimeID(animeID: Int): Flow<DataState<Anime>>
+    fun getAnimeByAnimeID(animeID: Int): Flow<UiState<Anime>>
 
     fun getAnimeHistory(): Flow<PagingData<Anime>>
 

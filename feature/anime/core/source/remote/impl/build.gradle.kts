@@ -1,4 +1,5 @@
 import com.lelestacia.hayate.buildsrc.ProjectConfig
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
@@ -7,6 +8,7 @@ plugins {
     alias(libs.plugins.kotlin.ksp)
     alias(libs.plugins.hilt)
     alias(libs.plugins.junit.adapter)
+    alias(libs.plugins.apollo)
 }
 
 android {
@@ -38,6 +40,21 @@ android {
     kotlinOptions {
         jvmTarget = ProjectConfig.jvmTarget
     }
+
+    sourceSets {
+        named("main") {
+            java.srcDir(listOf("src/main/java", "src/main/graphql"))
+            resources.srcDir("src/main/resources")
+        }
+    }
+}
+
+apollo {
+    service("characters") {
+        packageName.set("com.lelestacia.hayate.feature.anime.core.source.remote.impl")
+        generateKotlinModels.set(true)
+        sourceFolder.set("com/lelestacia/hayate/feature/anime/core/source/remote/impl/character")
+    }
 }
 
 dependencies {
@@ -45,6 +62,9 @@ dependencies {
     //  =====API=====
     implementation(projects.core.common)
     implementation(projects.feature.anime.core.source.remote.api)
+
+    //  Apollo
+    implementation(libs.apollo.runtime)
 
     //  Coroutine
     implementation(libs.coroutine)
@@ -82,4 +102,10 @@ dependencies {
     testImplementation(libs.test.junit.old)
     testRuntimeOnly(libs.junit.vintage.engine)
     /*====================================================================*/
+}
+
+tasks.withType<KotlinCompile>().configureEach {
+    kotlinOptions {
+        freeCompilerArgs = freeCompilerArgs + "-Xcontext-receivers"
+    }
 }

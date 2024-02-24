@@ -1,7 +1,7 @@
 package com.lelestacia.hayate.feature.anime.detail.ui.di
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -44,29 +44,15 @@ class DetailFeatureImplementation @Inject constructor() : FeatureApi {
                 }
             ),
             enterTransition = {
-                slideIntoContainer(
-                    towards = AnimatedContentTransitionScope.SlideDirection.Up,
+                fadeIn(
                     animationSpec = tween(
-                        durationMillis = 500,
-                        easing = FastOutSlowInEasing
-                    )
-                ) + fadeIn(
-                    animationSpec = tween(
-                        durationMillis = 500,
                         easing = FastOutSlowInEasing
                     )
                 )
             },
             exitTransition = {
-                slideOutOfContainer(
-                    towards = AnimatedContentTransitionScope.SlideDirection.Down,
+                fadeOut(
                     animationSpec = tween(
-                        durationMillis = 500,
-                        easing = FastOutSlowInEasing
-                    )
-                ) + fadeOut(
-                    animationSpec = tween(
-                        durationMillis = 500,
                         easing = FastOutSlowInEasing
                     )
                 )
@@ -81,7 +67,7 @@ class DetailFeatureImplementation @Inject constructor() : FeatureApi {
 
             val anime: Anime = screenState.anime
                 ?: navBackStackEntry.arguments?.parcelable<Anime>(Constant.KEY_DATA)
-                ?: throw Exception("What the fuck is going on")
+                ?: throw Exception("Something wrong.... But I have no idea :D")
 
             LaunchedEffect(key1 = Unit) {
                 val event = HayateEvent.OnDetailAnimeToolbar(
@@ -90,16 +76,15 @@ class DetailFeatureImplementation @Inject constructor() : FeatureApi {
                 )
                 onEvent(event)
 
-                vm.insertAnime(anime)
                 vm.getAnimeByAnimeID(anime.malId)
             }
 
             AnimeDetailScreen(
                 anime = anime,
-                isDarkTheme = state.isDarkTheme,
-                isOnWatchList = screenState.isOnWatchList,
-                onEvent = vm::onEvent,
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .animateContentSize()
+                    .fillMaxSize(),
+                isDarkTheme = state.isDarkTheme
             )
         }
     }

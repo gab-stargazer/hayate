@@ -2,6 +2,7 @@ package com.lelestacia.hayate.core.common.screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -11,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import com.lelestacia.hayate.core.theme.quickSandFamily
 import com.lelestacia.hayate.core.theme.spacing
 
@@ -36,7 +38,9 @@ fun ErrorScreen(
                 fontFamily = quickSandFamily,
                 fontWeight = FontWeight.Bold,
                 color = textColor
-            )
+            ),
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth()
         )
         Button(
             onClick = onRetry,

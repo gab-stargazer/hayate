@@ -50,8 +50,9 @@ fun HayateCustomChip(
             }
         ),
         border = AssistChipDefaults.assistChipBorder(
-            borderWidth = 0.dp,
-            borderColor = Color.Transparent
+            enabled = true,
+            borderColor = Color.Transparent,
+            borderWidth = 0.dp
         ),
         modifier = modifier
     )

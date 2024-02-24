@@ -97,6 +97,11 @@ dependencies {
     androidTestImplementation(libs.ui.test.compose.junit)
     androidTestImplementation(libs.ui.test.compose.manifest)
 
+    //  Retrofit
+    implementation(libs.retrofit) {
+        because("This is for importing Retrofit HTTP Exception")
+    }
+
     //  ViewModel
     implementation(libs.lifecycle.ktx)
     implementation(libs.lifecycle.viewmodel)

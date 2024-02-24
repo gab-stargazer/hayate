@@ -69,8 +69,10 @@ fun HayateCustomFilterChip(
         ),
         shape = RoundedCornerShape(15),
         border = FilterChipDefaults.filterChipBorder(
+            enabled = true,
+            selected = isActive,
             selectedBorderColor = Color.Transparent,
-            borderColor = MaterialTheme.colorScheme.primary
+            borderColor = MaterialTheme.colorScheme.primary,
         ),
         modifier = modifier.animateContentSize()
     )

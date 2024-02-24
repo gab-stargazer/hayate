@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.RewriteQueriesToDropUnusedColumns
 import androidx.room.Transaction
 import com.lelestacia.hayate.feature.anime.core.source.local.impl.entity.AnimeBasicEntity
 import com.lelestacia.hayate.feature.anime.core.source.local.impl.entity.AnimeFullEntity
@@ -24,6 +25,7 @@ internal interface AnimeDao {
     fun getAnimeHistory(): PagingSource<Int, AnimeFullEntity>
 
     @Transaction
+    @RewriteQueriesToDropUnusedColumns
     @Query("SELECT * FROM anime INNER JOIN watchlist ON anime.mal_id = watchlist.anime_id")
     fun getAnimeWatchList(): PagingSource<Int, AnimeFullEntity>
 }

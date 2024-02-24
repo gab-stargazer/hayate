@@ -2,7 +2,7 @@ package com.lelestacia.hayate.feature.anime.initialization.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lelestacia.hayate.core.common.state.DataState
+import com.lelestacia.hayate.core.common.state.UiState
 import com.lelestacia.hayate.feature.anime.initialization.domain.usecases.InitializationUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,8 +29,8 @@ internal class InitializationViewModel @Inject constructor(
     fun checkForFirebaseConfig() = viewModelScope.launch {
         useCases.checkForFirebaseConfig().collectLatest { dataState ->
             when (dataState) {
-                DataState.Loading -> Unit
-                DataState.None -> Unit
+                UiState.Loading -> Unit
+                UiState.None -> Unit
                 else -> _isConfigFinished.update { true }
             }
         }

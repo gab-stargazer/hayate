@@ -1,6 +1,7 @@
 package com.lelestacia.hayate.feature.anime.core.source.remote.impl.source
 
 import androidx.paging.PagingSource
+import com.lelestacia.hayate.core.common.api.LoggerApi
 import com.lelestacia.hayate.core.common.util.IoDispatcher
 import com.lelestacia.hayate.feature.anime.core.source.remote.api.api.AnimeRemoteDataSourceApi
 import com.lelestacia.hayate.feature.anime.core.source.remote.api.dto.anime.AnimeDto
@@ -22,6 +23,7 @@ internal class AnimeRemoteDataSourceImpl @Inject constructor(
     private val scheduleEndpoint: ScheduleEndpoint,
     private val utilityEndpoint: UtilityEndpoint,
     private val searchEndpoint: SearchEndpoint,
+    private val loggerApi: LoggerApi,
     @IoDispatcher private val ioDispatcher: CoroutineContext,
 ) : AnimeRemoteDataSourceApi {
 
@@ -31,13 +33,16 @@ internal class AnimeRemoteDataSourceImpl @Inject constructor(
         rating: String?,
         sfw: Boolean,
     ): PagingSource<Int, AnimeDto> {
-        return TopAnimePaging(
-            topEndpoint = topEndpoint,
-            type = type,
-            filter = filter,
-            rating = rating,
-            sfw = sfw
-        )
+        return with(loggerApi) {
+            TopAnimePaging(
+                topEndpoint = topEndpoint,
+                type = type,
+                filter = filter,
+                rating = rating,
+                sfw = sfw,
+                ioDispatcher = ioDispatcher
+            )
+        }
     }
 
     override fun getCurrentSeasonAnime(

@@ -2,12 +2,14 @@ package com.lelestacia.hayate.baseline_profiler
 
 import androidx.benchmark.macro.BaselineProfileMode
 import androidx.benchmark.macro.CompilationMode
+import androidx.benchmark.macro.ExperimentalMetricApi
+import androidx.benchmark.macro.FrameTimingMetric
+import androidx.benchmark.macro.MemoryUsageMetric
 import androidx.benchmark.macro.StartupMode
 import androidx.benchmark.macro.StartupTimingMetric
 import androidx.benchmark.macro.junit4.MacrobenchmarkRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -47,19 +49,25 @@ class StartupBenchmarks {
     fun startupCompilationBaselineProfiles() =
         benchmark(CompilationMode.Partial(BaselineProfileMode.Require))
 
+    @OptIn(ExperimentalMetricApi::class)
     private fun benchmark(compilationMode: CompilationMode) {
         // This example works only with the variant with application id `com.lelestacia.hayate.stable`."
         rule.measureRepeated(
             packageName = "com.lelestacia.hayate.stable",
-            metrics = listOf(StartupTimingMetric()),
+            metrics = listOf(
+                StartupTimingMetric(),
+                FrameTimingMetric(),
+                MemoryUsageMetric(
+                    mode = MemoryUsageMetric.Mode.Max,
+                    subMetrics = listOf(MemoryUsageMetric.SubMetric.Gpu)
+                )
+            ),
             compilationMode = compilationMode,
             startupMode = StartupMode.COLD,
             iterations = 10,
-            setupBlock = {
-                pressHome()
-            },
+            setupBlock = {},
             measureBlock = {
-                startActivityAndWait()
+                interaction()
 
                 // TODO Add interactions to wait for when your app is fully drawn.
                 // The app is fully drawn when Activity.reportFullyDrawn is called.

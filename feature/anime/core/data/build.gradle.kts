@@ -29,10 +29,12 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = ProjectConfig.jvmTarget
     }
@@ -57,9 +59,6 @@ dependencies {
 
     //  Paging
     implementation(libs.paging)
-
-    //  Timber
-    implementation(libs.timber)
 
     //  Ui Test
     androidTestImplementation(libs.ui.test.espresso.core)
