@@ -3,6 +3,7 @@ package com.lelestacia.hayate.feature.anime.core.source.remote.impl.di
 import android.content.Context
 import com.lelestacia.hayate.feature.anime.core.source.remote.impl.BuildConfig
 import com.lelestacia.hayate.feature.anime.core.source.remote.impl.ConnectivityChecker
+import com.lelestacia.hayate.feature.anime.core.source.remote.impl.Constant.HOST_NAME
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,9 +24,9 @@ internal object HttpModule {
     @Provides
     @Singleton
     fun provideSSL(): CertificatePinner = CertificatePinner.Builder()
-        .add(HOSTNAME, BuildConfig.SHA_1)
-        .add(HOSTNAME, BuildConfig.SHA_2)
-        .add(HOSTNAME, BuildConfig.SHA_3)
+        .add(HOST_NAME, BuildConfig.SHA_1)
+        .add(HOST_NAME, BuildConfig.SHA_2)
+        .add(HOST_NAME, BuildConfig.SHA_3)
         .build()
 
     @Provides
@@ -93,5 +94,4 @@ internal object HttpModule {
     private const val OFFLINE_INTERCEPTOR = "offline_interceptor"
     private const val CACHE_CONTROL = "Cache-Control"
     private const val PRAGMA = "Pragma"
-    private const val HOSTNAME = "api.jikan.moe"
 }
