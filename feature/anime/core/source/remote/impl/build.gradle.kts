@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.hilt)
     alias(libs.plugins.junit.adapter)
     alias(libs.plugins.apollo)
+    alias(libs.plugins.secret.gradle)
 }
 
 android {
@@ -46,6 +47,10 @@ android {
             java.srcDir(listOf("src/main/java", "src/main/graphql"))
             resources.srcDir("src/main/resources")
         }
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 }
 

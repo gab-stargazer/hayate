@@ -14,5 +14,6 @@ plugins {
     alias(libs.plugins.androidTest) apply false
     alias(libs.plugins.baseline.profile) apply false
     alias(libs.plugins.apollo) apply false
+    alias(libs.plugins.secret.gradle) apply false
 }
 true // Needed to make the Suppress annotation work for the plugins block

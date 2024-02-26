@@ -28,6 +28,7 @@ internal object RetrofitModule {
             .baseUrl(BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create())
             .client(okHttpClient)
+            .validateEagerly(true)
             .build()
     }
 
